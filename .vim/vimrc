@@ -61,7 +61,7 @@ if has("autocmd")
   autocmd FileType ruby,cucumber,haml setlocal expandtab shiftwidth=2 softtabstop=2
   autocmd FileType javascript setlocal expandtab shiftwidth=2 softtabstop=2
   autocmd FileType php setlocal shiftwidth=2 tabstop=2
-  autocmd FileType markdown setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2 wrap linebreak nolist textwidth=80 wrapmargin=0
+  autocmd FileType markdown setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2 wrap nolist
   autocmd BufRead,BufNewFile *.jsx.erb set filetype=eruby.javascript
 endif
 
@@ -163,10 +163,14 @@ endfunction
 
 nmap ,s :call ClearAllTrailingSpaces()<cr>
 
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/nerdtree'
 Plugin 'othree/html5.vim'
 Plugin 'ctrlp.vim'
 Plugin 'rails.vim'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'peterhoeg/vim-qml'
 
 call vundle#end()            " required
 filetype plugin indent on    " required

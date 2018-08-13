@@ -1,0 +1,8 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/Users/garyjohnson/repositories/concourse-sandbox/executors/macos/roles'
+let g:netrw_dirhist_2='/Users/garyjohnson/repositories/concourse-sandbox/executors/macos/roles/geerlingguy.mas'
+let g:netrw_dirhist_3='/Users/garyjohnson/repositories/concourse-sandbox/executors/macos/roles'
+let g:netrw_dirhist_4='/Users/garyjohnson/Desktop'
+let g:netrw_dirhist_5='/Users/garyjohnson/repositories/smart/smart-mobile-copy/merges'
+let g:netrw_dirhist_6='/Users/garyjohnson/repositories/smart/smart-mobile-copy/merges/windows'

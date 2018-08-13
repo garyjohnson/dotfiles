@@ -34,7 +34,12 @@
 [push]
 	default = simple
 [user]
-	name = Dan Parks + Gary Johnson
-	email = developer@leandog.com
+	name = Gary Johnson
+	email = gary@gjtt.com
 [core]
 	editor = vim
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
