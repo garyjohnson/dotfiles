@@ -171,9 +171,22 @@ Plugin 'ctrlp.vim'
 Plugin 'rails.vim'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'peterhoeg/vim-qml'
+Plugin 'mkitt/tabline.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
 
 map <C-n> :NERDTreeToggle<CR>
 imap jj <ESC>
+
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|platforms\|plugins'
+
+" Experimental -- make nested window appear if :make has errors
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
+
+" Experimental -- find current file in nerdtree
+nmap ,n :NERDTreeFind<CR>
+
+" Experimental -- show tab number
+set guitablabel=%N/\ %t\ %M
