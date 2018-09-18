@@ -63,6 +63,9 @@ if has("autocmd")
   autocmd FileType php setlocal shiftwidth=2 tabstop=2
   autocmd FileType markdown setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2 wrap nolist
   autocmd BufRead,BufNewFile *.jsx.erb set filetype=eruby.javascript
+
+  " stitch fix specific
+  autocmd BufRead,BufNewFile *.survey set filetype=ruby
 endif
 
 set nocompatible              " be iMproved, required
@@ -172,6 +175,11 @@ Plugin 'rails.vim'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'peterhoeg/vim-qml'
 Plugin 'mkitt/tabline.vim'
+Plugin 'zivyangll/git-blame.vim'
+" Experimental plugins
+Plugin 'mileszs/ack.vim'
+Plugin 'vim-scripts/nerdtree-ack'
+Plugin 'pgr0ss/vim-github-url'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -180,13 +188,23 @@ map <C-n> :NERDTreeToggle<CR>
 imap jj <ESC>
 
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|platforms\|plugins'
+let g:gh_line_map_default = 0
+let g:gh_line_map = '<leader>hu'
 
-" Experimental -- make nested window appear if :make has errors
-autocmd QuickFixCmdPost [^l]* nested cwindow
-autocmd QuickFixCmdPost    l* nested lwindow
+set guitablabel=%N/\ %t\ %M
 
-" Experimental -- find current file in nerdtree
 nmap ,n :NERDTreeFind<CR>
 
-" Experimental -- show tab number
-set guitablabel=%N/\ %t\ %M
+function Cheat()
+  echo "C-^    | Open previous file"
+  echo "C-p    | Find file name (ctrlp.vim)"
+  echo "C-n    | Open nerdtree (nerdtree)"
+  echo ",n     | Select the current file in nerdtree (nerdtree)"
+  echo ",s     | Clear all trailing spaces (vimrc/ClearAllTrailingSpaces())"
+  echo "mm     | Rename highlighted file or directory in nerdtree (nerdtree)"
+  echo "ms     | Search highlighted directory in nerdtree (nerdtree-ack)"
+  echo ":Blame | Show git blame (git-blame)"
+endfunction
+
+command Cheat :call Cheat()
+command Blame :call gitblame#echo()
