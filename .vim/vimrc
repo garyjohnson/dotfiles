@@ -166,6 +166,8 @@ endfunction
 
 nmap ,s :call ClearAllTrailingSpaces()<cr>
 
+Plugin 'VundleVim/Vundle.vim' " Yes, this is required. Vundle manages itself as a plugin
+
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/nerdtree'
@@ -175,36 +177,64 @@ Plugin 'rails.vim'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'peterhoeg/vim-qml'
 Plugin 'mkitt/tabline.vim'
-Plugin 'zivyangll/git-blame.vim'
+
 " Experimental plugins
-Plugin 'mileszs/ack.vim'
-Plugin 'vim-scripts/nerdtree-ack'
-Plugin 'pgr0ss/vim-github-url'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-rhubarb' " Github specific stuff for fugitive
+Plugin 'tpope/vim-commentary'
+Plugin 'jeetsukumaran/vim-buffergator'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
 
 map <C-n> :NERDTreeToggle<CR>
-imap jj <ESC>
+imap hh <ESC>
 
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|platforms\|plugins'
+let   g:ctrlp_custom_ignore = {
+    \ 'dir':  '\.git$\|\.hg$\|\.svn$\|bower_components$\|dist$\|node_modules$\|project_files$\|plugins$\|tmp$\|log$\|doc$',
+    \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$\|.DS_Store$' }
+
 let g:gh_line_map_default = 0
 let g:gh_line_map = '<leader>hu'
+
+" show buffer filenames across top
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+" Go to the previous buffer open
+nmap ,jj :BuffergatorMruCyclePrev<cr>
+" Go to the next buffer open
+nmap ,kk :BuffergatorMruCycleNext<cr>
+" View the entire list of buffers open
+nmap ,bl :BuffergatorOpen<cr>
 
 set guitablabel=%N/\ %t\ %M
 
 nmap ,n :NERDTreeFind<CR>
+nmap ,f <C-p>
 
 function Cheat()
-  echo "C-^    | Open previous file"
-  echo "C-p    | Find file name (ctrlp.vim)"
-  echo "C-n    | Open nerdtree (nerdtree)"
-  echo ",n     | Select the current file in nerdtree (nerdtree)"
-  echo ",s     | Clear all trailing spaces (vimrc/ClearAllTrailingSpaces())"
-  echo "mm     | Rename highlighted file or directory in nerdtree (nerdtree)"
-  echo "ms     | Search highlighted directory in nerdtree (nerdtree-ack)"
-  echo ":Blame | Show git blame (git-blame)"
+  echo " C-^       | Open previous file"
+  echo " C-p       | Find file name (ctrlp.vim)"
+  echo " C-n       | Open nerdtree (nerdtree)"
+  echo " ,n        | Select the open file in nerdtree (nerdtree)"
+  echo " ,s        | Clear all trailing spaces (vimrc/ClearAllTrailingSpaces())"
+  echo " m         | Operate on highlighted file or directory in nerdtree (nerdtree)"
+  echo " :tabnew   | Create new tab"
+  echo " gn | gp   | Go to next tab"
+  echo " ,kk | ,jj | Go to next / previous buffer (Buffergator)"
+  echo " ,bl       | View list of buffers (Buffergator)"
+  echo " :Gblame   | Show git blame (fugitive)"
+  echo " :Gbrowse  | Open highlighted lines or file in GitHub (fugitive)"
+  echo " gc | gcc  | Comment line in visual mode / or with count (commentary)"
 endfunction
 
 command Cheat :call Cheat()
 command Blame :call gitblame#echo()
+
+" ------------
+
+" Splits / Grids
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
