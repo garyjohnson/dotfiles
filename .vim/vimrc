@@ -17,7 +17,7 @@ set splitright
 set ruler  " Ruler on
 set number
 set nowrap  " Line wrapping off
-set timeoutlen=250  " Time to wait after ESC (default causes an annoying delay)
+set timeoutlen=300  " Time to wait after ESC (default causes an annoying delay)
 " set list
 " set listchars=trail:·
 
@@ -76,88 +76,13 @@ function! MapCR()
 endfunction
 call MapCR()
 
-function! RunTests(filename)
-" Write the file and run tests for the given filename
-    :w
-    :silent !echo;echo;echo;echo;echo
-    exec ":!bundle exec rspec " . a:filename
-endfunction
-
-function! SetTestFile()
-" Set the spec file that tests will be run for.
-  let t:grb_test_file=@%
-endfunction
-
-function! SetTestLine(line)
-  let t:grb_test_line=a:line
-endfunction
-
-function! RunTestFile(...)
-  let in_spec_file = match(expand("%"), '_spec.rb$') != -1
-  if a:0
-    if in_spec_file
-      call SetTestLine(a:1)
-    endif
-    if exists("t:grb_test_line")
-      let command_suffix = t:grb_test_line
-    else
-      let command_suffix = ""
-    endif
-  else
-    let command_suffix = ""
-  endif
-" Run the tests for the previously-marked file.
-  if in_spec_file
-    call SetTestFile()
-  elseif !exists("t:grb_test_file")
-    return
-  end
-  call RunTests(t:grb_test_file . command_suffix)
-endfunction
-
-function! RunNearestTest()
-  let spec_line_number = line('.')
-  call RunTestFile(":" . spec_line_number)
-endfunction
-
-function! SetFeatureFile()
-  let t:grb_feature_file=@%
-endfunction
-
-function! RunFeatureTest()
-  let in_feature_file = match(expand("%"), '.feature$') != -1
-" Run the tests for the previously-marked file.
-  if in_feature_file
-    call SetFeatureFile()
-  elseif !exists("t:grb_feature_file")
-    return
-  end
-
-  :w
-  :silent !echo;echo;echo;echo;echo
-  exec ":!cucumber " . t:grb_feature_file
-endfunction
-
-" Run this file
-" map <leader>t :call RunTestFile()<cr>
-" Run only the example under the cursor
-" map <leader>T :call RunNearestTest()<cr>
-" Run cucumber wip
-" map <leader>f :w\|:!cucumber -p wip<cr>
-map ,t :call RunTestFile()<cr>
-map ,T :call RunNearestTest()<cr>
-map ,w :w\|:!cucumber -p wip<cr>
-map ,f :call RunFeatureTest()<cr>
-
 " set the runtime path to include Vundle and initialize
-
 if has('win32') || has('win64')
   set rtp+=%HOME%\vimfiles\bundle\Vundle.vim
 else
   set rtp+=~/.vim/bundle/Vundle.vim
 endif
 call vundle#begin()
-
 
 " Quickly delete trailing spaces and tab characters turning the tabs into 4 spaces
 function! ClearAllTrailingSpaces()
@@ -177,12 +102,13 @@ Plugin 'rails.vim'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'peterhoeg/vim-qml'
 Plugin 'mkitt/tabline.vim'
-
-" Experimental plugins
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-rhubarb' " Github specific stuff for fugitive
 Plugin 'tpope/vim-commentary'
 Plugin 'jeetsukumaran/vim-buffergator'
+Plugin 'janko-m/vim-test'
+
+" Experimental plugins
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -226,6 +152,9 @@ function Cheat()
   echo " :Gblame   | Show git blame (fugitive)"
   echo " :Gbrowse  | Open highlighted lines or file in GitHub (fugitive)"
   echo " gc | gcc  | Comment line in visual mode / or with count (commentary)"
+  echo " ---------------------------------------------------------------------"
+  echo " C-v | C-s | Open splits from ctrlp pane"
+  echo " s   | i   | Open splits from nerdtree pane"
 endfunction
 
 command Cheat :call Cheat()
@@ -238,3 +167,13 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+
+" vim-test recommended
+nmap <silent> ,<C-n> :TestNearest<CR>
+nmap <silent> ,<C-f> :TestFile<CR>
+nmap <silent> ,<C-s> :TestSuite<CR>
+nmap <silent> ,<C-l> :TestLast<CR>
+nmap <silent> ,<C-g> :TestVisit<CR>
+" vim-test custom
+nmap <silent> ,t :TestNearest<CR>
+nmap <silent> ,T :TestFile<CR>
