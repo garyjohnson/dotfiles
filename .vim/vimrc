@@ -1,10 +1,10 @@
+" Windows-specific fixes for annoying behaviors
 if has('win32') || has('win64')
   set runtimepath=$HOME/_vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/_vim/after
-  set nobackup
-  set noswapfile
 endif
 
 " Save all backups here, rather than spreading around the file system.
+" %TEMP% is Windows-specific
 set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp,%TEMP%
 set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp,%TEMP%
 
@@ -18,8 +18,6 @@ set ruler  " Ruler on
 set number
 set nowrap  " Line wrapping off
 set timeoutlen=300  " Time to wait after ESC (default causes an annoying delay)
-" set list
-" set listchars=trail:·
 
 set tabstop=2  " Tabs are 2 spaces
 set backspace=2  " Backspace over everything in insert mode
@@ -39,10 +37,7 @@ set wildmenu " make tab completion more like bash
 set wildignore=*.swp
 set wildmode=list:longest
 
-filetype plugin on
-syntax on
-
-"Auto size the active window
+"Auto size the active window to take up 70% of screen
 let &winheight = &lines * 7/10
 let &winwidth = &columns * 7/10
 
@@ -50,130 +45,28 @@ let &winwidth = &columns * 7/10
 set noerrorbells visualbell t_vb=
 autocmd GUIEnter * set visualbell t_vb=
 
+set guitablabel=%N/\ %t\ %M " show tab number in tabline
+
 set hlsearch      " highlight all occurrences of search term
 :highlight clear Search
 :highlight Search term=reverse ctermfg=0 ctermbg=3 guibg=Yellow
 set ignorecase    " ignore case when searching
 
+filetype plugin on
+filetype indent on
+syntax on
+
 if has("autocmd")
-  filetype indent on
   autocmd FileType html,css setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
   autocmd FileType ruby,cucumber,haml setlocal expandtab shiftwidth=2 softtabstop=2
   autocmd FileType javascript setlocal expandtab shiftwidth=2 softtabstop=2
   autocmd FileType php setlocal shiftwidth=2 tabstop=2
   autocmd FileType markdown setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2 wrap nolist
   autocmd BufRead,BufNewFile *.jsx.erb set filetype=eruby.javascript
-
-  " stitch fix specific
-  autocmd BufRead,BufNewFile *.survey set filetype=ruby
 endif
 
-set nocompatible              " be iMproved, required
-filetype off                  " required
-" clear hls on return
-function! MapCR()
-  nnoremap <cr> :nohlsearch<cr>
-endfunction
-call MapCR()
-
-" set the runtime path to include Vundle and initialize
-if has('win32') || has('win64')
-  set rtp+=%HOME%\vimfiles\bundle\Vundle.vim
-else
-  set rtp+=~/.vim/bundle/Vundle.vim
-endif
-call vundle#begin()
-
-" Quickly delete trailing spaces and tab characters turning the tabs into 4 spaces
-function! ClearAllTrailingSpaces()
-  %s/\s\+$//
-endfunction
-
-nmap ,s :call ClearAllTrailingSpaces()<cr>
-
-Plugin 'VundleVim/Vundle.vim' " Yes, this is required. Vundle manages itself as a plugin
-
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'scrooloose/nerdtree'
-Plugin 'othree/html5.vim'
-Plugin 'ctrlp.vim'
-Plugin 'rails.vim'
-Plugin 'leafgarland/typescript-vim'
-Plugin 'peterhoeg/vim-qml'
-Plugin 'mkitt/tabline.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-rhubarb' " Github specific stuff for fugitive
-Plugin 'tpope/vim-commentary'
-Plugin 'jeetsukumaran/vim-buffergator'
-Plugin 'janko-m/vim-test'
-
-" Experimental plugins
-
-call vundle#end()            " required
-filetype plugin indent on    " required
-
-map <C-n> :NERDTreeToggle<CR>
-imap hh <ESC>
-
-let   g:ctrlp_custom_ignore = {
-    \ 'dir':  '\.git$\|\.hg$\|\.svn$\|bower_components$\|dist$\|node_modules$\|project_files$\|plugins$\|tmp$\|log$\|doc$',
-    \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$\|.DS_Store$' }
-
-let g:gh_line_map_default = 0
-let g:gh_line_map = '<leader>hu'
-
-" show buffer filenames across top
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
-" Go to the previous buffer open
-nmap ,jj :BuffergatorMruCyclePrev<cr>
-" Go to the next buffer open
-nmap ,kk :BuffergatorMruCycleNext<cr>
-" View the entire list of buffers open
-nmap ,bl :BuffergatorOpen<cr>
-
-set guitablabel=%N/\ %t\ %M
-
-nmap ,n :NERDTreeFind<CR>
-nmap ,f <C-p>
-
-function Cheat()
-  echo " C-^       | Open previous file"
-  echo " C-p       | Find file name (ctrlp.vim)"
-  echo " C-n       | Open nerdtree (nerdtree)"
-  echo " ,n        | Select the open file in nerdtree (nerdtree)"
-  echo " ,s        | Clear all trailing spaces (vimrc/ClearAllTrailingSpaces())"
-  echo " m         | Operate on highlighted file or directory in nerdtree (nerdtree)"
-  echo " :tabnew   | Create new tab"
-  echo " gn | gp   | Go to next tab"
-  echo " ,kk | ,jj | Go to next / previous buffer (Buffergator)"
-  echo " ,bl       | View list of buffers (Buffergator)"
-  echo " :Gblame   | Show git blame (fugitive)"
-  echo " :Gbrowse  | Open highlighted lines or file in GitHub (fugitive)"
-  echo " gc | gcc  | Comment line in visual mode / or with count (commentary)"
-  echo " ---------------------------------------------------------------------"
-  echo " C-v | C-s | Open splits from ctrlp pane"
-  echo " s   | i   | Open splits from nerdtree pane"
-endfunction
-
-command Cheat :call Cheat()
-command Blame :call gitblame#echo()
-
-" ------------
-
-" Splits / Grids
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
-" vim-test recommended
-nmap <silent> ,<C-n> :TestNearest<CR>
-nmap <silent> ,<C-f> :TestFile<CR>
-nmap <silent> ,<C-s> :TestSuite<CR>
-nmap <silent> ,<C-l> :TestLast<CR>
-nmap <silent> ,<C-g> :TestVisit<CR>
-" vim-test custom
-nmap <silent> ,t :TestNearest<CR>
-nmap <silent> ,T :TestFile<CR>
+so ~/.vim/plugins.vim
+so ~/.vim/plugin-config.vim
+so ~/.vim/stitchfix.vim
+so ~/.vim/cheat.vim
+so ~/.vim/keys-commands.vim
