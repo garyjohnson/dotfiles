@@ -1,8 +1,7 @@
 " Windows-specific fixes for annoying behaviors
 if has('win32') || has('win64')
   set runtimepath=$HOME/_vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/_vim/after
-endif
-
+endif 
 " Save all backups here, rather than spreading around the file system.
 " %TEMP% is Windows-specific
 set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp,%TEMP%
@@ -38,8 +37,8 @@ set wildignore=*.swp
 set wildmode=list:longest
 
 "Auto size the active window to take up 70% of screen
-let &winheight = &lines * 7/10
-let &winwidth = &columns * 7/10
+" let &winheight = &lines * 7/10
+" let &winwidth = &columns * 7/10
 
 " Disable beeping and blinking on error
 set noerrorbells visualbell t_vb=

@@ -21,14 +21,15 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-rhubarb' " Github specific stuff for fugitive
 Plugin 'tpope/vim-commentary'
 Plugin 'janko-m/vim-test'
+Plugin 'w0rp/ale'
+Plugin 'itchyny/lightline.vim'
+Plugin 'danilo-augusto/vim-afterglow'
 
 " Experimental plugins
 Plugin 'tpope/vim-surround'
-Plugin 'itchyny/lightline.vim'
 Plugin 'jeetsukumaran/vim-buffergator'
-Plugin 'w0rp/ale'
 Plugin 'junegunn/fzf.vim'
-Plugin 'danilo-augusto/vim-afterglow'
+Plugin 'zhaocai/GoldenView.Vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required

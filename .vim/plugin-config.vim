@@ -1,3 +1,7 @@
+" golenview
+" --------
+let g:goldenview__enable_default_mapping = 0 " default keys overlap nerdtree binding 
+
 " nerdtree
 " --------
 nmap ,n :NERDTreeFind<CR>
@@ -16,6 +20,8 @@ set noshowmode " don't show mode in own line -- insert, et al are shown in light
 
 " vim-test
 " --------
+"let test#strategy = "neovim"
+
 " vim-test recommended
 nmap <silent> ,<C-n> :TestNearest<CR>
 nmap <silent> ,<C-f> :TestFile<CR>
