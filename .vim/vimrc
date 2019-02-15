@@ -60,6 +60,7 @@ if has("autocmd")
   autocmd FileType html,css setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
   autocmd FileType ruby,cucumber,haml setlocal expandtab shiftwidth=2 softtabstop=2
   autocmd FileType javascript setlocal expandtab shiftwidth=2 softtabstop=2
+  autocmd FileType python setlocal expandtab shiftwidth=4 softtabstop=4
   autocmd FileType php setlocal shiftwidth=2 tabstop=2
   autocmd FileType markdown setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2 wrap nolist
   autocmd BufRead,BufNewFile *.jsx.erb set filetype=eruby.javascript
