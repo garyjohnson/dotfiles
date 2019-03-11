@@ -30,6 +30,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'jeetsukumaran/vim-buffergator'
 Plugin 'junegunn/fzf.vim'
 Plugin 'zhaocai/GoldenView.Vim'
+Plugin 'kchmck/vim-coffee-script'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
