@@ -32,6 +32,9 @@ nmap <silent> ,<C-g> :TestVisit<CR>
 nmap <silent> ,t :TestNearest<CR>
 nmap <silent> ,T :TestFile<CR>
 
+" ctrl+shift+6
+nmap <silent> <C-^> :TestNearest<CR> 
+
 " Buffergator
 " --------
 " show buffer filenames across top
