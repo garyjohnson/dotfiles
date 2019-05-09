@@ -1,36 +1,35 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
-if has('win32') || has('win64')
-  set rtp+=%HOME%\vimfiles\bundle\Vundle.vim
-else
-  set rtp+=~/.vim/bundle/Vundle.vim
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
-call vundle#begin()
 
-Plugin 'VundleVim/Vundle.vim' " Yes, this is required. Vundle manages itself as a plugin
+call plug#begin('~/.vim/plugged')
 
-Plugin 'scrooloose/nerdtree'
-Plugin 'othree/html5.vim'
-Plugin 'rails.vim'
-Plugin 'leafgarland/typescript-vim'
-Plugin 'peterhoeg/vim-qml'
-Plugin 'mkitt/tabline.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-rhubarb' " Github specific stuff for fugitive
-Plugin 'tpope/vim-commentary'
-Plugin 'janko-m/vim-test'
-Plugin 'w0rp/ale'
-Plugin 'itchyny/lightline.vim'
-Plugin 'danilo-augusto/vim-afterglow'
+Plug 'scrooloose/nerdtree'
+Plug 'othree/html5.vim'
+Plug 'vim-scripts/rails.vim'
+Plug 'leafgarland/typescript-vim'
+Plug 'peterhoeg/vim-qml'
+Plug 'mkitt/tabline.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb' " Github specific stuff for fugitive
+Plug 'tpope/vim-commentary'
+Plug 'janko-m/vim-test'
+Plug 'w0rp/ale'
+Plug 'itchyny/lightline.vim'
+Plug 'danilo-augusto/vim-afterglow'
+Plug 'kchmck/vim-coffee-script'
+Plug 'tpope/vim-surround'
+Plug 'jeetsukumaran/vim-buffergator'
+Plug 'junegunn/fzf.vim'
+Plug 'zhaocai/GoldenView.Vim'
 
 " Experimental plugins
-Plugin 'tpope/vim-surround'
-Plugin 'jeetsukumaran/vim-buffergator'
-Plugin 'junegunn/fzf.vim'
-Plugin 'zhaocai/GoldenView.Vim'
-Plugin 'kchmck/vim-coffee-script'
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
 
-call vundle#end()            " required
+call plug#end()
 filetype plugin indent on    " required

@@ -32,8 +32,10 @@ nmap <silent> ,<C-g> :TestVisit<CR>
 nmap <silent> ,t :TestNearest<CR>
 nmap <silent> ,T :TestFile<CR>
 
-" ctrl+shift+6
-nmap <silent> <C-^> :TestNearest<CR> 
+" build button
+nmap <silent> <M-6> :TestNearest<CR> 
+nmap <silent> <M-7> :TestFile<CR>
+nmap <silent> <M-8> :TestSuite<CR>
 
 " Buffergator
 " --------
@@ -57,6 +59,9 @@ let g:ctrlp_custom_ignore = {
 " --------
 nmap ,k :ALENext<cr>
 nmap ,j :ALEPrevious<cr>
+
+let g:ale_linters = {'ruby': ['standardrb']}
+let g:ale_fixers = {'ruby': ['standardrb']}
 
 " fzf
 " --------

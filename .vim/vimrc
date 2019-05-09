@@ -63,6 +63,7 @@ if has("autocmd")
   autocmd FileType php setlocal shiftwidth=2 tabstop=2
   autocmd FileType markdown setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2 wrap nolist
   autocmd BufRead,BufNewFile *.jsx.erb set filetype=eruby.javascript
+  autocmd BufRead,BufNewFile *.jsx.snap set filetype=javascript
 
   " lets view some images in iterm!
   autocmd BufEnter *.png,*.jpg,*gif exec "! open ".expand("%") | :bw
