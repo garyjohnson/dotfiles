@@ -15,8 +15,8 @@
 	cp = cherry-pick -x
 	rb = rebase
 	pr = pull --rebase
-	br = branch
-	b = branch -v
+  b = for-each-ref --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
+  br = for-each-ref --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
 	r = remote -v
 	t = tag -l
 	put = push origin HEAD
@@ -31,8 +31,8 @@
 	ar = add -A
 	lg = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %s %C(bold)- %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
 	l = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %s %C(bold)- %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative -10
-  tidy=!f() {           local branch=${1-master};           echo Pruning branches that are already merged into $branch...;           git remote prune origin && git branch --merged $branch | grep --color=auto --exclude-dir={.bzr,.cvs,.git,.hg,.svn} -v  $branch | xargs -n 1 git branch -d;           }; f
-  la=!git config -l | grep alias | cut -c 7-
+  tidy = "!f() { git branch --merged | grep -v \"\\*\" | grep -v master | grep -v dev | xargs -n 1 git branch -d; git remote prune origin; }; f"
+  la = !git config -l | grep alias | cut -c 7-
 [push]
 	default = simple
 [user]
@@ -40,6 +40,7 @@
 	email = gary@gjtt.com
 [core]
 	editor = vim
+	excludesfile = /Users/garyjohnson/.gitignore
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
