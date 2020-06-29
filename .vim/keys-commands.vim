@@ -15,4 +15,16 @@ endfunction
 
 nmap ,s :call ClearAllTrailingSpaces()<cr>
 
+function! FormatJson()
+  %!python -m json.tool
+endfunction
+
+function! SplitMaster()
+  %Gvsplit master:%
+endfunction
+
+nmap ,js :call FormatJson()<cr>
+nmap ,ss :call SplitMaster()<cr>
+nmap ,ff :ALEFix<cr>
+
 command Blame :call gitblame#echo()

@@ -30,6 +30,8 @@ Plug 'zhaocai/GoldenView.Vim'
 
 " Experimental plugins
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
+Plug 'mileszs/ack.vim'
+Plug 'slim-template/vim-slim'
 
 call plug#end()
 filetype plugin indent on    " required

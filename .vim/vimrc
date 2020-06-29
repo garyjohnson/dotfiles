@@ -69,6 +69,11 @@ if has("autocmd")
   autocmd BufEnter *.png,*.jpg,*gif exec "! open ".expand("%") | :bw
 endif
 
+" gf will open file under cursor 
+" these allow alternate paths and file extensions
+set path=.,src,node_nodules
+set suffixesadd=.js,.jsx,.scss,.css,.erb,.rb
+
 so ~/.vim/plugins.vim
 so ~/.vim/plugin-config.vim
 so ~/.vim/stitchfix.vim

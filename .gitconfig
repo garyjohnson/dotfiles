@@ -33,6 +33,7 @@
 	l = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %s %C(bold)- %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative -10
   tidy = "!f() { git branch --merged | grep -v \"\\*\" | grep -v master | grep -v dev | xargs -n 1 git branch -d; git remote prune origin; }; f"
   la = !git config -l | grep alias | cut -c 7-
+  changes = log --all --first-parent --remotes --reflog --author-date-order
 [push]
 	default = simple
 [user]

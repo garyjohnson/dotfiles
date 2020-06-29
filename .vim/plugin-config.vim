@@ -1,3 +1,7 @@
+" ack.vim
+" --------
+let g:ackprg = 'ag --nogroup --nocolor --column' " enable the-silver-surfer in ack.vim
+
 " golenview
 " --------
 let g:goldenview__enable_default_mapping = 0 " default keys overlap nerdtree binding 
@@ -60,8 +64,15 @@ let g:ctrlp_custom_ignore = {
 nmap ,k :ALENext<cr>
 nmap ,j :ALEPrevious<cr>
 
-let g:ale_linters = {'ruby': ['standardrb']}
-let g:ale_fixers = {'ruby': ['standardrb']}
+let g:ale_linters = {
+\   'ruby': ['standardrb'],
+\   'js': ['eslint'],
+\   'jsx': ['eslint'],
+\}
+let g:ale_fixers = {
+\   'ruby': ['standardrb'],
+\   'javascript': ['eslint'],
+\}
 
 " fzf
 " --------
