@@ -12,9 +12,11 @@ paths_to_link=(
 ".tmux.conf"
 ".vim"
 ".zshrc"
+"oh-my-posh-themes"
 )
 
 for i in "${paths_to_link[@]}"
-  ln -s "${PWD}/${i}" "${HOME}/${i}"
 do
+  echo "Linking ${i} to ${HOME}/${i}"
+  ln -sf "${PWD}/${i}" "${HOME}/${i}"
 done

@@ -1,0 +1,84 @@
+{
+    "final_space": true,
+    "osc99": false,
+    "console_title": true,
+    "console_title_style": "folder",
+    "console_title_template": "",
+    "blocks": [
+        {
+            "type": "prompt",
+            "alignment": "left",
+            "horizontal_offset": 0,
+            "vertical_offset": 0,
+            "segments": [
+                {
+                    "type": "session",
+                    "style": "diamond",
+                    "powerline_symbol": "",
+                    "invert_powerline": false,
+                    "display_host": false,
+                    "foreground": "#ffffff",
+                    "foreground_templates": null,
+                    "background": "#c386f1",
+                    "background_templates": null,
+                    "leading_diamond": "",
+                    "trailing_diamond": "",
+                    "properties": null
+                },
+                {
+                    "type": "path",
+                    "style": "powerline",
+                    "powerline_symbol": "",
+                    "invert_powerline": false,
+                    "foreground": "#ffffff",
+                    "foreground_templates": null,
+                    "background": "#ff479c",
+                    "background_templates": null,
+                    "leading_diamond": "",
+                    "trailing_diamond": "",
+                    "enable_hyperlink": true,
+                    "properties": {
+                        "prefix": "  ",
+                        "style": "folder"
+                    }
+                },
+                {
+                    "type": "git",
+                    "style": "powerline",
+                    "powerline_symbol": "",
+                    "invert_powerline": false,
+                    "foreground": "#193549",
+                    "foreground_templates": null,
+                    "background": "#fffb38",
+                    "background_templates": null,
+                    "leading_diamond": "",
+                    "trailing_diamond": "",
+                    "properties": {
+                        "display_status": false,
+                        "display_status_detail": false,
+                        "display_stash_count": false,
+                        "display_upstream_icon": false
+                    }
+                },
+                {
+                  "type": "exit",
+                  "style": "diamond",
+                  "foreground": "#ffffff",
+                  "background": "#00897b",
+                  "leading_diamond": "",
+                  "trailing_diamond": "",
+                  "properties": {
+                    "display_exit_code": true,
+                    "always_enabled": true,
+                    "error_color": "#e91e63",
+                    "color_background": true,
+                    "always_numeric": true,
+                    "success_icon": "",
+                    "error_icon": "  ",
+                    "prefix": "<#193549>\uE0B0</>"
+                  }
+                }
+            ]
+        }
+    ]
+}
