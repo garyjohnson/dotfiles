@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Disable automatic capitalization as it’s annoying when typing code
 defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
 
