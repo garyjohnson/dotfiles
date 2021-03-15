@@ -1,0 +1,21 @@
+{
+  "entries": {
+    "tap": {
+      "jandedobbeleer/oh-my-posh": {
+        "revision": "3ed5b79190b01744cedd5ec763a2df2fbd0d0365"
+      }
+    }
+  },
+  "system": {
+    "macos": {
+      "catalina": {
+        "HOMEBREW_VERSION": "3.0.4",
+        "HOMEBREW_PREFIX": "/usr/local",
+        "Homebrew/homebrew-core": "c5821ac51ab67166913f2922b7fa8543bfc5a4f6",
+        "CLT": "12.0.32.29",
+        "Xcode": "12.4",
+        "macOS": "10.15.7"
+      }
+    }
+  }
+}

@@ -22,4 +22,4 @@ do
   ln -sf "${PWD}/${i}" "${HOME}/${i}"
 done
 
-brew bundle
+echo "Don't forget to run 'brew bundle' as non-root!"
