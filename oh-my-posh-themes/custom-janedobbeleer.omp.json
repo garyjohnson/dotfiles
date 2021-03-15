@@ -54,10 +54,7 @@
                     "leading_diamond": "",
                     "trailing_diamond": "",
                     "properties": {
-                        "display_status": false,
-                        "display_status_detail": false,
-                        "display_stash_count": false,
-                        "display_upstream_icon": false
+                        "display_branch_status": false
                     }
                 },
                 {
