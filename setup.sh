@@ -7,6 +7,7 @@ fi
 
 paths_to_link=(
 ".config"
+".profile"
 ".gitconfig"
 ".macos"
 ".tmux.conf"
@@ -20,3 +21,5 @@ do
   echo "Linking ${i} to ${HOME}/${i}"
   ln -sf "${PWD}/${i}" "${HOME}/${i}"
 done
+
+brew bundle
