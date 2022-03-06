@@ -68,10 +68,14 @@ let g:ale_linters = {
 \   'ruby': ['standardrb'],
 \   'js': ['eslint'],
 \   'jsx': ['eslint'],
+\   'graphql': ['graphql-schema-linter'],
+\   'typescript': ['eslint', 'tsserver'],
 \}
 let g:ale_fixers = {
 \   'ruby': ['standardrb'],
 \   'javascript': ['eslint'],
+\   'typescript': ['eslint'],
+\   'scss': ['stylelint'],
 \}
 
 " fzf
@@ -131,4 +135,5 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 " Advanced customization using autoload functions
 inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 
-
+" Lens
+let g:lens#disabled_filetypes = ['nerdtree', 'fzf']

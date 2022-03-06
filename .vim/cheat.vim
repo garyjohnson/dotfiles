@@ -1,4 +1,5 @@
 function Cheat()
+  echo " \"*y       | Yank into clipboard"
   echo " C-^       | Open previous file"
   echo " C-p       | Find file name (ctrlp.vim)"
   echo " C-n       | Open nerdtree (nerdtree)"
