@@ -15,3 +15,5 @@ autoload -U colors && colors
 printf "Loading oh-my-posh..."
 eval "$(oh-my-posh --init --shell zsh --config $HOME/oh-my-posh-themes/custom-janedobbeleer.omp.json)"
 printf "\033[K\033[100D"
+
+export PLAYDATE_SDK_PATH='/Users/garyjohnson/Developer/PlaydateSDK'

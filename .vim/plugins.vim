@@ -32,6 +32,7 @@ Plug 'zhaocai/GoldenView.Vim'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
 Plug 'mileszs/ack.vim'
 Plug 'slim-template/vim-slim'
+Plug 'davisdude/vim-love-docs'
 
 call plug#end()
 filetype plugin indent on    " required
