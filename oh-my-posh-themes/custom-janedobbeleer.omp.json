@@ -7,9 +7,6 @@
         {
           "background": "#3A86FF",
           "foreground": "#ffffff",
-          "properties": {
-            "template": " {{ .UserName }}@{{ .HostName }} "
-          },
           "style": "powerline",
           "type": "session"
         },
@@ -18,8 +15,7 @@
           "foreground": "#ffffff",
           "powerline_symbol": "\ue0b0",
           "properties": {
-            "style": "folder",
-            "template": " \ue5ff {{ .Path }} "
+            "style": "folder"
           },
           "style": "powerline",
           "type": "path"
@@ -30,8 +26,7 @@
           "powerline_symbol": "\ue0b0",
           "properties": {
             "fetch_stash_count": false,
-            "fetch_upstream_icon": false,
-            "template": " {{ .UpstreamIcon }}{{ .HEAD }}{{ if gt .StashCount 0 }} \uf692 {{ .StashCount }}{{ end }} "
+            "fetch_upstream_icon": false
           },
           "style": "powerline",
           "type": "git"
