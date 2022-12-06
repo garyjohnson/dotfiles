@@ -27,12 +27,13 @@ Plug 'tpope/vim-surround'
 Plug 'jeetsukumaran/vim-buffergator'
 Plug 'junegunn/fzf.vim'
 Plug 'zhaocai/GoldenView.Vim'
-
-" Experimental plugins
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
 Plug 'mileszs/ack.vim'
 Plug 'slim-template/vim-slim'
 Plug 'davisdude/vim-love-docs'
+
+" Experimental plugins
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 call plug#end()
 filetype plugin indent on    " required
