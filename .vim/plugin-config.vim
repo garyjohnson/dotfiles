@@ -1,3 +1,8 @@
+" go-vim
+" -------
+let g:go_metalinter_autosave = 1
+let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck']
+
 " ack.vim
 " --------
 let g:ackprg = 'ag --nogroup --nocolor --column' " enable the-silver-surfer in ack.vim
