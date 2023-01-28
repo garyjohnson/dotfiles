@@ -16,7 +16,7 @@ endfunction
 nmap ,s :call ClearAllTrailingSpaces()<cr>
 
 function! FormatJson()
-  %!python -m json.tool
+  %!python3 -m json.tool
 endfunction
 
 function! SplitMaster()
