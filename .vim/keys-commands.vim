@@ -19,12 +19,12 @@ function! FormatJson()
   %!python3 -m json.tool
 endfunction
 
-function! SplitMaster()
-  %Gvsplit master:%
+function! SplitMain()
+  %Gvsplit main:%
 endfunction
 
 nmap ,js :call FormatJson()<cr>
-nmap ,ss :call SplitMaster()<cr>
-nmap ,ff :ALEFix<cr>
-
-command Blame :call gitblame#echo()
+nmap ,ss :call SplitMain()<cr>
+nmap ,fx :ALEFix<cr>
+nmap ,gn :tabnext<cr>
+nmap ,gp :tabprev<cr>

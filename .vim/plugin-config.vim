@@ -74,12 +74,14 @@ let g:ale_linters = {
 \   'js': ['eslint'],
 \   'jsx': ['eslint'],
 \   'graphql': ['graphql-schema-linter'],
-\   'typescript': ['eslint', 'tsserver'],
+\   'typescript': ['eslint'],
+\   'typescriptreact': ['eslint'],
 \}
 let g:ale_fixers = {
 \   'ruby': ['standardrb'],
 \   'javascript': ['eslint'],
 \   'typescript': ['eslint'],
+\   'typescriptreact': ['eslint'],
 \   'scss': ['stylelint'],
 \}
 

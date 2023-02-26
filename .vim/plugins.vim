@@ -11,14 +11,12 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'scrooloose/nerdtree'
 Plug 'othree/html5.vim'
-Plug 'vim-scripts/rails.vim'
 Plug 'leafgarland/typescript-vim'
-Plug 'peterhoeg/vim-qml'
 Plug 'mkitt/tabline.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb' " Github specific stuff for fugitive
 Plug 'tpope/vim-commentary'
-Plug 'janko-m/vim-test'
+Plug 'vim-test/vim-test'
 Plug 'w0rp/ale'
 Plug 'itchyny/lightline.vim'
 Plug 'danilo-augusto/vim-afterglow'
@@ -27,7 +25,7 @@ Plug 'tpope/vim-surround'
 Plug 'jeetsukumaran/vim-buffergator'
 Plug 'junegunn/fzf.vim'
 Plug 'zhaocai/GoldenView.Vim'
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'mileszs/ack.vim'
 Plug 'slim-template/vim-slim'
 Plug 'davisdude/vim-love-docs'

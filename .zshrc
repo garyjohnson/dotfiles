@@ -14,6 +14,8 @@ export HISTORY_IGNORE='(rm*|git*)'
 # Rename iterm2 tab
 tabname() { echo -ne "\033]0;"${1}"\007"; }
 
+diffbranch() { vim -p $(git diff --name-only ${1} HEAD) -c "tabdo :Gdiff ${1}" }
+
 # Enable colors and change prompt
 autoload -U colors && colors
 
@@ -22,3 +24,4 @@ eval "$(oh-my-posh --init --shell zsh --config $HOME/oh-my-posh-themes/custom-ja
 printf "\033[K\033[100D"
 
 export PLAYDATE_SDK_PATH='/Users/garyjohnson/Developer/PlaydateSDK'
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
