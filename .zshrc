@@ -25,3 +25,5 @@ printf "\033[K\033[100D"
 
 export PLAYDATE_SDK_PATH='/Users/garyjohnson/Developer/PlaydateSDK'
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

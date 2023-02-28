@@ -1,11 +1,19 @@
+" coc.vim
+" ------
+nmap ,fx :Format<CR>
+
+" airline
+" -------
+let g:airline#extensions#tabline#enabled = 1
+
 " go-vim
 " -------
-let g:go_metalinter_autosave = 1
-let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck']
+" let g:go_metalinter_autosave = 1
+" let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck']
 
 " ack.vim
 " --------
-let g:ackprg = 'ag --nogroup --nocolor --column' " enable the-silver-surfer in ack.vim
+" let g:ackprg = 'ag --nogroup --nocolor --column' " enable the-silver-surfer in ack.vim
 
 " golenview
 " --------
@@ -38,52 +46,40 @@ nmap <silent> ,<C-s> :TestSuite<CR>
 nmap <silent> ,<C-l> :TestLast<CR>
 nmap <silent> ,<C-g> :TestVisit<CR>
 " vim-test custom
-nmap <silent> ,t :TestNearest<CR>
-nmap <silent> ,T :TestFile<CR>
+nmap ,t :TestNearest<CR>
+nmap ,T :TestFile<CR>
 
 " build button
 nmap <silent> <M-6> :TestNearest<CR> 
 nmap <silent> <M-7> :TestFile<CR>
 nmap <silent> <M-8> :TestSuite<CR>
 
-" Buffergator
-" --------
-" show buffer filenames across top
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
-" Go to the previous buffer open
-nmap ,jj :BuffergatorMruCyclePrev<cr>
-" Go to the next buffer open
-nmap ,kk :BuffergatorMruCycleNext<cr>
-" View the entire list of buffers open
-nmap ,bl :BuffergatorOpen<cr>
-
 " Ctrlp
 " --------
-let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\.git$\|\.hg$\|\.svn$\|bower_components$\|dist$\|node_modules$\|project_files$\|plugins$\|tmp$\|log$\|doc$',
-    \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$\|.DS_Store$' }
+"let g:ctrlp_custom_ignore = {
+"    \ 'dir':  '\.git$\|\.hg$\|\.svn$\|bower_components$\|dist$\|node_modules$\|project_files$\|plugins$\|tmp$\|log$\|doc$',
+"    \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$\|.DS_Store$' }
 
 " ale
 " --------
-nmap ,k :ALENext<cr>
-nmap ,j :ALEPrevious<cr>
+"nmap ,k :ALENext<cr>
+"nmap ,j :ALEPrevious<cr>
 
-let g:ale_linters = {
-\   'ruby': ['standardrb'],
-\   'js': ['eslint'],
-\   'jsx': ['eslint'],
-\   'graphql': ['graphql-schema-linter'],
-\   'typescript': ['eslint'],
-\   'typescriptreact': ['eslint'],
-\}
-let g:ale_fixers = {
-\   'ruby': ['standardrb'],
-\   'javascript': ['eslint'],
-\   'typescript': ['eslint'],
-\   'typescriptreact': ['eslint'],
-\   'scss': ['stylelint'],
-\}
+"let g:ale_linters = {
+"\   'ruby': ['standardrb'],
+"\   'js': ['eslint'],
+"\   'jsx': ['eslint'],
+"\   'graphql': ['graphql-schema-linter'],
+"\   'typescript': ['eslint'],
+"\   'typescriptreact': ['eslint'],
+"\}
+"let g:ale_fixers = {
+"\   'ruby': ['standardrb'],
+"\   'javascript': ['eslint'],
+"\   'typescript': ['eslint'],
+"\   'typescriptreact': ['eslint'],
+"\   'scss': ['stylelint'],
+"\}
 
 " fzf
 " --------
@@ -97,12 +93,12 @@ let g:fzf_action = {
 
 " Default fzf layout
 " - down / up / left / right
-let g:fzf_layout = { 'down': '~40%' }
+"let g:fzf_layout = { 'down': '~40%' }
 
 " In Neovim, you can set up fzf window using a Vim command
-let g:fzf_layout = { 'window': 'enew' }
+" let g:fzf_layout = { 'window': 'enew' }
 let g:fzf_layout = { 'window': '-tabnew' }
-let g:fzf_layout = { 'window': '10split enew' }
+" let g:fzf_layout = { 'window': '10split enew' }
 
 " Customize fzf colors to match your color scheme
 let g:fzf_colors =
@@ -127,6 +123,7 @@ let g:fzf_colors =
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
 nnoremap <silent> <expr> <C-p> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
+nnoremap <silent> <expr> <C-g> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Rg\<cr>"
 
 " Mapping selecting mappings
 nmap <leader><tab> <plug>(fzf-maps-n)

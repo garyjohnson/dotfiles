@@ -13,8 +13,6 @@ function! ClearAllTrailingSpaces()
   %s/\s\+$//
 endfunction
 
-nmap ,s :call ClearAllTrailingSpaces()<cr>
-
 function! FormatJson()
   %!python3 -m json.tool
 endfunction
@@ -23,8 +21,14 @@ function! SplitMain()
   %Gvsplit main:%
 endfunction
 
+nmap ,s :call ClearAllTrailingSpaces()<cr>
 nmap ,js :call FormatJson()<cr>
 nmap ,ss :call SplitMain()<cr>
-nmap ,fx :ALEFix<cr>
-nmap ,gn :tabnext<cr>
-nmap ,gp :tabprev<cr>
+
+" buffer stuff
+map ,jj :bnext<CR>
+map ,kk :bprev<CR>
+"
+" from https://www.reddit.com/r/vim/comments/g4l5p0/good_plugin_to_navigate_buffers/
+" type the buffer number + <CR> right afterwards to go to the buffer you want
+nnoremap <leader>b :ls<CR>:b

@@ -10,6 +10,8 @@ set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp,%TEMP%
 set noswapfile
 set nobackup
 
+let mapleader = ","
+
 set ignorecase
 set splitbelow
 set splitright
@@ -76,6 +78,7 @@ set suffixesadd=.js,.jsx,.scss,.css,.erb,.rb
 
 so ~/.vim/plugins.vim
 so ~/.vim/plugin-config.vim
+so ~/.vim/coc.vim
 so ~/.vim/stitchfix.vim
 so ~/.vim/cheat.vim
 so ~/.vim/keys-commands.vim
