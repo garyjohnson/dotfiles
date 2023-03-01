@@ -21,19 +21,9 @@ Plug 'danilo-augusto/vim-afterglow' " color theme
 Plug 'tpope/vim-surround' " shortcuts for surrounds
 Plug 'zhaocai/GoldenView.Vim' " manages split sizes
 
-" Plug 'mkitt/tabline.vim' " archived
-" Plug 'w0rp/ale'
-" Plug 'jeetsukumaran/vim-buffergator'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " file searching
 Plug 'junegunn/fzf.vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" Plug 'kchmck/vim-coffee-script'
-" Plug 'slim-template/vim-slim'
-" Plug 'davisdude/vim-love-docs'
-" Plug 'othree/html5.vim'
-" Plug 'leafgarland/typescript-vim'
-" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'dense-analysis/ale' " linting & fixing
 
 call plug#end()
 filetype plugin indent on    " required

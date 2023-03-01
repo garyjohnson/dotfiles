@@ -41,6 +41,7 @@ set wildmode=list:longest
 "Auto size the active window to take up 70% of screen
 " let &winheight = &lines * 7/10
 " let &winwidth = &columns * 7/10
+" Disabled, using GoldenView.vim plugin instead
 
 " Disable beeping and blinking on error
 set noerrorbells visualbell t_vb=
@@ -78,7 +79,6 @@ set suffixesadd=.js,.jsx,.scss,.css,.erb,.rb
 
 so ~/.vim/plugins.vim
 so ~/.vim/plugin-config.vim
-so ~/.vim/coc.vim
 so ~/.vim/stitchfix.vim
 so ~/.vim/cheat.vim
 so ~/.vim/keys-commands.vim

@@ -1,7 +1,3 @@
-" coc.vim
-" ------
-nmap ,fx :Format<CR>
-
 " airline
 " -------
 let g:airline#extensions#tabline#enabled = 1
@@ -10,10 +6,6 @@ let g:airline#extensions#tabline#enabled = 1
 " -------
 " let g:go_metalinter_autosave = 1
 " let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck']
-
-" ack.vim
-" --------
-" let g:ackprg = 'ag --nogroup --nocolor --column' " enable the-silver-surfer in ack.vim
 
 " golenview
 " --------
@@ -37,7 +29,6 @@ set noshowmode " don't show mode in own line -- insert, et al are shown in light
 
 " vim-test
 " --------
-"let test#strategy = "neovim"
 
 " vim-test recommended
 nmap <silent> ,<C-n> :TestNearest<CR>
@@ -54,32 +45,32 @@ nmap <silent> <M-6> :TestNearest<CR>
 nmap <silent> <M-7> :TestFile<CR>
 nmap <silent> <M-8> :TestSuite<CR>
 
-" Ctrlp
-" --------
-"let g:ctrlp_custom_ignore = {
-"    \ 'dir':  '\.git$\|\.hg$\|\.svn$\|bower_components$\|dist$\|node_modules$\|project_files$\|plugins$\|tmp$\|log$\|doc$',
-"    \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$\|.DS_Store$' }
-
 " ale
 " --------
-"nmap ,k :ALENext<cr>
-"nmap ,j :ALEPrevious<cr>
+nmap ,k :ALENext<cr>
+nmap ,j :ALEPrevious<cr>
+nmap ,fx :ALEFix<CR>
+nmap ,gd :ALEGoToDefinition<CR>
+nmap ,fr :ALEFindReferences<CR>
 
-"let g:ale_linters = {
-"\   'ruby': ['standardrb'],
-"\   'js': ['eslint'],
-"\   'jsx': ['eslint'],
-"\   'graphql': ['graphql-schema-linter'],
-"\   'typescript': ['eslint'],
-"\   'typescriptreact': ['eslint'],
-"\}
-"let g:ale_fixers = {
-"\   'ruby': ['standardrb'],
-"\   'javascript': ['eslint'],
-"\   'typescript': ['eslint'],
-"\   'typescriptreact': ['eslint'],
-"\   'scss': ['stylelint'],
-"\}
+let g:ale_completion_enabled = 1
+
+let g:ale_linters = {
+\   'ruby': ['standardrb', 'solargraph'],
+\   'graphql': ['graphql-schema-linter'],
+\   'js': ['eslint'],
+\   'jsx': ['eslint'],
+\   'typescript': ['eslint', 'tsserver'],
+\   'typescriptreact': ['eslint', 'tsserver'],
+\}
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'ruby': ['standardrb'],
+\   'javascript': ['prettier', 'eslint'],
+\   'typescript': ['prettier', 'eslint'],
+\   'typescriptreact': ['prettier', 'eslint'],
+\   'scss': ['stylelint'],
+\}
 
 " fzf
 " --------
@@ -96,9 +87,7 @@ let g:fzf_action = {
 "let g:fzf_layout = { 'down': '~40%' }
 
 " In Neovim, you can set up fzf window using a Vim command
-" let g:fzf_layout = { 'window': 'enew' }
-let g:fzf_layout = { 'window': '-tabnew' }
-" let g:fzf_layout = { 'window': '10split enew' }
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 
 " Customize fzf colors to match your color scheme
 let g:fzf_colors =
@@ -138,6 +127,3 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 
 " Advanced customization using autoload functions
 inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
-
-" Lens
-let g:lens#disabled_filetypes = ['nerdtree', 'fzf']
