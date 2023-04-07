@@ -5,6 +5,10 @@ export GOPATH=$HOME/go
 export GOROOT="$(brew --prefix golang)/libexec"
 export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 
+# for solargraph, installed as `gem install --user-install solargraph`
+# for vim / ale
+export PATH="$PATH:/Users/garyjohnson/.gem/ruby/3.1.0/bin"
+
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 

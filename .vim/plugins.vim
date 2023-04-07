@@ -14,6 +14,7 @@ Plug 'scrooloose/nerdtree' " file browser
 Plug 'tpope/vim-fugitive' " Git commands
 Plug 'tpope/vim-rhubarb' " Github specific stuff for fugitive
 
+Plug 'tpope/vim-rails' " better file navigation in rails projects
 Plug 'tpope/vim-commentary' " comment commands
 Plug 'vim-test/vim-test' "test commands
 Plug 'itchyny/lightline.vim' " status line

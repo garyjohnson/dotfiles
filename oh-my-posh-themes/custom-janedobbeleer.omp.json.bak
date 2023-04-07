@@ -8,7 +8,6 @@
           "background": "#3A86FF",
           "foreground": "#ffffff",
           "style": "powerline",
-          "template": " {{ .UserName }}@{{ .HostName }} ",
           "type": "session"
         },
         {
@@ -19,7 +18,6 @@
             "style": "folder"
           },
           "style": "powerline",
-          "template": " \ue5ff {{ .Path }} ",
           "type": "path"
         },
         {
@@ -31,7 +29,6 @@
             "fetch_upstream_icon": false
           },
           "style": "powerline",
-          "template": " {{ .UpstreamIcon }}{{ .HEAD }}{{ if gt .StashCount 0 }} \uf692 {{ .StashCount }}{{ end }} ",
           "type": "git"
         },
         {
@@ -53,5 +50,5 @@
     }
   ],
   "final_space": true,
-  "version": 2
+  "version": 1
 }
