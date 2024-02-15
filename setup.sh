@@ -6,7 +6,8 @@ then
 fi
 
 paths_to_link=(
-".config"
+".config/lvim"
+".config/nvim"
 ".profile"
 ".gitconfig"
 ".macos"
