@@ -1,1 +1,0 @@
-/Users/garyjohnson/repositories/dotfiles/.vim
