@@ -36,12 +36,14 @@
   changes = log --all --first-parent --remotes --reflog --author-date-order
 [push]
 	default = current
+  autoSetupRemote = true
 [user]
 	name = Gary Johnson
 	email = gary@gjtt.com
 [core]
 	editor = vim
 	excludesfile = /Users/garyjohnson/.gitignore
+	autocrlf = input
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -49,3 +51,5 @@
 	required = true
 [credential]
 	helper = osxkeychain
+[pull]
+	rebase = true

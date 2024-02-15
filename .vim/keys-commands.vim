@@ -21,6 +21,25 @@ function! SplitMain()
   %Gvsplit main:%
 endfunction
 
+" scratch pad buffer                                                                                                                                                                  
+" modified from https://vi.stackexchange.com/a/21390 by Kat Tipton                                                                                                                                  
+function! Scratch()                                                                                                                                                                   
+  if bufnr("scratch") > 0                                                                                                                                                             
+    sbuffer scratch                                                                                                                                                                   
+  else                                                                                                                                                                                
+    split                                                                                                                                                                             
+    noswapfile hide enew                                                                                                                                                              
+    setlocal buftype=nofile                                                                                                                                                           
+    setlocal bufhidden=hide                                                                                                                                                           
+    "setlocal nobuflisted                                                                                                                                                             
+    "lcd ~                                                                                                                                                                            
+    file scratch                                                                                                                                                                      
+  endif                                                                                                                                                                               
+endfunction       
+
+" create a scratch window or open an existing one
+nnoremap <C-s> :call Scratch()<CR>
+
 nmap ,s :call ClearAllTrailingSpaces()<cr>
 nmap ,js :call FormatJson()<cr>
 nmap ,ss :call SplitMain()<cr>

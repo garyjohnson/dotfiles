@@ -58,8 +58,8 @@ let g:ale_completion_enabled = 1
 let g:ale_linters = {
 \   'ruby': ['standardrb', 'solargraph'],
 \   'graphql': ['graphql-schema-linter'],
-\   'js': ['eslint'],
-\   'jsx': ['eslint'],
+\   'javascript': ['eslint'],
+\   'javascriptreact': ['eslint'],
 \   'typescript': ['eslint', 'tsserver'],
 \   'typescriptreact': ['eslint', 'tsserver'],
 \}
@@ -67,6 +67,7 @@ let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'ruby': ['standardrb'],
 \   'javascript': ['prettier', 'eslint'],
+\   'javascriptreact': ['prettier', 'eslint'],
 \   'typescript': ['prettier', 'eslint'],
 \   'typescriptreact': ['prettier', 'eslint'],
 \   'scss': ['stylelint'],
@@ -131,7 +132,7 @@ inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 " From https://github.com/junegunn/fzf.vim#example-advanced-ripgrep-integration
 " Allow ripgrep to re-run as query changes
 function! RipgrepFzf(query, fullscreen)
-  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+  let command_fmt = 'rg -g '!target/' -g '!node_modules/' --column --line-number --no-heading --color=always --smart-case -- %s || true'
   let initial_command = printf(command_fmt, shellescape(a:query))
   let reload_command = printf(command_fmt, '{q}')
   let spec = {'options': ['--disabled', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
@@ -140,3 +141,9 @@ function! RipgrepFzf(query, fullscreen)
 endfunction
 
 command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
+
+" yats
+" -------
+" From README: Old regexp engine will incur performance issues for yats 
+" and old engine is usually turned on by other plugins.
+set re=0

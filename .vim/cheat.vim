@@ -1,8 +1,11 @@
 function Cheat()
   echo " \"*y          | Yank into clipboard"
+  echo " n | N        | Search forwards / backwards"
   echo " C-p          | Find file name (fzf.vim)"
   echo " C-g          | Grep file contents (fzf.vim)"
   echo " C-n          | Open nerdtree (nerdtree)"
+  echo " C-s          | Open or create scratch buffer (/keys-commands.vim)"
+  echo " C-r          | Expression register (do math and other things! ex: <C-r>=7*7<CR>"
   echo " ,n           | Select the open file in nerdtree (nerdtree)"
   echo " ,kk | ,jj    | Go to next / previous buffer (/keys-commands.vim)"
   echo " ,b           | View list of buffers (/keys-commands.vim)"
@@ -18,10 +21,20 @@ function Cheat()
   echo " ,j           | Go to previous linting issue (ale)"
   echo " ,gd          | Go to definition (ale, requires LSP)"
   echo " ,fr          | Find references (ale, requires LSP)"
+  echo " *            | Find other occurrences of word under cursor (vim-visual-star-search)"
   echo " ---------------------------------------------------------------------"
   echo " NERDTREE COMMANDS"
   echo " s   | i      | Open splits from nerdtree pane"
   echo " m            | Operate on highlighted file or directory in nerdtree (nerdtree)"
+  echo " A            | Toggle nerdtree pane to full width (nerdtree)"
+  echo " ---------------------------------------------------------------------"
+  echo " OCLC COMMANDS"
+  echo " ,ls           | Insert OCLC copyright at top of file (/oclc.vim)"
+  echo " :TReact       | Insert template for new OCLC component"
+  echo " :TReactTest   | Insert template for new OCLC component specs"
+  echo " :TStory       | Insert template for new OCLC component stories"
+  echo " :TTest        | Insert template for new OCLC jest specs"
+
 endfunction
 
 command Cheat :call Cheat()

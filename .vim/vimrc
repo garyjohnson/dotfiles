@@ -67,6 +67,7 @@ if has("autocmd")
   autocmd FileType markdown setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2 wrap nolist
   autocmd BufRead,BufNewFile *.jsx.erb set filetype=eruby.javascript
   autocmd BufRead,BufNewFile *.jsx.snap set filetype=javascript
+  autocmd BufRead,BufNewFile *.mdx set filetype=javascript
 
   " lets view some images in iterm!
   autocmd BufEnter *.png,*.jpg,*gif exec "! open ".expand("%") | :bw
@@ -79,6 +80,6 @@ set suffixesadd=.js,.jsx,.scss,.css,.erb,.rb
 
 so ~/.vim/plugins.vim
 so ~/.vim/plugin-config.vim
-so ~/.vim/stitchfix.vim
+so ~/.vim/oclc.vim
 so ~/.vim/cheat.vim
 so ~/.vim/keys-commands.vim

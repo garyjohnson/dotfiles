@@ -39,11 +39,12 @@
           "foreground": "#ffffff",
           "leading_diamond": "<transparent,background>\ue0b0</>",
           "properties": {
-            "always_enabled": true
+            "always_enabled": true,
+            "status_template": "{{ if gt .Code 0 }}\uf071 {{ reason .Code }}{{ else }}\u200A{{ end }}"
           },
           "style": "diamond",
           "trailing_diamond": "\ue0b4",
-          "type": "exit"
+          "type": "status"
         }
       ],
       "type": "prompt"

@@ -22,6 +22,29 @@
 	<true/>
 	<key>Control</key>
 	<integer>1</integer>
+	<key>Coprocess MRU</key>
+	<array>
+		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/contexts/SimplifiedEditorModel.spec.ts || echo vim + /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/contexts/SimplifiedEditorModel.spec.ts</string>
+		<string>[ -z "49" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedEditor/SimplifiedEditor.spec.tsx || echo vim +49 /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedEditor/SimplifiedEditor.spec.tsx</string>
+		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/contexts/SimplifiedEditorModel.ts || echo vim + /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/contexts/SimplifiedEditorModel.ts</string>
+		<string>[ -z "7" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedEditor/ReadonlyFixedField.spec.tsx || echo vim +7 /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedEditor/ReadonlyFixedField.spec.tsx</string>
+		<string>[ -z "56" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedEditor/SimplifiedEditor.spec.tsx || echo vim +56 /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedEditor/SimplifiedEditor.spec.tsx</string>
+		<string>[ -z "83" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedEditor/SimplifiedEditor.spec.tsx || echo vim +83 /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedEditor/SimplifiedEditor.spec.tsx</string>
+		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/DataGridDetailPanel/DataGridDetailPanelModel.ts || echo vim + /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/DataGridDetailPanel/DataGridDetailPanelModel.ts</string>
+		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedEditor/ReadonlyFixedField.spec.tsx || echo vim + /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedEditor/ReadonlyFixedField.spec.tsx</string>
+		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/modals/SendToExportListModal.tsx || echo vim + /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/modals/SendToExportListModal.tsx</string>
+		<string>[ -z "304" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedContainer.spec.tsx || echo vim +304 /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedContainer.spec.tsx</string>
+		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedEditor/SimplifiedEditor.tsx || echo vim + /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedEditor/SimplifiedEditor.tsx</string>
+		<string>[ -z "3" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedEditor/ReadonlyVariableField.tsx || echo vim +3 /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedEditor/ReadonlyVariableField.tsx</string>
+		<string>[ -z "2" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedEditor/ReadonlyFixedField.tsx || echo vim +2 /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedEditor/ReadonlyFixedField.tsx</string>
+		<string>[ -z "2" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/DataGridDetailPanel/DataGridDetailPanelModel.ts || echo vim +2 /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/DataGridDetailPanel/DataGridDetailPanelModel.ts</string>
+		<string>[ -z "6" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/DataGridDetailPanel/DataGridDetailPanel.tsx || echo vim +6 /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/DataGridDetailPanel/DataGridDetailPanel.tsx</string>
+		<string>[ -z "1" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/contexts/SimplifiedEditorModel.spec.ts || echo vim +1 /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/contexts/SimplifiedEditorModel.spec.ts</string>
+		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedEditor/SimplifiedEditorModel.ts || echo vim + /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedEditor/SimplifiedEditorModel.ts</string>
+		<string>[ -z "218" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedEditor/SimplifiedEditor.tsx || echo vim +218 /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedEditor/SimplifiedEditor.tsx</string>
+		<string>[ -z "1" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedEditor/SimplifiedEditor.tsx || echo vim +1 /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedEditor/SimplifiedEditor.tsx</string>
+		<string>[ -z "341" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedContainer.spec.tsx || echo vim +341 /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedContainer.spec.tsx</string>
+	</array>
 	<key>CopyLastNewline</key>
 	<false/>
 	<key>CopySelection</key>
@@ -972,7 +995,7 @@
 			<key>Screen</key>
 			<integer>-1</integer>
 			<key>Scrollback Lines</key>
-			<integer>1000</integer>
+			<integer>0</integer>
 			<key>Scrollback With Status Bar</key>
 			<false/>
 			<key>Scrollback in Alternate Screen</key>
@@ -998,11 +1021,11 @@
 			<key>Semantic History</key>
 			<dict>
 				<key>action</key>
-				<string>best editor</string>
+				<string>coprocess</string>
 				<key>editor</key>
 				<string>com.sublimetext.2</string>
 				<key>text</key>
-				<string></string>
+				<string>[ -z "\2" ] &amp;&amp; echo vim \1 || echo vim +\2 \1</string>
 			</dict>
 			<key>Send Code When Idle</key>
 			<false/>
@@ -1730,11 +1753,11 @@
 			<key>Semantic History</key>
 			<dict>
 				<key>action</key>
-				<string>best editor</string>
+				<string>coprocess</string>
 				<key>editor</key>
 				<string>com.sublimetext.2</string>
 				<key>text</key>
-				<string></string>
+				<string>[ -z "\2" ] &amp;&amp; echo vim \1 || echo vim +\2 \1</string>
 			</dict>
 			<key>Send Code When Idle</key>
 			<false/>
@@ -2489,11 +2512,11 @@
 			<key>Semantic History</key>
 			<dict>
 				<key>action</key>
-				<string>best editor</string>
+				<string>coprocess</string>
 				<key>editor</key>
 				<string>com.sublimetext.2</string>
 				<key>text</key>
-				<string></string>
+				<string>[ -z "\2" ] &amp;&amp; echo vim \1 || echo vim +\2 \1</string>
 			</dict>
 			<key>Send Bell Alert</key>
 			<false/>
@@ -2885,7 +2908,7 @@
 			<key>Custom Command</key>
 			<string>No</string>
 			<key>Custom Directory</key>
-			<string>Advanced</string>
+			<string>Yes</string>
 			<key>Default Bookmark</key>
 			<string>No</string>
 			<key>Disable Printing</key>
@@ -3208,11 +3231,11 @@
 			<key>Name</key>
 			<string>Posh</string>
 			<key>Non Ascii Font</key>
-			<string>MesloLGMNer-Regular 14</string>
+			<string>MesloLGMNFM-Regular 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>MesloLGMNer-Regular 14</string>
+			<string>MesloLGMNFM-Regular 14</string>
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
@@ -3250,11 +3273,11 @@
 			<key>Semantic History</key>
 			<dict>
 				<key>action</key>
-				<string>best editor</string>
+				<string>coprocess</string>
 				<key>editor</key>
 				<string>com.sublimetext.2</string>
 				<key>text</key>
-				<string></string>
+				<string>[ -z "\2" ] &amp;&amp; echo vim \1 || echo vim +\2 \1</string>
 			</dict>
 			<key>Send Bell Alert</key>
 			<false/>
@@ -3386,7 +3409,7 @@
 			<key>Window Type</key>
 			<integer>1</integer>
 			<key>Working Directory</key>
-			<string>/Users/garyjohnson/repositories</string>
+			<string>/Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern</string>
 		</dict>
 	</array>
 	<key>OnlyWhenMoreTabs</key>

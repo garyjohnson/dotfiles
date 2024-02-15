@@ -26,5 +26,14 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " file searching
 Plug 'junegunn/fzf.vim'
 Plug 'dense-analysis/ale' " linting & fixing
 
+Plug 'bronson/vim-visual-star-search' " use * to search for selected text
+Plug 'HerringtonDarkholme/yats.vim' " TS syntax highlighting gets messed up with 'import type', seeing if this will override nvim built-in highlights: https://github.com/neovim/neovim/issues/17188
+
+" Experimental
+
+" OCLC
+Plug 'tommcdo/vim-fubitive' " bitbucket fugitive support
+
+
 call plug#end()
 filetype plugin indent on    " required
