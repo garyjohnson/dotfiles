@@ -24,8 +24,8 @@
 	<integer>1</integer>
 	<key>Coprocess MRU</key>
 	<array>
-		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/.rvm/log/1711043343_ruby-3.2.2/make.log || echo vim + /Users/garyjohnson/.rvm/log/1711043343_ruby-3.2.2/make.log</string>
 		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/.local/state/lvim/lsp.log || echo vim + /Users/garyjohnson/.local/state/lvim/lsp.log</string>
+		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/.rvm/log/1711043343_ruby-3.2.2/make.log || echo vim + /Users/garyjohnson/.rvm/log/1711043343_ruby-3.2.2/make.log</string>
 		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/.rvm/log/1711028770_ruby-3.1.2/make.log || echo vim + /Users/garyjohnson/.rvm/log/1711028770_ruby-3.1.2/make.log</string>
 		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/.rvm/log/1711028480_ruby-3.1.2/make.log || echo vim + /Users/garyjohnson/.rvm/log/1711028480_ruby-3.1.2/make.log</string>
 		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/.rvm/log/1711028133_ruby-3.1.2/make.log || echo vim + /Users/garyjohnson/.rvm/log/1711028133_ruby-3.1.2/make.log</string>
