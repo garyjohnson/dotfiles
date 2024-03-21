@@ -39,18 +39,50 @@ lvim.plugins = {
     ft = { "fugitive" }
   },
   {
-    'tommcdo/vim-fubitive'
+    "tpope/vim-bundler",
+    cmd = {"Bundler", "Bopen", "Bsplit", "Btabedit"}
+  },
+  {
+    "tpope/vim-rails",
+    lazy = false,
+    cmd = {
+      "Eview",
+      "Econtroller",
+      "Emodel",
+      "Smodel",
+      "Sview",
+      "Scontroller",
+      "Vmodel",
+      "Vview",
+      "Vcontroller",
+      "Tmodel",
+      "Tview",
+      "Tcontroller",
+      "Rails",
+      "Generate",
+      "Runner",
+      "Extract"
+    }
   },
 }
 
-vim.g.fubitive_domain_pattern = "git.ent.oclc.org"
-vim.g.fubitive_default_protocol = "http://"
+lvim.builtin.which_key.mappings["r"] = {
+  name = "Rails",
+  m = { "<cmd>Emodel<cr>", "Open model" },
+  vm = { "<cmd>Vmodel<cr>", "Open model in vertical split" },
+  sm = { "<cmd>Smodel<cr>", "Open model in horizontal split" },
+}
 
 lvim.builtin.which_key.mappings["t"] = {
   name = "Test",
   t = { "<cmd>TestNearest<cr>", "Nearest" },
   f = { "<cmd>TestFile<cr>", "File" },
   s = { "<cmd>TestSuite<cr>", "Suite" },
+}
+
+lvim.builtin.which_key.mappings["j"] = {
+  name = "JSON",
+  f = { "<cmd>%!python3 -m json.tool<cr>>", "Format" }
 }
 
 lvim.builtin.which_key.mappings["T"] = {
@@ -62,25 +94,12 @@ lvim.builtin.which_key.mappings["T"] = {
 
 -- CTRL+D closes terminal -- can we find a better way?
 
+-- displays source and message (useful for knowing which eslint rule is being violated)
 lvim.lsp.null_ls.setup = {
   diagnostics_format = "[#{c}] #{m}",
 }
 
-
-require'lspconfig'.tsserver.setup({
-    on_attach = function(client, bufnr)
-        client.server_capabilities.documentFormattingProvider = false
-    end
-})
-
--- npm i -g vscode-langservers-extracted
-require'lspconfig'.eslint.setup{
-  format = true,
-  on_attach = function(client, initialize_result)
-    client.server_capabilities.documentFormattingProvider = true
-  end
-}
-
+-- enables floating diagnostic window
 vim.diagnostic.config({
   virtual_text = {
     source = "always",  -- Or "if_many"
@@ -89,3 +108,23 @@ vim.diagnostic.config({
     source = "always",  -- Or "if_many"
   },
 })
+
+require("lvim.lsp.null-ls.formatters").setup {
+  {
+    exe = "prettierd",
+    filetypes = {
+    "graphql",
+    "html",
+    "json",
+    "less",
+    "markdown",
+    "yaml",
+    },
+  },
+}
+
+
+require("lsp-config/eslint")
+require("lsp-config/tsserver")
+require("lsp-config/ruby-lsp")
+require("lsp-config/standardrb")
