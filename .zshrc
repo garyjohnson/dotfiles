@@ -15,6 +15,9 @@ printf "Loading oh-my-posh..."
 eval "$(oh-my-posh --init --shell zsh --config $HOME/oh-my-posh-themes/custom-janedobbeleer.omp.json)"
 printf "\033[K\033[100D"
 
+# for any local overrides
+export PATH="$HOME/.local/bin:$PATH"
+
 export PLAYDATE_SDK_PATH='/Users/garyjohnson/Developer/PlaydateSDK'
 export PATH="$PATH:/opt/homebrew/opt/libpq/bin"
 # export PATH="/opt/homebrew/opt/libpq/bin:$PATH"

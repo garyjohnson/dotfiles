@@ -123,8 +123,29 @@ require("lvim.lsp.null-ls.formatters").setup {
   },
 }
 
+require("lvim.lsp.null-ls.formatters").setup {
+  {
+    exe = "prettierd",
+    filetypes = {
+    "graphql",
+    "html",
+    "json",
+    "less",
+    "markdown",
+    "yaml",
+    },
+  {
+    exe = "erblint",
+    filetypes = {
+    "eruby",
+    },
+  },
+  },
+}
 
 require("lsp-config/eslint")
 require("lsp-config/tsserver")
 require("lsp-config/ruby-lsp")
 require("lsp-config/standardrb")
+require("lsp-config/tailwindcss")
+require("lsp-config/html")
