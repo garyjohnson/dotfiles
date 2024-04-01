@@ -40,9 +40,10 @@
   "toggleterm.nvim": { "branch": "main", "commit": "6b334b9d1266b0f58ab1b6965c1e5b7eb5c34523" },
   "tokyonight.nvim": { "branch": "main", "commit": "f247ee700b569ed43f39320413a13ba9b0aef0db" },
   "vim-bundler": { "branch": "master", "commit": "c261509e78fc8dc55ad1fcf3cd7cdde49f35435c" },
-  "vim-fugitive": { "branch": "master", "commit": "193ba9b393931bad768c1d2eed688b0bcc240858" },
+  "vim-fugitive": { "branch": "master", "commit": "a83135b55b018a891e0803199c3d418010a404d8" },
   "vim-illuminate": { "branch": "master", "commit": "3bd2ab64b5d63b29e05691e624927e5ebbf0fb86" },
   "vim-rails": { "branch": "master", "commit": "3a155462d1c346e291595400ca238037d02a357f" },
+  "vim-rhubarb": { "branch": "master", "commit": "ee69335de176d9325267b0fd2597a22901d927b1" },
   "vim-test": { "branch": "master", "commit": "a49c9cade75e97cace5e3ba545ce82d02f689feb" },
   "which-key.nvim": { "branch": "main", "commit": "4433e5ec9a507e5097571ed55c02ea9658fb268a" }
 }

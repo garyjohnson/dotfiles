@@ -2,6 +2,7 @@
 -- Video Tutorials: https://www.youtube.com/watch?v=sFA9kX-Ud_c&list=PLhoH5vyxr6QqGu0i7tt_XoVK9v-KvZ3m6
 -- Forum: https://www.reddit.com/r/lunarvim/
 -- Discord: https://discord.com/invite/Xb9B4Ny
+
 lvim.builtin.terminal.active = true
 
 lvim.plugins = {
@@ -38,6 +39,7 @@ lvim.plugins = {
     },
     ft = { "fugitive" }
   },
+  { "tpope/vim-rhubarb" },
   {
     "tpope/vim-bundler",
     cmd = {"Bundler", "Bopen", "Bsplit", "Btabedit"}
@@ -68,9 +70,17 @@ lvim.plugins = {
 
 lvim.builtin.which_key.mappings["r"] = {
   name = "Rails",
-  m = { "<cmd>Emodel<cr>", "Open model" },
-  vm = { "<cmd>Vmodel<cr>", "Open model in vertical split" },
-  sm = { "<cmd>Smodel<cr>", "Open model in horizontal split" },
+  a = { "<cmd>AV<cr>", "Open associated file in vertical split" },
+  ae = { "<cmd>A<cr>", "Open associated file" },
+  m = { "<cmd>Vmodel<cr>", "Open model in vertical split" },
+  me = { "<cmd>Emodel<cr>", "Open model" },
+  ms = { "<cmd>Smodel<cr>", "Open model in horizontal split" },
+  c = { "<cmd>Vcontroller<cr>", "Open controller in vertical split" },
+  ce = { "<cmd>Econtroller<cr>", "Open controller" },
+  cs = { "<cmd>Scontroller<cr>", "Open controller in horizontal split" },
+  v = { "<cmd>Vview<cr>", "Open view in vertical split" },
+  ve = { "<cmd>Eview<cr>", "Open view" },
+  sv = { "<cmd>Sview<cr>", "Open view in horizontal split" },
 }
 
 lvim.builtin.which_key.mappings["t"] = {

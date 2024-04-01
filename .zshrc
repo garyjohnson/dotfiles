@@ -3,6 +3,11 @@ source ~/.profile
 export HISTIGNORE='rm*:git*'
 export HISTORY_IGNORE='(rm*|git*)'
 
+# nodenv
+eval "$(nodenv init -)"
+# rbenv
+eval "$(~/.rbenv/bin/rbenv init - zsh)"
+
 # Rename iterm2 tab
 tabname() { echo -ne "\033]0;"${1}"\007"; }
 
@@ -30,3 +35,4 @@ export NVM_DIR="$HOME/.nvm"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+export PATH=/bin:$PATH

@@ -24,6 +24,10 @@
 	<integer>1</integer>
 	<key>Coprocess MRU</key>
 	<array>
+		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/stackshine/app/views/layouts/data_management.html.erb || echo vim + /Users/garyjohnson/repositories/stackshine/app/views/layouts/data_management.html.erb</string>
+		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/stackshine/spec/controllers/admin/workspace_members_controller_spec.rb || echo vim + /Users/garyjohnson/repositories/stackshine/spec/controllers/admin/workspace_members_controller_spec.rb</string>
+		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/stackshine/app/controllers/admin/workspace_members_controller.rb || echo vim + /Users/garyjohnson/repositories/stackshine/app/controllers/admin/workspace_members_controller.rb</string>
+		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/stackshine/app/controllers/admin/workspace_member_controller.rb || echo vim + /Users/garyjohnson/repositories/stackshine/app/controllers/admin/workspace_member_controller.rb</string>
 		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/.local/state/lvim/lsp.log || echo vim + /Users/garyjohnson/.local/state/lvim/lsp.log</string>
 		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/.rvm/log/1711043343_ruby-3.2.2/make.log || echo vim + /Users/garyjohnson/.rvm/log/1711043343_ruby-3.2.2/make.log</string>
 		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/.rvm/log/1711028770_ruby-3.1.2/make.log || echo vim + /Users/garyjohnson/.rvm/log/1711028770_ruby-3.1.2/make.log</string>
@@ -40,10 +44,6 @@
 		<string>[ -z "15" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/contexts/SimplifiedEditorModel.spec.ts || echo vim +15 /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/contexts/SimplifiedEditorModel.spec.ts</string>
 		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/contexts/SimplifiedEditorModel.ts || echo vim + /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/contexts/SimplifiedEditorModel.ts</string>
 		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/types/SimplifiedEditorModel.ts || echo vim + /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/types/SimplifiedEditorModel.ts</string>
-		<string>[ -z "552" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedContainer.spec.tsx || echo vim +552 /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedContainer.spec.tsx</string>
-		<string>[ -z "93" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedEditor/SimplifiedEditor.spec.tsx || echo vim +93 /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedEditor/SimplifiedEditor.spec.tsx</string>
-		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedContainer.tsx || echo vim + /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedContainer.tsx</string>
-		<string>[ -z "32" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedContainer.spec.tsx || echo vim +32 /Users/garyjohnson/repositories/oclc/cataloging/cataloging-ui/cataloging-ui-modern/src/editor/simplified/SimplifiedContainer.spec.tsx</string>
 	</array>
 	<key>CopyLastNewline</key>
 	<false/>
