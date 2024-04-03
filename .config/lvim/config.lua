@@ -104,11 +104,6 @@ lvim.builtin.which_key.mappings["T"] = {
 
 -- CTRL+D closes terminal -- can we find a better way?
 
--- displays source and message (useful for knowing which eslint rule is being violated)
-lvim.lsp.null_ls.setup = {
-  diagnostics_format = "[#{c}] #{m}",
-}
-
 -- enables floating diagnostic window
 vim.diagnostic.config({
   virtual_text = {
@@ -119,38 +114,18 @@ vim.diagnostic.config({
   },
 })
 
-require("lvim.lsp.null-ls.formatters").setup {
-  {
-    exe = "prettierd",
-    filetypes = {
-    "graphql",
-    "html",
-    "json",
-    "less",
-    "markdown",
-    "yaml",
+null_ls = require("null-ls")
+null_ls.setup({
+    sources = {
+        null_ls.builtins.formatting.prettierd,
+        null_ls.builtins.formatting.erb_format,
+        null_ls.builtins.diagnostics.erb_lint,
     },
-  },
-}
+})
 
-require("lvim.lsp.null-ls.formatters").setup {
-  {
-    exe = "prettierd",
-    filetypes = {
-    "graphql",
-    "html",
-    "json",
-    "less",
-    "markdown",
-    "yaml",
-    },
-  {
-    exe = "erblint",
-    filetypes = {
-    "eruby",
-    },
-  },
-  },
+-- displays source and message (useful for knowing which eslint rule is being violated)
+lvim.lsp.null_ls.setup = {
+  diagnostics_format = "[#{c}] #{m}",
 }
 
 require("lsp-config/eslint")
