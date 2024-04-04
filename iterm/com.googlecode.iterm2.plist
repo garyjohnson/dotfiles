@@ -24,6 +24,7 @@
 	<integer>1</integer>
 	<key>Coprocess MRU</key>
 	<array>
+		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/stackshine/app/views/shared/_flash_messages_toast.html.erb || echo vim + /Users/garyjohnson/repositories/stackshine/app/views/shared/_flash_messages_toast.html.erb</string>
 		<string>[ -z "35" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/stackshine/spec/system/members/member_overview_spec.rb || echo vim +35 /Users/garyjohnson/repositories/stackshine/spec/system/members/member_overview_spec.rb</string>
 		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/stackshine/spec/system/pages/sections/flash_message.rb || echo vim + /Users/garyjohnson/repositories/stackshine/spec/system/pages/sections/flash_message.rb</string>
 		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/stackshine/tmp/capybara/failures_r_spec_example_groups_member_overview_page_when_updating_a_member_s_page_updates_the_member_s_profile_on_clicking_save_changes_921.png || echo vim + /Users/garyjohnson/repositories/stackshine/tmp/capybara/failures_r_spec_example_groups_member_overview_page_when_updating_a_member_s_page_updates_the_member_s_profile_on_clicking_save_changes_921.png</string>
@@ -43,7 +44,6 @@
 		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/stackshine/app/views/layouts/_data_management_section.html.erb || echo vim + /Users/garyjohnson/repositories/stackshine/app/views/layouts/_data_management_section.html.erb</string>
 		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/stackshine/spec/controllers/admin/data_management/workspace_members_controller_spec.rb || echo vim + /Users/garyjohnson/repositories/stackshine/spec/controllers/admin/data_management/workspace_members_controller_spec.rb</string>
 		<string>[ -z "" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/stackshine/spec/system/admin/data_management || echo vim + /Users/garyjohnson/repositories/stackshine/spec/system/admin/data_management</string>
-		<string>[ -z "38" ] &amp;&amp; echo vim /Users/garyjohnson/repositories/stackshine/spec/controllers/admin/data_management/workspace_members_controller_spec.rb || echo vim +38 /Users/garyjohnson/repositories/stackshine/spec/controllers/admin/data_management/workspace_members_controller_spec.rb</string>
 	</array>
 	<key>CopyLastNewline</key>
 	<false/>
