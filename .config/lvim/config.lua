@@ -102,6 +102,11 @@ lvim.builtin.which_key.mappings["T"] = {
   h = { "<cmd>2ToggleTerm size=30 direction=horizontal<cr>", "Split horizontal" },
 }
 
+lvim.builtin.which_key.mappings["x"] = {
+name = "+Explorer",
+  g = { "<cmd>NvimTreeFindFile<cr>", "Go to file in explorer" }
+}
+
 -- CTRL+D closes terminal -- can we find a better way?
 
 -- enables floating diagnostic window

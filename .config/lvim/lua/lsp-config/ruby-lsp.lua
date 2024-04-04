@@ -88,8 +88,9 @@ end
 
 
 require'lspconfig'.ruby_ls.setup({
+  init_options = { formatter = "none" },
   on_attach = function(client, buffer)
-    setup_diagnostics(client, buffer)
+    --setup_diagnostics(client, buffer)
     add_ruby_deps_command(client, buffer)
   end,
 })
