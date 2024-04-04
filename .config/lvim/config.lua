@@ -124,7 +124,7 @@ null_ls.setup({
   sources = {
     null_ls.builtins.formatting.prettierd,
     null_ls.builtins.formatting.erb_format.with({
-      extra_args = { "--print-width=120" } -- avoid aggressive wrapping, wrapped ERB can be particularly ugly
+      extra_args = { "--print-width=120" }
     }),
     null_ls.builtins.diagnostics.erb_lint,
   },
