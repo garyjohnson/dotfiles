@@ -64,7 +64,18 @@ lvim.plugins = {
       "Generate",
       "Runner",
       "Extract"
-    }
+    },
+  },
+  { 
+    "bkad/CamelCaseMotion",
+    config = function()
+      vim.cmd [[
+        map <silent> \w <Plug>CamelCaseMotion_w
+        map <silent> \b <Plug>CamelCaseMotion_b
+        map <silent> \e <Plug>CamelCaseMotion_e
+        map <silent> \ge <Plug>CamelCaseMotion_ge
+      ]]
+    end,
   },
 }
 
@@ -135,9 +146,25 @@ lvim.lsp.null_ls.setup = {
   diagnostics_format = "[#{c}] #{m}",
 }
 
+-- treat thor jobs as ruby files
+vim.filetype.add {
+  pattern = {
+    ['.*%.thor'] = 'ruby',
+  }
+}
+
+vim.filetype.add {
+  pattern = {
+    -- openapi
+    ['.*openapi.*%.ya?ml'] = 'yaml.openapi',
+    ['.*openapi.*%.json'] = 'json.openapi',
+  },
+}
+
 require("lsp-config/eslint")
 require("lsp-config/tsserver")
 require("lsp-config/ruby-lsp")
 require("lsp-config/standardrb")
 require("lsp-config/tailwindcss")
 require("lsp-config/html")
+require("lsp-config/vacuum")

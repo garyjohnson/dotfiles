@@ -87,7 +87,7 @@ local function add_ruby_deps_command(client, bufnr)
 end
 
 
-require'lspconfig'.ruby_ls.setup({
+require'lspconfig'.ruby_lsp.setup({
   init_options = { formatter = "none" },
   on_attach = function(client, buffer)
     --setup_diagnostics(client, buffer)
