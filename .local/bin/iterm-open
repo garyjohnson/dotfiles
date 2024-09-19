@@ -1,0 +1,11 @@
+#!/bin/bash
+FILENAME=$1
+LINE_NUMBER=$2
+if (
+  shopt -s nocasematch;
+  [[ $FILENAME =~ .*\.(png|svg|gif|bmp|jpeg|jpg|pdf) ]]
+  ); then
+  open $FILENAME
+else
+  [ -z $LINE_NUMBER ] && echo vim $FILENAME || echo vim +$LINE_NUMBER $FILENAME
+fi

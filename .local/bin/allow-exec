@@ -1,0 +1,14 @@
+#!/bin/bash
+set -euxo pipefail
+
+EXEC_PATH=$1
+if [ ! -f "$EXEC_PATH" ]; then
+  echo "File not found at path '$EXEC_PATH'"
+  exit 1
+fi
+
+# will fail if the file in question does not have the quarantine attribute set, so ignore the error
+xattr -d com.apple.quarantine "$EXEC_PATH" || true
+
+spctl --add --label 'Approved' "$EXEC_PATH" 
+
