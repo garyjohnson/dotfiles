@@ -3,9 +3,25 @@
 -- Forum: https://www.reddit.com/r/lunarvim/
 -- Discord: https://discord.com/invite/Xb9B4Ny
 
+local function augroup(name)
+  return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
+end
+
 lvim.builtin.terminal.active = true
 
 lvim.plugins = {
+  { 
+    "preservim/vim-pencil" ,
+    init = function()
+      vim.g["pencil#wrapModeDefault"] = "soft"
+      vim.api.nvim_create_autocmd("FileType", {
+        group = augroup("pencil"),
+        pattern = { "markdown,mkd,md" },
+        callback = vim.fn['pencil#init'],
+      })
+    end,
+
+  },
   {
     "vim-test/vim-test",
     cmd = { "TestNearest", "TestFile", "TestSuite", "TestLast", "TestVisit" },
