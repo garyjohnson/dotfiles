@@ -9,7 +9,21 @@ end
 
 lvim.builtin.terminal.active = true
 
+-- path=3 is show absolute path with ~ home dir
+lvim.builtin.lualine.sections.lualine_b = {{"filename", path = 3}}
+
+-- prevent long paths from being truncated
+lvim.builtin.telescope.defaults = {
+  path_display = { "absolute" },
+  wrap_results = true
+}
+
 lvim.plugins = {
+  {
+    "barrett-ruth/import-cost.nvim",
+    build = 'sh install.sh yarn',
+    config = true
+  },
   { 
     "preservim/vim-pencil" ,
     init = function()
@@ -93,6 +107,17 @@ lvim.plugins = {
       ]]
     end,
   },
+  {
+    url = "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    config = function()
+      require("lsp_lines").setup()
+    end,
+  }
+}
+
+-- add to LSP menu
+lvim.builtin.which_key.mappings["lg"] = {
+  "<cmd>lua require('lsp_lines').toggle()<cr>", "Toggle LSP lines"
 }
 
 lvim.builtin.which_key.mappings["r"] = {
@@ -131,20 +156,21 @@ lvim.builtin.which_key.mappings["T"] = {
 
 lvim.builtin.which_key.mappings["x"] = {
 name = "+Explorer",
-  g = { "<cmd>NvimTreeFindFile<cr>", "Go to file in explorer" }
+  g = { "<cmd>NvimTreeFindFile<cr>", "Go to file in explorer" },
+  c = { ":let @+=expand(\"%\")<cr>", "Put current buffer name in system clipboard"},
 }
 
 -- CTRL+D closes terminal -- can we find a better way?
 
 -- enables floating diagnostic window
-vim.diagnostic.config({
-  virtual_text = {
-    source = "always",  -- Or "if_many"
-  },
-  float = {
-    source = "always",  -- Or "if_many"
-  },
-})
+-- vim.diagnostic.config({
+--   virtual_text = {
+--     source = "always",  -- Or "if_many"
+--   },
+--   float = {
+--     source = "always",  -- Or "if_many"
+--   },
+-- })
 
 null_ls = require("null-ls")
 null_ls.setup({
@@ -184,3 +210,6 @@ require("lsp-config/standardrb")
 require("lsp-config/tailwindcss")
 require("lsp-config/html")
 require("lsp-config/vacuum")
+
+-- Disable virtual text
+vim.diagnostic.config({ virtual_text = false })

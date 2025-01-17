@@ -42,7 +42,7 @@
   autoSetupRemote = true
 [user]
 	name = Gary Johnson
-	email = gary.johnson@leasequery.com
+	email = gary@gjtt.com
 [core]
 	editor = vim
 	excludesfile = /Users/garyjohnson/.gitignore
