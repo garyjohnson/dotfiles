@@ -6,5 +6,6 @@ brew "ripgrep"
 brew "rbenv"
 brew "nodenv"
 brew "fzf"
+brew "luarocks" # for neovim
 brew "ack"
 cask "font-meslo-lg-nerd-font"

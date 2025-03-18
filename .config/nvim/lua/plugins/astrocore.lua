@@ -41,6 +41,7 @@ return {
     },
     mappings = {
       n = {
+        -- Test mappings
         ["<Leader>T"] = { desc = "Test" },
         ["<Leader>Tt"] = { function()
           require("neotest").output_panel.open()
@@ -58,10 +59,12 @@ return {
         ["<Leader>To"] = { function() require("neotest").output_panel.toggle() end, desc = "Toggle test output panel" },
         ["<Leader>Tp"] = { function() require("neotest").output.open({ auto_close = true }) end, desc = "Toggle test output popover" },
 
+        -- Explorer mappings
         ["<Leader>X"] = { desc = "Explorer" },
         ["<Leader>Xg"] = { "<cmd>Neotree filesystem reveal_force_cwd<cr>", desc = "Go to file in explorer" },
         ["<Leader>Xc"] = { ":let @+=expand(\"%\")<cr>", desc = "Put current buffer name in system clipboard" },
 
+        -- AstroNvim mappings
         ["<Leader>A"] = { desc = "AstroNvim" },
         ["<Leader>Ac"] = { "<cmd>e ~/.config/nvim/lua/plugins/astrocore.lua<cr><cmd>Neotree filesystem show reveal_force_cwd<cr>", desc = "Open AstroNvim config" },
       },

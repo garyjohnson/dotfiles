@@ -11,9 +11,17 @@ return {
 	        '.git',
 	        '.DS_Store',
 	        'thumbs.db',
+	        'node_modules',
 	      },
 	      never_show = {},
       },
+    },
+    window = {
+      mappings = {
+        -- Disable fuzzy finding so we can just search the buffer
+        -- https://github.com/nvim-neo-tree/neo-tree.nvim/issues/791
+        ['/'] = 'noop'
+      }
     }
-  }
+  },
 }
