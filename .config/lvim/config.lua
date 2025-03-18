@@ -10,7 +10,7 @@ end
 lvim.builtin.terminal.active = true
 
 -- path=3 is show absolute path with ~ home dir
-lvim.builtin.lualine.sections.lualine_b = {{"filename", path = 3}}
+lvim.builtin.lualine.sections.lualine_b = { { "filename", path = 3 } }
 
 -- prevent long paths from being truncated
 lvim.builtin.telescope.defaults = {
@@ -30,7 +30,7 @@ lvim.plugins = {
     dependencies = { "zbirenbaum/copilot.lua" },
     config = function()
       vim.defer_fn(function()
-        require("copilot").setup() -- https://github.com/zbirenbaum/copilot.lua/blob/master/README.md#setup-and-configuration
+        require("copilot").setup()     -- https://github.com/zbirenbaum/copilot.lua/blob/master/README.md#setup-and-configuration
         require("copilot_cmp").setup() -- https://github.com/zbirenbaum/copilot-cmp/blob/master/README.md#configuration
       end, 100)
     end,
@@ -40,13 +40,13 @@ lvim.plugins = {
     cmd = { 'Pastify', 'PastifyAfter' },
     event = { 'BufReadPost' }, -- Load after the buffer is read, I like to be able to paste right away
     keys = {
-      {noremap = true, mode = "x", '<leader>p', "<cmd>PastifyAfter<CR>"},
-      {noremap = true, mode = "n", '<leader>p', "<cmd>PastifyAfter<CR>"},
-      {noremap = true, mode = "n", '<leader>P', "<cmd>Pastify<CR>"},
+      { noremap = true, mode = "x", '<leader>p', "<cmd>PastifyAfter<CR>" },
+      { noremap = true, mode = "n", '<leader>p', "<cmd>PastifyAfter<CR>" },
+      { noremap = true, mode = "n", '<leader>P', "<cmd>Pastify<CR>" },
     },
     config = function()
       require('pastify').setup {
-        opts = { 
+        opts = {
           absolute_path = false,
           save = 'local',
           filename = function() return vim.fn.expand("%:t:r") .. '_' .. os.date('%Y-%m-%d_%H-%M-%S') end,
@@ -61,10 +61,9 @@ lvim.plugins = {
         }
       }
     end
->>>>>>> 75c385b (Switching to astronvim config)
   },
-  { 
-    "preservim/vim-pencil" ,
+  {
+    "preservim/vim-pencil",
     init = function()
       vim.g["pencil#wrapModeDefault"] = "soft"
       vim.api.nvim_create_autocmd("FileType", {
@@ -111,7 +110,7 @@ lvim.plugins = {
   { "tpope/vim-rhubarb" },
   {
     "tpope/vim-bundler",
-    cmd = {"Bundler", "Bopen", "Bsplit", "Btabedit"}
+    cmd = { "Bundler", "Bopen", "Bsplit", "Btabedit" }
   },
   {
     "tpope/vim-rails",
@@ -135,7 +134,7 @@ lvim.plugins = {
       "Extract"
     },
   },
-  { 
+  {
     "bkad/CamelCaseMotion",
     config = function()
       vim.cmd [[
@@ -199,9 +198,9 @@ lvim.builtin.which_key.mappings["T"] = {
 }
 
 lvim.builtin.which_key.mappings["x"] = {
-name = "+Explorer",
+  name = "+Explorer",
   g = { "<cmd>NvimTreeFindFile<cr>", "Go to file in explorer" },
-  c = { ":let @+=expand(\"%\")<cr>", "Put current buffer name in system clipboard"},
+  c = { ":let @+=expand(\"%\")<cr>", "Put current buffer name in system clipboard" },
 }
 
 -- CTRL+D closes terminal -- can we find a better way?

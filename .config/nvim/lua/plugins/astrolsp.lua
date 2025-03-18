@@ -1,9 +1,59 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
-
 -- AstroLSP allows you to customize the features in AstroNvim's LSP configuration engine
 -- Configuration documentation can be found with `:h astrolsp`
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
 --       as this provides autocomplete and documentation while editing
+--
+local function tprint(tbl, indent)
+  if not indent then indent = 0 end
+  local toprint = string.rep(" ", indent) .. "{\r\n"
+  indent = indent + 2
+  for k, v in pairs(tbl) do
+    toprint = toprint .. string.rep(" ", indent)
+    if type(k) == "number" then
+      toprint = toprint .. "[" .. k .. "] = "
+    elseif type(k) == "string" then
+      toprint = toprint .. k .. "= "
+    end
+    if type(v) == "number" then
+      toprint = toprint .. v .. ",\r\n"
+    elseif type(v) == "string" then
+      toprint = toprint .. '"' .. v .. '",\r\n'
+    elseif type(v) == "table" then
+      toprint = toprint .. tprint(v, indent + 2) .. ",\r\n"
+    else
+      toprint = toprint .. '"' .. tostring(v) .. '",\r\n'
+    end
+  end
+  toprint = toprint .. string.rep(" ", indent - 2) .. "}"
+  return toprint
+end
+
+local function add_ruby_deps_command(client, bufnr)
+  vim.api.nvim_buf_create_user_command(bufnr, "ShowRubyDeps", function(opts)
+    local params = vim.lsp.util.make_text_document_params()
+    local showAll = opts.args == "all"
+
+    client.request("rubyLsp/workspace/dependencies", params, function(error, result)
+      if error then
+        print("Error showing deps: " .. error)
+        return
+      end
+
+      local qf_list = {}
+      for _, item in ipairs(result) do
+        if showAll or item.dependency then
+          table.insert(qf_list, {
+            text = string.format("%s (%s) - %s", item.name, item.version, item.dependency),
+            filename = item.path,
+          })
+        end
+      end
+
+      vim.fn.setqflist(qf_list)
+      vim.cmd "copen"
+    end, bufnr)
+  end, { nargs = "?", complete = function() return { "all" } end })
+end
 
 ---@type LazySpec
 return {
@@ -39,12 +89,54 @@ return {
     },
     -- enable servers that you already have installed without mason
     servers = {
-      -- "pyright"
+      ruby_lsp = {
+        mason = false,
+        cmd = { vim.fn.expand("~/.rbenv/shims/ruby-lsp") },
+      },
     },
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
     config = {
       -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
+      ruby_lsp = {
+        mason = false,
+        cmd = { vim.fn.expand("~/.rbenv/shims/ruby-lsp") },
+        commands_created = true,
+        on_attach = function(client, buffer)
+          client.commands["rubyLsp.openFile"] = function(command)
+            local uri = command.arguments[1][1]
+            local path = uri:gsub("^file://", "")
+
+            vim.cmd("e " .. path)
+          end
+
+          client.commands["rubyLsp.runTask"] = function(command)
+            local shell_command = command.arguments[1]
+            vim.notify("Running: " .. shell_command)
+            vim.cmd "split"
+            vim.cmd("terminal " .. shell_command)
+          end
+
+          client.commands["rubyLsp.runTest"] = function()
+            require("neotest").output_panel.open()
+            require("neotest").run.run()
+          end
+
+          client.commands["rubyLsp.runTestInTerminal"] = function(command)
+            local shell_command = command.arguments[3]
+            -- vim.cmd "split"
+            -- vim.cmd("terminal " .. shell_command)
+            require'toggleterm'.exec(shell_command)
+          end
+
+          client.commands["rubyLsp.debugTest"] = function(command, context)
+            vim.notify(tprint(command))
+            vim.notify(tprint(context))
+          end
+
+          add_ruby_deps_command(client, buffer)
+        end,
+      },
     },
     -- customize how language servers are attached
     handlers = {
@@ -54,6 +146,7 @@ return {
       -- the key is the server that is being setup with `lspconfig`
       -- rust_analyzer = false, -- setting a handler to false will disable the set up of that language server
       -- pyright = function(_, opts) require("lspconfig").pyright.setup(opts) end -- or a custom handler function can be passed
+      --
     },
     -- Configure buffer local auto commands to add when attaching a language server
     autocmds = {
