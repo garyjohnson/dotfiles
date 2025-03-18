@@ -15,3 +15,4 @@ diffbranch() { vim -p $(git diff --name-only ${1} HEAD) -c "tabdo :Gdiff ${1}" }
 # Enable colors and change prompt
 autoload -U colors && colors
 
+eval "$(nodenv init - zsh)"

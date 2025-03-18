@@ -24,6 +24,45 @@ lvim.plugins = {
     build = 'sh install.sh yarn',
     config = true
   },
+  {
+    "zbirenbaum/copilot-cmp",
+    event = "InsertEnter",
+    dependencies = { "zbirenbaum/copilot.lua" },
+    config = function()
+      vim.defer_fn(function()
+        require("copilot").setup() -- https://github.com/zbirenbaum/copilot.lua/blob/master/README.md#setup-and-configuration
+        require("copilot_cmp").setup() -- https://github.com/zbirenbaum/copilot-cmp/blob/master/README.md#configuration
+      end, 100)
+    end,
+  },
+  {
+    'TobinPalmer/pastify.nvim',
+    cmd = { 'Pastify', 'PastifyAfter' },
+    event = { 'BufReadPost' }, -- Load after the buffer is read, I like to be able to paste right away
+    keys = {
+      {noremap = true, mode = "x", '<leader>p', "<cmd>PastifyAfter<CR>"},
+      {noremap = true, mode = "n", '<leader>p', "<cmd>PastifyAfter<CR>"},
+      {noremap = true, mode = "n", '<leader>P', "<cmd>Pastify<CR>"},
+    },
+    config = function()
+      require('pastify').setup {
+        opts = { 
+          absolute_path = false,
+          save = 'local',
+          filename = function() return vim.fn.expand("%:t:r") .. '_' .. os.date('%Y-%m-%d_%H-%M-%S') end,
+          local_path = '/src/images/',
+        },
+        ft = {
+          html = '<img src="$IMG$" alt="">',
+          markdown = '![]($IMG$)',
+          css = 'background-image: url("$IMG$");',
+          js = 'const img = new Image(); img.src = "$IMG$";',
+          xml = '<image src="$IMG$" />',
+        }
+      }
+    end
+>>>>>>> 75c385b (Switching to astronvim config)
+  },
   { 
     "preservim/vim-pencil" ,
     init = function()
@@ -118,6 +157,11 @@ lvim.plugins = {
 -- add to LSP menu
 lvim.builtin.which_key.mappings["lg"] = {
   "<cmd>lua require('lsp_lines').toggle()<cr>", "Toggle LSP lines"
+}
+
+lvim.builtin.which_key.mappings["k"] = {
+  name = "Copilot",
+  p = { ":Copilot panel<cr>", "Open Copilot panel" },
 }
 
 lvim.builtin.which_key.mappings["r"] = {
