@@ -9,3 +9,6 @@ brew "fzf"
 brew "luarocks" # for neovim
 brew "ack"
 cask "font-meslo-lg-nerd-font"
+
+# nice-to-haves
+brew "tree" 

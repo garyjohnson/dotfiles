@@ -8,18 +8,27 @@ return {
     -- adapters
     -- see https://github.com/nvim-neotest/neotest?tab=readme-ov-file
     "zidhuss/neotest-minitest",
+    "olimorris/neotest-rspec",
+    "nvim-neotest/neotest-jest",
+    "marilari88/neotest-vitest",
   },
-  -- TODO: is this doing anything? 
-  -- why can't i see failure diagnositcs?
   config = function()
-    require("neotest").setup({
+    require("neotest").setup {
       adapters = {
-        require("neotest-minitest")
+        require "neotest-minitest",
+        require "neotest-rspec",
+        require "neotest-jest" {
+          jestCommand = "npm test --",
+          jestConfigFile = "custom.jest.config.ts",
+          env = { CI = true },
+          cwd = function(path) return vim.fn.getcwd() end,
+        },
+        require "neotest-vitest",
       },
       diagnostic = {
         enabled = true,
-        severity = 1
+        severity = 1,
       },
-    })
-  end
+    }
+  end,
 }

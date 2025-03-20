@@ -6,6 +6,7 @@ then
 fi
 
 paths_to_link=(
+".local/bin"
 ".config/lvim"
 ".config/nvim"
 ".profile"
