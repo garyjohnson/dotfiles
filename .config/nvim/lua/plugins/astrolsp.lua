@@ -160,8 +160,8 @@ return {
         -- cond = function(client, bufnr) return client.name == "lua_ls" end,
         -- list of auto commands to set
         {
-          -- events to trigger
-          event = { "InsertLeave", "BufEnter" },
+         -- events to trigger
+         event = { "InsertLeave", "BufEnter" },
           -- the rest of the autocmd options (:h nvim_create_autocmd)
           desc = "Refresh codelens (buffer)",
           callback = function(args)
