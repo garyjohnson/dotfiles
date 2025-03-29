@@ -17,18 +17,18 @@ return {
       adapters = {
         require "neotest-minitest",
         require "neotest-rspec",
-        require "neotest-jest" {
-          jestCommand = "npm test --",
-          jestConfigFile = "custom.jest.config.ts",
-          env = { CI = true },
-          cwd = function(path) return vim.fn.getcwd() end,
-        },
+        require "neotest-jest",
         require "neotest-vitest",
       },
       diagnostic = {
         enabled = true,
         severity = 1,
       },
+      opts = {
+        discovery = {
+          enabled = false
+        }
+      }
     }
   end,
 }

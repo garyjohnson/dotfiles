@@ -41,6 +41,8 @@ return {
     },
     mappings = {
       n = {
+        --project.nvim
+        ["<Leader>fp"] = { "<cmd>Telescope projects<cr>", desc = "Find projects" },
         -- Test mappings
         ["<Leader>T"] = { desc = "Test" },
         ["<Leader>Tt"] = {
@@ -70,6 +72,7 @@ return {
           function() require("neotest").output.open { auto_close = true } end,
           desc = "Toggle test output popover",
         },
+        ["<Leader>Tl"] = { function() vim.cmd('e ' .. require("neotest.logging"):get_filename()) end, desc = "Open neotest logs" },
 
         -- Explorer mappings
         ["<Leader>X"] = { desc = "Explorer" },

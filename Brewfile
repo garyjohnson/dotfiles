@@ -12,3 +12,4 @@ cask "font-meslo-lg-nerd-font"
 
 # nice-to-haves
 brew "tree" 
+brew "zoxide"
