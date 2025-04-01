@@ -43,7 +43,8 @@ return {
       n = {
         --project.nvim
         ["<Leader>fp"] = { "<cmd>Telescope projects<cr>", desc = "Find projects" },
-        -- Test mappings
+
+        -- Test mappings (neotest)
         ["<Leader>T"] = { desc = "Test" },
         ["<Leader>Tt"] = {
           function()
@@ -89,6 +90,14 @@ return {
         -- DAP
         ["<Leader>dl"] = { "<cmd>DapShowLog<cr>", desc = "Show DAP logs" },
         ["<Leader>dL"] = { "<cmd>DapSetLogLevel TRACE<cr>", desc = "Set DAP log level to TRACE" },
+
+        -- Git (fugitive / rhubarb)
+        ["<Leader>G"] = { desc = "Git host" },
+        ["<Leader>Gr"] = { "<cmd>GBrowse<cr>", desc = "View file in Git host" },
+        ["<Leader>Gl"] = { "<cmd>.GBrowse<cr>", desc = "View line or commit in Git host" },
+        ["<Leader>Gc"] = { "<cmd>GBrowse!<cr>", desc = "Copy Git host URL" },
+        ["<Leader>GC"] = { "<cmd>.GBrowse!<cr>", desc = "Copy Git host URL for line or commit" },
+        ["<Leader>Gb"] = { "<cmd>Git blame<cr>", desc = "View full Git blame" },
       },
     },
   },
