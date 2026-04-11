@@ -54,12 +54,12 @@ if [ "$(uname)" != "Darwin" ]; then
 fi
 
 echo ""
-echo -e "  ${hotpink}♥${pink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${pink}♥${hotpink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${hotpink}♥${pink}♥${rose}♥${reset}"
+echo -e "  ${hotpink}♥${pink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${pink}♥${hotpink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${hotpink}♥${pink}♥${rose}♥${hotpink}♥${pink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${pink}♥${hotpink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${hotpink}♥${pink}♥${rose}♥${reset}"
 echo ""
 echo -e "       ${bold}${hotpink}🌺${reset}  ${bold}${pink}d o t f i l e s${reset}  ${bold}${hotpink}🌺${reset}"
 echo -e "       ${italic}${lavender}~* setting up your new machine *~${reset}"
 echo ""
-echo -e "  ${hotpink}♥${pink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${pink}♥${hotpink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${hotpink}♥${pink}♥${rose}♥${reset}"
+echo -e "  ${hotpink}♥${pink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${pink}♥${hotpink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${hotpink}♥${pink}♥${rose}♥${hotpink}♥${pink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${pink}♥${hotpink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${hotpink}♥${pink}♥${rose}♥${reset}"
 echo ""
 echo -e "  ${dim}${periwinkle}📂 $DOTFILES_DIR${reset}"
 
@@ -290,13 +290,6 @@ gh ssh-key add "$HOME/.ssh/id_ed25519.pub" --title "$(hostname)-$(date +%Y%m%d)"
   && success "SSH key added to GitHub 🎉" \
   || skip "SSH key already on GitHub"
 
-step "🦎 Forgejo SSH"
-
-pbcopy < "$HOME/.ssh/id_ed25519.pub"
-info "Public key copied to clipboard 📋"
-info "Add it here → ${bold}${hotpink}https://forgejo.app.usefulbits.io/user/settings/keys${reset}"
-prompt "Press Enter after adding the key: "
-read
 
 # --- Home VPN (L2TP/IPsec) ---
 
@@ -412,12 +405,12 @@ success "iTerm2 configured 💅"
 # --- Done ---
 
 echo ""
-echo -e "  ${hotpink}♥${pink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${pink}♥${hotpink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${hotpink}♥${pink}♥${rose}♥${reset}"
+echo -e "  ${hotpink}♥${pink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${pink}♥${hotpink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${hotpink}♥${pink}♥${rose}♥${hotpink}♥${pink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${pink}♥${hotpink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${hotpink}♥${pink}♥${rose}♥${reset}"
 echo ""
 echo -e "       ${bold}${hotpink}🌺${reset}  ${bold}${pink}a l l   d o n e !${reset}  ${bold}${hotpink}🌺${reset}"
 echo -e "       ${italic}${lavender}~* your machine is ready to go *~${reset}"
 echo ""
-echo -e "  ${hotpink}♥${pink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${pink}♥${hotpink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${hotpink}♥${pink}♥${rose}♥${reset}"
+echo -e "  ${hotpink}♥${pink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${pink}♥${hotpink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${hotpink}♥${pink}♥${rose}♥${hotpink}♥${pink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${pink}♥${hotpink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${hotpink}♥${pink}♥${rose}♥${reset}"
 echo ""
 echo -e "  ${bold}${rose}📝 Manual steps remaining:${reset}"
 echo -e "  ${lilac}🌷${reset} Activate VoiceInk license"
@@ -425,6 +418,8 @@ echo -e "  ${purple}🌷${reset} Configure Cap → ${bold}https://cap.app.useful
 echo -e "  ${periwinkle}🌷${reset} Add Trilium PWA to dock from Safari:"
 echo -e "     ${bold}https://trilium-gary.app.usefulbits.io/${reset}"
 echo -e "  ${pink}🌷${reset} Install 1Password extension for Chrome"
+echo -e "  ${skyblue}🌷${reset} Add SSH key to Forgejo:"
+echo -e "     ${bold}https://forgejo.app.usefulbits.io/user/settings/keys${reset}"
 echo ""
 echo -e "  ${mint}Open a new terminal to pick up the new shell config 💕${reset}"
 echo ""
