@@ -33,6 +33,8 @@ eval "$($HOME/homebrew/bin/brew shellenv)"
 # --- Install packages from Brewfile ---
 
 echo "==> Running brew bundle..."
+mkdir -p "$HOME/Applications"
+export HOMEBREW_CASK_OPTS="--appdir=$HOME/Applications"
 brew bundle --file="$DOTFILES_DIR/Brewfile"
 
 # --- Symlink dotfiles ---
@@ -91,11 +93,15 @@ echo "  Latest Ruby: $latest_ruby"
 rbenv install -s "$latest_ruby"
 rbenv global "$latest_ruby"
 
-# --- Install global npm packages ---
+# --- Install Claude Code ---
 
-echo "==> Installing Claude Code and Codex..."
-eval "$(nodenv init - bash)"
-npm install -g @anthropic-ai/claude-code @openai/codex
+echo "==> Installing Claude Code..."
+curl -fsSL https://claude.ai/install.sh | bash
+
+# --- Install Codex ---
+
+echo "==> Installing Codex..."
+brew install --cask codex
 
 # --- App Store installs ---
 
@@ -131,6 +137,75 @@ export GIT_COMMITTER_NAME="$git_name"
 export GIT_COMMITTER_EMAIL="$git_email"
 EOF
   echo "  Written to ~/.profile-env"
+fi
+
+# --- SSH key setup ---
+
+# Generate key if needed
+if [ -f "$HOME/.ssh/id_ed25519" ]; then
+  echo "==> SSH key already exists at ~/.ssh/id_ed25519"
+else
+  echo "==> Generating SSH key..."
+
+  # Use git email if available, otherwise prompt
+  if [ -n "$git_email" ]; then
+    ssh_email="$git_email"
+  elif [ -f "$HOME/.profile-env" ] && grep -q "GIT_AUTHOR_EMAIL" "$HOME/.profile-env"; then
+    ssh_email=$(grep "GIT_AUTHOR_EMAIL" "$HOME/.profile-env" | head -1 | sed 's/.*="\(.*\)"/\1/')
+  else
+    read -p "  Email for SSH key: " ssh_email
+  fi
+
+  ssh-keygen -t ed25519 -C "$ssh_email" -f "$HOME/.ssh/id_ed25519"
+fi
+
+# Configure SSH for GitHub and Forgejo
+mkdir -p "$HOME/.ssh"
+if [ ! -f "$HOME/.ssh/config" ]; then
+  cat > "$HOME/.ssh/config" <<EOF
+Host github.com
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentitiesOnly yes
+  IdentityFile ~/.ssh/id_ed25519
+
+Host forgejo.app.usefulbits.io
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentitiesOnly yes
+  IdentityFile ~/.ssh/id_ed25519
+EOF
+  echo "  Written ~/.ssh/config"
+else
+  echo "  ~/.ssh/config already exists"
+fi
+
+# Add key to ssh-agent
+eval "$(ssh-agent -s)"
+ssh-add --apple-use-keychain "$HOME/.ssh/id_ed25519" 2>/dev/null
+
+# Add key to GitHub
+echo ""
+echo "==> Adding SSH key to GitHub..."
+if gh auth status &>/dev/null; then
+  echo "  Already logged into GitHub"
+else
+  gh auth login -w -p ssh
+fi
+gh ssh-key add "$HOME/.ssh/id_ed25519.pub" --title "$(hostname)-$(date +%Y%m%d)" 2>/dev/null \
+  && echo "  SSH key added to GitHub" \
+  || echo "  SSH key already exists on GitHub"
+
+# Add key to Forgejo
+echo ""
+echo "==> Adding SSH key to Forgejo..."
+if ssh -T git@forgejo.app.usefulbits.io 2>&1 | grep -q "Welcome"; then
+  echo "  SSH key already configured on Forgejo"
+else
+  pbcopy < "$HOME/.ssh/id_ed25519.pub"
+  echo "  Public key copied to clipboard. Add it at:"
+  echo "    https://forgejo.app.usefulbits.io/user/settings/keys"
+  read -p "  Press Enter after adding the key..."
 fi
 
 # --- macOS defaults ---

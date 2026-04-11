@@ -11,6 +11,9 @@ brew "zoxide"
 brew "git"
 brew "mas"
 
+# Git hosting CLIs
+brew "gh"
+
 # Development
 brew "rbenv"
 brew "nodenv"
@@ -23,7 +26,7 @@ cask "font-meslo-lg-nerd-font"
 
 # Apps
 cask "iterm2"
-cask "tailscale"
+cask "tailscale-app"
 cask "obsidian"
 cask "google-chrome"
 cask "fastmail"
