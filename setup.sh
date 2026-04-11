@@ -1,45 +1,104 @@
 #!/bin/bash
 set -e
 
+# --- Colors & helpers ---
+
+reset='\033[0m'
+bold='\033[1m'
+dim='\033[2m'
+italic='\033[3m'
+
+# the palette ✨
+pink='\033[38;5;213m'
+hotpink='\033[38;5;199m'
+lavender='\033[38;5;183m'
+lilac='\033[38;5;177m'
+purple='\033[38;5;141m'
+softpurple='\033[38;5;135m'
+periwinkle='\033[38;5;147m'
+rose='\033[38;5;211m'
+peach='\033[38;5;217m'
+mint='\033[38;5;158m'
+skyblue='\033[38;5;117m'
+white='\033[38;5;255m'
+red='\033[38;5;204m'
+
+step() {
+  echo ""
+  echo -e "  ${pink}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${reset}"
+  echo -e "  ${bold}${lilac}✿${reset} ${bold}${lavender}$1${reset}"
+  echo -e "  ${pink}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${reset}"
+}
+
+info()    { echo -e "  ${periwinkle}💜${reset} ${white}$1${reset}"; }
+success() { echo -e "  ${mint}✨${reset} ${peach}$1${reset}"; }
+skip()    { echo -e "  ${dim}${lavender}💤 $1${reset}"; }
+warn()    { echo -e "  ${rose}🌸 $1${reset}"; }
+err()     { echo -e "  ${red}💔 $1${reset}"; }
+prompt()  { echo -en "  ${hotpink}▸${reset} $1"; }
+link()    { echo -e "  ${dim}${purple}   $1 → $2${reset}"; }
+
 # Resolve the dotfiles directory from script location
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # --- Validate environment ---
 
 if [ -z "$HOME" ]; then
-  echo "ERROR: \$HOME is not set"
+  err "HOME is not set"
   exit 1
 fi
 
 if [ "$(uname)" != "Darwin" ]; then
-  echo "ERROR: This script is designed for macOS"
+  err "This script is for macOS only"
   exit 1
 fi
 
-echo "==> Dotfiles directory: $DOTFILES_DIR"
+echo ""
+echo -e "  ${hotpink}♥${pink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${pink}♥${hotpink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${hotpink}♥${pink}♥${rose}♥${reset}"
+echo ""
+echo -e "       ${bold}${hotpink}🌺${reset}  ${bold}${pink}d o t f i l e s${reset}  ${bold}${hotpink}🌺${reset}"
+echo -e "       ${italic}${lavender}~* setting up your new machine *~${reset}"
+echo ""
+echo -e "  ${hotpink}♥${pink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${pink}♥${hotpink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${hotpink}♥${pink}♥${rose}♥${reset}"
+echo ""
+echo -e "  ${dim}${periwinkle}📂 $DOTFILES_DIR${reset}"
 
 # --- Install Homebrew to ~/homebrew ---
 
+step "🍺 Homebrew"
+
 if [ ! -f "$HOME/homebrew/bin/brew" ]; then
-  echo "==> Installing Homebrew to ~/homebrew..."
+  info "Installing Homebrew to ~/homebrew..."
   mkdir -p "$HOME/homebrew"
   curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip-components 1 -C "$HOME/homebrew"
+  success "Homebrew installed!"
 else
-  echo "==> Homebrew already installed at ~/homebrew"
+  skip "Homebrew already installed at ~/homebrew"
 fi
 
 eval "$($HOME/homebrew/bin/brew shellenv)"
 
 # --- Install packages from Brewfile ---
 
-echo "==> Running brew bundle..."
+step "📦 Brew packages"
+
+info "Running brew bundle... this might take a sec 🍩"
 mkdir -p "$HOME/Applications"
 export HOMEBREW_CASK_OPTS="--appdir=$HOME/Applications"
 brew bundle --file="$DOTFILES_DIR/Brewfile"
+success "All packages installed!"
+
+# --- Install 1Password to /Applications ---
+
+step "🔐 1Password"
+
+info "Installing to /Applications (it needs to live there, it's picky 💅)"
+brew install --cask 1password --appdir=/Applications
+success "1Password ready to go 🤫"
 
 # --- Symlink dotfiles ---
 
-echo "==> Symlinking dotfiles..."
+step "🔗 Symlinks"
 
 symlink() {
   local src="$1"
@@ -48,7 +107,7 @@ symlink() {
   dest_dir="$(dirname "$dest")"
   mkdir -p "$dest_dir"
   ln -sf "$src" "$dest"
-  echo "  $dest -> $src"
+  link "$dest" "$src"
 }
 
 # Config files
@@ -69,64 +128,95 @@ symlink "$DOTFILES_DIR/.local/bin/iterm-open" "$HOME/.local/bin/iterm-open"
 ln -sf "$HOME/homebrew/bin/git" "$HOME/.local/bin/gti"
 ln -sf "$HOME/homebrew/bin/nvim" "$HOME/.local/bin/vi"
 ln -sf "$HOME/homebrew/bin/nvim" "$HOME/.local/bin/vim"
-echo "  gti -> git, vi -> nvim, vim -> nvim"
+info "gti → git, vi → nvim, vim → nvim (typo-proof aliases 🐾)"
 
 # AI config
 symlink "$DOTFILES_DIR/.claude/settings.json" "$HOME/.claude/settings.json"
+success "All linked up 💕"
 
 # --- Install latest Node via nodenv ---
 
-echo "==> Installing latest Node..."
+step "🟢 Node"
+
 eval "$(nodenv init - bash)"
 latest_node=$(nodenv install -l | grep -E '^\s*[0-9]+\.[0-9]+\.[0-9]+$' | tail -1 | tr -d ' ')
-echo "  Latest Node: $latest_node"
+info "Latest: ${bold}$latest_node${reset}"
 nodenv install -s "$latest_node"
 nodenv global "$latest_node"
+success "Node $latest_node 🐾"
 
 # --- Install latest Ruby via rbenv ---
 
-echo "==> Installing latest Ruby (this may take a few minutes)..."
+step "💎 Ruby"
+
+info "This may take a few minutes... grab a coffee ☕"
 eval "$(rbenv init - bash)"
 export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@3)"
 latest_ruby=$(rbenv install -l | grep -E '^\s*[0-9]+\.[0-9]+\.[0-9]+$' | tail -1 | tr -d ' ')
-echo "  Latest Ruby: $latest_ruby"
+info "Latest: ${bold}$latest_ruby${reset}"
 rbenv install -s "$latest_ruby"
 rbenv global "$latest_ruby"
+success "Ruby $latest_ruby 💅✨"
 
 # --- Install Claude Code ---
 
-echo "==> Installing Claude Code..."
-curl -fsSL https://claude.ai/install.sh | bash
+step "🤖 Claude Code"
+
+if command -v claude &>/dev/null; then
+  skip "Already installed 💜"
+else
+  info "Installing..."
+  curl -fsSL https://claude.ai/install.sh | bash
+  success "Claude Code installed!"
+fi
 
 # --- Install Codex ---
 
-echo "==> Installing Codex..."
+step "🧬 Codex"
+
+info "Installing..."
 brew install --cask codex
+success "Codex installed!"
 
 # --- App Store installs ---
 
-echo "==> Installing App Store apps..."
-mas install 497799835 || echo "  Xcode: already installed or App Store sign-in required"
-mas install 441258766 || echo "  Magnet: already installed or App Store sign-in required"
+step "🏪 App Store"
+
+mas install 497799835 || warn "Xcode: already installed or App Store sign-in required"
+mas install 441258766 || warn "Magnet: already installed or App Store sign-in required"
+mas install 1569813296 || warn "1Password for Safari: already installed or App Store sign-in required"
+success "App Store done 🛒"
 
 # --- Xcode post-install ---
 
+step "🔨 Xcode"
+
 if command -v xcodebuild &>/dev/null; then
-  echo "==> Configuring Xcode..."
-  sudo xcodebuild -license accept 2>/dev/null || echo "  Xcode license may need manual acceptance"
+  if ! xcodebuild -license check &>/dev/null; then
+    info "Accepting Xcode license (the one nobody reads lol)..."
+    sudo xcodebuild -license accept 2>/dev/null || warn "Xcode license may need manual acceptance"
+  else
+    skip "License already accepted"
+  fi
   xcodebuild -runFirstLaunch 2>/dev/null || true
+  success "Xcode configured!"
 fi
 
 # --- Git identity ---
 
-echo "==> Configuring git identity..."
+step "👤 Git identity"
+
 if [ -f "$HOME/.profile-env" ] && grep -q "GIT_AUTHOR_NAME" "$HOME/.profile-env"; then
-  echo "  Git identity already configured in ~/.profile-env:"
-  grep "GIT_AUTHOR" "$HOME/.profile-env"
+  skip "Already configured in ~/.profile-env"
+  grep "GIT_AUTHOR" "$HOME/.profile-env" | while read -r line; do
+    echo -e "  ${dim}${lavender}$line${reset}"
+  done
 else
-  read -p "  Git author name [Gary Johnson]: " git_name
+  prompt "Git author name [Gary Johnson]: "
+  read git_name
   git_name="${git_name:-Gary Johnson}"
-  read -p "  Git author email: " git_email
+  prompt "Git author email: "
+  read git_email
 
   cat >> "$HOME/.profile-env" <<EOF
 
@@ -136,16 +226,18 @@ export GIT_AUTHOR_EMAIL="$git_email"
 export GIT_COMMITTER_NAME="$git_name"
 export GIT_COMMITTER_EMAIL="$git_email"
 EOF
-  echo "  Written to ~/.profile-env"
+  success "Written to ~/.profile-env"
 fi
 
 # --- SSH key setup ---
 
+step "🔑 SSH key"
+
 # Generate key if needed
 if [ -f "$HOME/.ssh/id_ed25519" ]; then
-  echo "==> SSH key already exists at ~/.ssh/id_ed25519"
+  skip "Key already exists at ~/.ssh/id_ed25519"
 else
-  echo "==> Generating SSH key..."
+  info "Generating ed25519 key..."
 
   # Use git email if available, otherwise prompt
   if [ -n "$git_email" ]; then
@@ -153,10 +245,12 @@ else
   elif [ -f "$HOME/.profile-env" ] && grep -q "GIT_AUTHOR_EMAIL" "$HOME/.profile-env"; then
     ssh_email=$(grep "GIT_AUTHOR_EMAIL" "$HOME/.profile-env" | head -1 | sed 's/.*="\(.*\)"/\1/')
   else
-    read -p "  Email for SSH key: " ssh_email
+    prompt "Email for SSH key: "
+    read ssh_email
   fi
 
   ssh-keygen -t ed25519 -C "$ssh_email" -f "$HOME/.ssh/id_ed25519"
+  success "Key generated! 🗝️"
 fi
 
 # Configure SSH for GitHub and Forgejo
@@ -175,58 +269,66 @@ Host forgejo.app.usefulbits.io
   IdentitiesOnly yes
   IdentityFile ~/.ssh/id_ed25519
 EOF
-  echo "  Written ~/.ssh/config"
+  success "Written ~/.ssh/config"
 else
-  echo "  ~/.ssh/config already exists"
+  skip "~/.ssh/config already exists"
 fi
 
 # Add key to ssh-agent
 eval "$(ssh-agent -s)"
 ssh-add --apple-use-keychain "$HOME/.ssh/id_ed25519" 2>/dev/null
 
-# Add key to GitHub
-echo ""
-echo "==> Adding SSH key to GitHub..."
+step "🐙 GitHub SSH"
+
 if gh auth status &>/dev/null; then
-  echo "  Already logged into GitHub"
+  skip "Already logged into GitHub"
 else
-  gh auth login -w -p ssh
+  info "Opening browser to log in... 🌐"
+  gh auth login -w -p https
 fi
 gh ssh-key add "$HOME/.ssh/id_ed25519.pub" --title "$(hostname)-$(date +%Y%m%d)" 2>/dev/null \
-  && echo "  SSH key added to GitHub" \
-  || echo "  SSH key already exists on GitHub"
+  && success "SSH key added to GitHub 🎉" \
+  || skip "SSH key already on GitHub"
 
-# Add key to Forgejo
-echo ""
-echo "==> Adding SSH key to Forgejo..."
-if ssh -T git@forgejo.app.usefulbits.io 2>&1 | grep -q "Welcome"; then
-  echo "  SSH key already configured on Forgejo"
-else
-  pbcopy < "$HOME/.ssh/id_ed25519.pub"
-  echo "  Public key copied to clipboard. Add it at:"
-  echo "    https://forgejo.app.usefulbits.io/user/settings/keys"
-  read -p "  Press Enter after adding the key..."
-fi
+step "🦎 Forgejo SSH"
+
+pbcopy < "$HOME/.ssh/id_ed25519.pub"
+info "Public key copied to clipboard 📋"
+info "Add it here → ${bold}${hotpink}https://forgejo.app.usefulbits.io/user/settings/keys${reset}"
+prompt "Press Enter after adding the key: "
+read
 
 # --- macOS defaults ---
 
-echo "==> Applying macOS defaults..."
+step "🍎 macOS defaults"
+
 source "$DOTFILES_DIR/.macos"
+success "Defaults applied ✨"
 
 # --- iTerm2 config ---
 
-echo "==> Configuring iTerm2..."
+step "🖥️  iTerm2"
+
 defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$DOTFILES_DIR/iterm"
 defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
+success "iTerm2 configured 💅"
 
 # --- Done ---
 
 echo ""
-echo "==> Setup complete!"
+echo -e "  ${hotpink}♥${pink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${pink}♥${hotpink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${hotpink}♥${pink}♥${rose}♥${reset}"
 echo ""
-echo "Manual steps remaining:"
-echo "  - Activate VoiceInk license"
-echo "  - Configure Cap to point at https://cap.app.usefulbits.io"
-echo "  - Add Trilium PWA to dock from Safari: https://trilium-gary.app.usefulbits.io/"
+echo -e "       ${bold}${hotpink}🌺${reset}  ${bold}${pink}a l l   d o n e !${reset}  ${bold}${hotpink}🌺${reset}"
+echo -e "       ${italic}${lavender}~* your machine is ready to go *~${reset}"
 echo ""
-echo "Open a new terminal to pick up the new shell config."
+echo -e "  ${hotpink}♥${pink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${pink}♥${hotpink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${hotpink}♥${pink}♥${rose}♥${reset}"
+echo ""
+echo -e "  ${bold}${rose}📝 Manual steps remaining:${reset}"
+echo -e "  ${lilac}🌷${reset} Activate VoiceInk license"
+echo -e "  ${purple}🌷${reset} Configure Cap → ${bold}https://cap.app.usefulbits.io${reset}"
+echo -e "  ${periwinkle}🌷${reset} Add Trilium PWA to dock from Safari:"
+echo -e "     ${bold}https://trilium-gary.app.usefulbits.io/${reset}"
+echo -e "  ${pink}🌷${reset} Install 1Password extension for Chrome"
+echo ""
+echo -e "  ${mint}Open a new terminal to pick up the new shell config 💕${reset}"
+echo ""
