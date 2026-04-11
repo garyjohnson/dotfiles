@@ -298,6 +298,102 @@ info "Add it here → ${bold}${hotpink}https://forgejo.app.usefulbits.io/user/se
 prompt "Press Enter after adding the key: "
 read
 
+# --- Home VPN (L2TP/IPsec) ---
+
+step "🔒 Home VPN"
+
+if scutil --nc list 2>/dev/null | grep -q "Home VPN"; then
+  skip "Home VPN already configured"
+else
+  # Ensure 1Password CLI is connected
+  if ! echo "n" | op account list &>/dev/null; then
+    warn "1Password CLI is not connected."
+    info "Open ${bold}1Password → Settings → Developer${reset}"
+    info "and turn on ${bold}\"Integrate with 1Password CLI\"${reset}"
+    prompt "Press Enter once that's enabled: "
+    read
+  fi
+
+  # Verify it worked
+  if ! echo "n" | op account list &>/dev/null; then
+    err "Still can't reach 1Password — skipping VPN setup"
+  else
+
+  info "Fetching VPN credentials from 1Password..."
+  vpn_server="$(op item get 'Home VPN' --fields 'server address')"
+  vpn_user="$(op item get 'Home VPN' --fields 'username')"
+  vpn_pass="$(op item get 'Home VPN' --fields 'password')"
+  vpn_psk="$(op item get 'Home VPN' --fields 'pre-shared key')"
+
+  vpn_uuid="$(uuidgen)"
+  vpn_payload_uuid="$(uuidgen)"
+  vpn_profile="/tmp/home-vpn-$$.mobileconfig"
+
+  cat > "$vpn_profile" <<VPNEOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>PayloadType</key>
+      <string>com.apple.vpn.managed</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadIdentifier</key>
+      <string>io.usefulbits.vpn.l2tp</string>
+      <key>PayloadUUID</key>
+      <string>$vpn_payload_uuid</string>
+      <key>PayloadDisplayName</key>
+      <string>Home VPN</string>
+      <key>UserDefinedName</key>
+      <string>Home VPN</string>
+      <key>VPNType</key>
+      <string>L2TP</string>
+      <key>PPP</key>
+      <dict>
+        <key>AuthName</key>
+        <string>$vpn_user</string>
+        <key>AuthPassword</key>
+        <string>$vpn_pass</string>
+        <key>CommRemoteAddress</key>
+        <string>$vpn_server</string>
+      </dict>
+      <key>IPSec</key>
+      <dict>
+        <key>AuthenticationMethod</key>
+        <string>SharedSecret</string>
+        <key>SharedSecret</key>
+        <string>$vpn_psk</string>
+      </dict>
+    </dict>
+  </array>
+  <key>PayloadDisplayName</key>
+  <string>Home VPN</string>
+  <key>PayloadIdentifier</key>
+  <string>io.usefulbits.vpn</string>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>$vpn_uuid</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+</dict>
+</plist>
+VPNEOF
+
+  info "Opening VPN profile for installation..."
+  open "$vpn_profile"
+  info "Install the profile in ${bold}System Settings → Privacy & Security → Profiles${reset}"
+  prompt "Press Enter after installing the profile: "
+  read
+  rm -f "$vpn_profile"
+  success "Home VPN configured 🏠"
+
+  fi
+fi
+
 # --- macOS defaults ---
 
 step "🍎 macOS defaults"
