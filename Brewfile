@@ -24,6 +24,9 @@ brew "luarocks"
 # Fonts
 cask "font-meslo-lg-nerd-font"
 
+# CLI tools
+cask "1password-cli"
+
 # Apps
 cask "iterm2"
 cask "tailscale-app"
