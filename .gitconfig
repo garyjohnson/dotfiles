@@ -40,12 +40,9 @@
 [push]
 	default = current
   autoSetupRemote = true
-[user]
-	name = Gary Johnson
-	email = gary@gjtt.com
 [core]
 	editor = vim
-	excludesfile = /Users/garyjohnson/.gitignore
+	excludesfile = ~/.gitignore
 	autocrlf = input
 [filter "lfs"]
 	clean = git-lfs clean -- %f
