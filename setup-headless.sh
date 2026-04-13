@@ -315,7 +315,7 @@ else
 fi
 
 # Finder is always pinned by macOS, no need to add it
-dock_add "/Applications/Safari.app"
+dock_add "/System/Applications/Safari.app"
 dock_add "/System/Applications/System Settings.app"
 
 # Disable widgets on desktop
