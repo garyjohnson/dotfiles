@@ -295,6 +295,12 @@ else
   warn "iTerm2 not found — install it and add to dock manually"
 fi
 
+if [ -n "$lm_studio_path" ]; then
+  dock_add "$lm_studio_path"
+else
+  warn "LM Studio not found — install it and add to dock manually"
+fi
+
 # Finder is always pinned by macOS, no need to add it
 dock_add "/Applications/Safari.app"
 dock_add "/System/Applications/System Settings.app"
