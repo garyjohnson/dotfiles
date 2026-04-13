@@ -157,7 +157,20 @@ info "Setting auto-login for ${bold}$current_user${reset}"
 prompt "Enter password for $current_user: "
 read -s login_password
 echo ""
-sudo sysadminctl -autologin set -userName "$current_user" -password "$login_password"
+
+# Write the kcpassword file used by macOS auto-login.
+# The password is XOR-obfuscated with a fixed key.
+python3 -c "
+import sys, struct
+key = [125,137,82,35,210,188,221,234,163,185,31]
+pw = sys.argv[1].encode('utf-8')
+# Pad to next multiple of 12
+pw += b'\0' * (12 - len(pw) % 12)
+out = bytes([pw[i] ^ key[i % len(key)] for i in range(len(pw))])
+sys.stdout.buffer.write(out)
+" "$login_password" | sudo tee /etc/kcpassword > /dev/null
+sudo chmod 600 /etc/kcpassword
+sudo defaults write /Library/Preferences/com.apple.loginwindow autoLoginUser "$current_user"
 success "Auto-login configured for $current_user"
 
 # --- Homebrew ---
