@@ -1,0 +1,38 @@
+#!/bin/bash
+set -e
+
+pink='\033[38;5;213m'
+mint='\033[38;5;158m'
+peach='\033[38;5;217m'
+lavender='\033[38;5;183m'
+red='\033[38;5;204m'
+white='\033[38;5;255m'
+reset='\033[0m'
+bold='\033[1m'
+
+case "${1:-}" in
+  on)
+    echo -e "  ${pink}🧠${reset} ${white}Entering headless mode...${reset}"
+    sudo pmset -a displaysleep 0 sleep 0 disablesleep 1 standby 0 autopoweroff 0
+    sudo pmset -a lowpowermode 0
+    sudo pmset -a tcpkeepalive 1
+    echo -e "  ${mint}✨${reset} ${peach}Headless mode ON — this Mac will not sleep${reset}"
+    ;;
+  off)
+    echo -e "  ${lavender}💤${reset} ${white}Exiting headless mode...${reset}"
+    sudo pmset -a displaysleep 5 sleep 10 disablesleep 0 standby 1 autopoweroff 1
+    echo -e "  ${mint}✨${reset} ${peach}Headless mode OFF — normal sleep behavior restored${reset}"
+    ;;
+  status)
+    echo -e "  ${white}Current pmset settings:${reset}"
+    pmset -g
+    ;;
+  *)
+    echo -e "  ${bold}Usage:${reset} headless ${pink}on${reset} | ${lavender}off${reset} | ${white}status${reset}"
+    echo ""
+    echo -e "  ${pink}on${reset}      Prevent sleep, enable high power mode"
+    echo -e "  ${lavender}off${reset}     Restore default sleep & power settings"
+    echo -e "  ${white}status${reset}  Show current pmset settings"
+    exit 1
+    ;;
+esac
