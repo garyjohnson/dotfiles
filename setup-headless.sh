@@ -196,6 +196,22 @@ else
   success "1Password CLI installed!"
 fi
 
+# --- iTerm2 ---
+
+step "🖥️  iTerm2"
+
+if ls "$HOME/Applications/iTerm.app" /Applications/iTerm.app &>/dev/null; then
+  skip "iTerm2 already installed"
+else
+  info "Installing iTerm2..."
+  brew install --cask iterm2
+  success "iTerm2 installed!"
+fi
+
+defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$DOTFILES_DIR/iterm"
+defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
+success "iTerm2 configured 💅"
+
 # --- LM Studio ---
 
 step "🤖 LM Studio"
