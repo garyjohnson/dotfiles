@@ -214,6 +214,67 @@ if [ -n "$lm_studio_path" ]; then
     || skip "Login item may already exist"
 fi
 
+# --- Xcode Command Line Tools ---
+
+step "🔨 Xcode CLI Tools"
+
+if xcode-select -p &>/dev/null; then
+  skip "Already installed at $(xcode-select -p)"
+else
+  info "Installing Xcode Command Line Tools..."
+  xcode-select --install
+  info "Waiting for installation to complete..."
+  until xcode-select -p &>/dev/null; do
+    sleep 5
+  done
+  success "Xcode CLI Tools installed!"
+fi
+
+# --- iTerm2 preferences ---
+
+step "🖥️  iTerm2"
+
+defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$DOTFILES_DIR/iterm"
+defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
+success "iTerm2 configured 💅"
+
+# --- Dock ---
+
+step "🚢 Dock"
+
+info "Clearing default apps from dock..."
+defaults write com.apple.dock persistent-apps -array
+
+dock_add() {
+  defaults write com.apple.dock persistent-apps -array-add \
+    "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>$1</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
+}
+
+# iTerm2 first — check both install locations
+iterm_path=""
+if [ -d "$HOME/Applications/iTerm.app" ]; then
+  iterm_path="$HOME/Applications/iTerm.app"
+elif [ -d "/Applications/iTerm.app" ]; then
+  iterm_path="/Applications/iTerm.app"
+fi
+
+if [ -n "$iterm_path" ]; then
+  dock_add "$iterm_path"
+else
+  warn "iTerm2 not found — install it and add to dock manually"
+fi
+
+# Finder is always pinned by macOS, no need to add it
+dock_add "/Applications/Safari.app"
+dock_add "/System/Applications/System Settings.app"
+
+# Disable widgets on desktop
+defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false 2>/dev/null || true
+defaults write com.apple.WindowManager StandardHideDesktopIcons -bool true 2>/dev/null || true
+
+killall Dock 2>/dev/null || true
+success "Dock cleaned up — only the essentials 💅"
+
 # --- Install headless toggle script ---
 
 step "🔧 Headless toggle"
