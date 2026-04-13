@@ -110,9 +110,9 @@ symlink() {
   local dest_dir
   dest_dir="$(dirname "$dest")"
   mkdir -p "$dest_dir"
-  # If dest is an existing real directory (not a symlink), remove it first.
+  # If dest already exists as a symlink or real directory, remove it first.
   # Otherwise `ln -sf dir existing_dir` creates a symlink *inside* the dir.
-  if [ -d "$dest" ] && [ ! -L "$dest" ]; then
+  if [ -L "$dest" ] || { [ -d "$dest" ] && [ ! -L "$dest" ]; }; then
     rm -rf "$dest"
   fi
   ln -sf "$src" "$dest"
@@ -148,7 +148,8 @@ success "All linked up 💕"
 step "🟢 Node"
 
 eval "$(nodenv init - bash)"
-latest_node=$(nodenv install -l | grep -E '^\s*[0-9]+\.[0-9]+\.[0-9]+$' | tail -1 | tr -d ' ')
+node_max_major=24
+latest_node=$(nodenv install -l | grep -E '^\s*[0-9]+\.[0-9]+\.[0-9]+$' | awk -v max="$node_max_major" '{gsub(/^ +/,"")} split($0,v,".") && v[1]+0 <= max' | tail -1 | tr -d ' ')
 info "Latest: ${bold}$latest_node${reset}"
 nodenv install -s "$latest_node"
 nodenv global "$latest_node"
