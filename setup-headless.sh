@@ -124,7 +124,7 @@ if sudo systemsetup -getremotelogin 2>/dev/null | grep -q "On"; then
   skip "Remote Login already enabled"
 else
   info "Enabling Remote Login..."
-  sudo systemsetup -setremotelogin on
+  sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist
   success "SSH enabled"
 fi
 
