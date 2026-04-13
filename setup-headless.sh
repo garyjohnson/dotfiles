@@ -176,6 +176,16 @@ fi
 
 eval "$($HOME/homebrew/bin/brew shellenv)"
 
+# --- Install packages from Brewfile ---
+
+step "📦 Brew packages"
+
+info "Running brew bundle... this might take a sec 🍩"
+mkdir -p "$HOME/Applications"
+export HOMEBREW_CASK_OPTS="--appdir=$HOME/Applications"
+brew bundle --file="$DOTFILES_DIR/Brewfile"
+success "All packages installed!"
+
 # --- 1Password ---
 
 step "🔐 1Password"
