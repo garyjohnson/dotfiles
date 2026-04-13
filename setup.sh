@@ -92,9 +92,13 @@ success "All packages installed!"
 
 step "🔐 1Password"
 
-info "Installing to /Applications (it needs to live there, it's picky 💅)"
-brew install --cask 1password --appdir=/Applications
-success "1Password ready to go 🤫"
+if [ -d "/Applications/1Password.app" ]; then
+  skip "Already installed in /Applications"
+else
+  info "Installing to /Applications (it needs to live there, it's picky 💅)"
+  brew install --cask 1password --appdir=/Applications
+  success "1Password ready to go 🤫"
+fi
 
 # --- Symlink dotfiles ---
 
