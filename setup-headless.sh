@@ -291,7 +291,7 @@ defaults write com.apple.dock persistent-apps -array
 
 dock_add() {
   defaults write com.apple.dock persistent-apps -array-add \
-    "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>$1</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
+    "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>file://$1</string><key>_CFURLStringType</key><integer>15</integer></dict></dict></dict>"
 }
 
 # iTerm2 first — check both install locations
@@ -315,7 +315,7 @@ else
 fi
 
 # Finder is always pinned by macOS, no need to add it
-dock_add "/System/Applications/Safari.app"
+dock_add "/Applications/Safari.app"
 dock_add "/System/Applications/System Settings.app"
 
 # Disable widgets on desktop
