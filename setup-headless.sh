@@ -147,22 +147,18 @@ step "🔓 Auto-login"
 
 current_user="$(whoami)"
 
-if defaults read /Library/Preferences/com.apple.loginwindow autoLoginUser 2>/dev/null | grep -q "$current_user"; then
-  skip "Auto-login already configured for $current_user"
-else
-  # Check for FileVault
-  if fdesetup status 2>/dev/null | grep -q "On"; then
-    warn "FileVault is enabled — auto-login won't work until it's disabled"
-    warn "Disable via: sudo fdesetup disable"
-  fi
-
-  info "Setting auto-login for ${bold}$current_user${reset}"
-  prompt "Enter password for $current_user: "
-  read -s login_password
-  echo ""
-  sudo sysadminctl -autologin set -userName "$current_user" -password "$login_password"
-  success "Auto-login configured for $current_user"
+# Check for FileVault
+if fdesetup status 2>/dev/null | grep -q "On"; then
+  warn "FileVault is enabled — auto-login won't work until it's disabled"
+  warn "Disable via: sudo fdesetup disable"
 fi
+
+info "Setting auto-login for ${bold}$current_user${reset}"
+prompt "Enter password for $current_user: "
+read -s login_password
+echo ""
+sudo sysadminctl -autologin set -userName "$current_user" -password "$login_password"
+success "Auto-login configured for $current_user"
 
 # --- Homebrew ---
 
@@ -290,8 +286,11 @@ info "Clearing default apps from dock..."
 defaults write com.apple.dock persistent-apps -array
 
 dock_add() {
+  local app_path="$1"
+  local app_name
+  app_name="$(basename "$app_path" .app)"
   defaults write com.apple.dock persistent-apps -array-add \
-    "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>file://$1</string><key>_CFURLStringType</key><integer>15</integer></dict></dict></dict>"
+    "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>file://$app_path/</string><key>_CFURLStringType</key><integer>15</integer></dict><key>file-label</key><string>$app_name</string><key>file-type</key><integer>41</integer></dict><key>tile-type</key><string>file-tile</string></dict>"
 }
 
 # iTerm2 first — check both install locations
