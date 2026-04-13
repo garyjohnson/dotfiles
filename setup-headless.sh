@@ -300,8 +300,7 @@ dock_add "/Applications/Safari.app"
 dock_add "/System/Applications/System Settings.app"
 
 # Disable widgets on desktop
-defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false 2>/dev/null || true
-defaults write com.apple.WindowManager StandardHideDesktopIcons -bool true 2>/dev/null || true
+defaults write com.apple.WindowManager StandardHideWidgets -bool true 2>/dev/null || true
 
 killall Dock 2>/dev/null || true
 success "Dock cleaned up — only the essentials 💅"
