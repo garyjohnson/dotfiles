@@ -1,68 +1,27 @@
 # dotfiles
 
-This is my repo for first-time machine setup. It contains the scripts and files necessary for me to get my machines up and running for the first time, work and personal.
+One-command macOS machine setup. Run `./setup.sh` on a fresh Mac and it installs everything, symlinks configs, and tells you what's left to do manually. Used across both work and personal machines.
 
-## Environment
+## How it works
 
-macOS
-(customizations in .macos)
-Additionally I need list view to to be the default view in finder.
+`setup.sh` is the entry point. It installs Homebrew, runs the `Brewfile`, symlinks dotfiles into `$HOME`, sets up dev toolchains (node via nodenv, ruby via rbenv), configures SSH/GitHub, pulls VPN credentials from 1Password CLI, applies macOS defaults, and prints manual steps at the end.
 
-Homebrew should be installed to ~/homebrew because many of my systems are multi-user. Can we source it in .zshrc in a way that will be durable across different environments (given unique home folders)?
+The Brewfile and setup.sh are the source of truth for what gets installed -- don't duplicate that list here or in docs.
 
-* Customizations in ~/.zshrc (in dotfiles)
-* Machine-specific customizations and env vars in ~/.profile-env (sourced by .zshrc, not in dotfiles)
+## Key design decisions
 
-## Terminal apps
+**Homebrew lives at `~/homebrew`**, not `/opt/homebrew` or `/usr/local`. This is intentional -- some machines are multi-user, so everything stays under `$HOME`. The .zshrc sources brew via `$HOME/homebrew/bin/brew shellenv` so it works regardless of the username.
 
-* neovim with AstroNvim (config in dotfiles)
-* lua (nvim)
-* zsh
-* tmux (config in dotfiles)
-* oh-my-posh (terminal prompt, custom theme in dotfiles)
-* ripgrep (search)
-* fzf (search)
-* ack (search)
-* tree (dir listings)
-* zoxide (quick dir switching)
+**Machine-specific config goes in `~/.profile-env`**, which is sourced by .zshrc but not checked into this repo. Git identity, machine-specific env vars, anything that differs between machines lives there.
 
-## Development
+**Configs in this repo are symlinked, not copied.** Changes to .zshrc, .gitconfig, .tmux.conf, nvim config, oh-my-posh themes, and iTerm prefs are all symlinked from the dotfiles dir into `$HOME`. Edit them here.
 
-* node (nodenv)
-* ruby (rbenv)
-* postgres
-* go
+**1Password gets special treatment** -- it must live in `/Applications` (not `~/Applications` like everything else) because it's picky about that.
 
-## AI
+## What's in .local/bin
 
-* claude code
-* openai codex
+A handful of small utilities that get symlinked individually (not the whole directory). The ones that matter: `allow-exec`, `until-fail`, `until-success`, `iterm-open`. There are also typo/alias symlinks: `gti` -> git, `vi`/`vim` -> nvim. Ask before touching anything else in .local -- most of it is legacy.
 
-## macOS Applications
+## The vibe
 
-* iTerm2 (pointed to config folder in dotfiles)
-* Tailscale
-* Magnet (App Store)
-* VoiceInk (license file to activate)
-* Cap (configured to my local server at https://cap.app.usefulbits.io)
-* Fastmail
-* Obsidian
-* Google Chrome (secondary)
-* Slack
-* Notion
-* 1Password
-
-## PWAs
-
-* https://trilium-gary.app.usefulbits.io/ added to dock from Safari
-
-## .local
-
-Much of this is not relevant anymore, so ask before doing anything here. The things I care about:
-* allow-exec
-* until-fail
-* until-success
-* iterm-open
-* gti (should be symlinked to homebrewed git)
-* vi (should be symlinked to homebrewed nvim)
-* vim (should be symlinked to homebrewed nvim)
+The setup script is intentionally cute (pink/lavender/sparkle output). That's on purpose, keep it that way. Changes should be idempotent -- running setup.sh twice should be safe and skip what's already done.

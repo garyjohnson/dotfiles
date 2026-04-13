@@ -27,3 +27,5 @@ autoload -U colors && colors
 tabname() { echo -ne "\033]0;"${1}"\007"; }
 
 diffbranch() { vim -p $(git diff --name-only ${1} HEAD) -c "tabdo :Gdiff ${1}" }
+
+moshdev() { mosh devts -- tmux new -A -s main }

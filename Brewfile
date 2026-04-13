@@ -10,6 +10,7 @@ brew "tree"
 brew "zoxide"
 brew "git"
 brew "mas"
+brew "mosh"
 
 # Git hosting CLIs
 brew "gh"
