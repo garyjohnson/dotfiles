@@ -299,7 +299,8 @@ info "Clearing default apps from dock..."
 defaults write com.apple.dock persistent-apps -array
 
 dock_add() {
-  local app_path="$1"
+  local app_path
+  app_path="$(readlink -f "$1" 2>/dev/null || echo "$1")"
   local app_name
   app_name="$(basename "$app_path" .app)"
   defaults write com.apple.dock persistent-apps -array-add \
