@@ -157,7 +157,10 @@ else
   fi
 
   info "Setting auto-login for ${bold}$current_user${reset}"
-  sudo defaults write /Library/Preferences/com.apple.loginwindow autoLoginUser "$current_user"
+  prompt "Enter password for $current_user: "
+  read -s login_password
+  echo ""
+  sudo sysadminctl -autologin set -userName "$current_user" -password "$login_password"
   success "Auto-login configured for $current_user"
 fi
 
