@@ -161,6 +161,21 @@ else
   success "Auto-login configured for $current_user"
 fi
 
+# --- Homebrew ---
+
+step "🍺 Homebrew"
+
+if [ ! -f "$HOME/homebrew/bin/brew" ]; then
+  info "Installing Homebrew to ~/homebrew..."
+  mkdir -p "$HOME/homebrew"
+  curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip-components 1 -C "$HOME/homebrew"
+  success "Homebrew installed!"
+else
+  skip "Homebrew already installed at ~/homebrew"
+fi
+
+eval "$($HOME/homebrew/bin/brew shellenv)"
+
 # --- 1Password ---
 
 step "🔐 1Password"
@@ -277,18 +292,50 @@ success "Dock cleaned up — only the essentials 💅"
 
 # --- Install headless toggle script ---
 
-step "🔧 Headless toggle"
+# --- Symlink dotfiles ---
 
-mkdir -p "$DOTFILES_DIR/.local/bin"
-info "Installing headless toggle to .local/bin..."
+step "🔗 Symlinks"
 
-# Symlink the toggle script
+link()    { echo -e "  ${dim}${purple}   $1 → $2${reset}"; }
+
+symlink() {
+  local src="$1"
+  local dest="$2"
+  local dest_dir
+  dest_dir="$(dirname "$dest")"
+  mkdir -p "$dest_dir"
+  if [ -L "$dest" ] || { [ -d "$dest" ] && [ ! -L "$dest" ]; }; then
+    rm -rf "$dest"
+  fi
+  ln -sf "$src" "$dest"
+  link "$dest" "$src"
+}
+
+# Config files
+symlink "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
+symlink "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
+symlink "$DOTFILES_DIR/.gitignore" "$HOME/.gitignore"
+symlink "$DOTFILES_DIR/.tmux.conf" "$HOME/.tmux.conf"
+symlink "$DOTFILES_DIR/.config/nvim" "$HOME/.config/nvim"
+symlink "$DOTFILES_DIR/oh-my-posh-themes" "$HOME/oh-my-posh-themes"
+
+# Individual .local/bin scripts
+symlink "$DOTFILES_DIR/.local/bin/allow-exec" "$HOME/.local/bin/allow-exec"
+symlink "$DOTFILES_DIR/.local/bin/until-fail" "$HOME/.local/bin/until-fail"
+symlink "$DOTFILES_DIR/.local/bin/until-success" "$HOME/.local/bin/until-success"
+symlink "$DOTFILES_DIR/.local/bin/iterm-open" "$HOME/.local/bin/iterm-open"
+symlink "$DOTFILES_DIR/.local/bin/headless" "$HOME/.local/bin/headless"
+
+# Tool symlinks (typo-correctors and editor aliases)
 mkdir -p "$HOME/.local/bin"
-if [ -L "$HOME/.local/bin/headless" ]; then
-  rm "$HOME/.local/bin/headless"
-fi
-ln -sf "$DOTFILES_DIR/.local/bin/headless" "$HOME/.local/bin/headless"
-success "Toggle installed — use 'headless on' or 'headless off'"
+ln -sf "$HOME/homebrew/bin/git" "$HOME/.local/bin/gti"
+ln -sf "$HOME/homebrew/bin/nvim" "$HOME/.local/bin/vi"
+ln -sf "$HOME/homebrew/bin/nvim" "$HOME/.local/bin/vim"
+info "gti → git, vi → nvim, vim → nvim (typo-proof aliases 🐾)"
+
+# AI config
+symlink "$DOTFILES_DIR/.claude/settings.json" "$HOME/.claude/settings.json"
+success "All linked up 💕"
 
 # --- Done ---
 
