@@ -110,6 +110,11 @@ symlink() {
   local dest_dir
   dest_dir="$(dirname "$dest")"
   mkdir -p "$dest_dir"
+  # If dest is an existing real directory (not a symlink), remove it first.
+  # Otherwise `ln -sf dir existing_dir` creates a symlink *inside* the dir.
+  if [ -d "$dest" ] && [ ! -L "$dest" ]; then
+    rm -rf "$dest"
+  fi
   ln -sf "$src" "$dest"
   link "$dest" "$src"
 }
