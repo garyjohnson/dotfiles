@@ -173,6 +173,26 @@ sudo chmod 600 /etc/kcpassword
 sudo defaults write /Library/Preferences/com.apple.loginwindow autoLoginUser "$current_user"
 success "Auto-login configured for $current_user"
 
+# --- Hostname ---
+# Set explicitly so mDNS doesn't pick up some mangled/auto-generated name
+# (macOS will sometimes grab whatever it finds on the network at first boot).
+
+step "💻 Hostname"
+
+current_hostname="$(scutil --get LocalHostName 2>/dev/null || hostname -s)"
+prompt "Hostname [$current_hostname]: "
+read desired_hostname
+desired_hostname="${desired_hostname:-$current_hostname}"
+
+if [ "$desired_hostname" = "$current_hostname" ]; then
+  skip "Already set to $current_hostname"
+else
+  sudo scutil --set HostName "$desired_hostname"
+  sudo scutil --set LocalHostName "$desired_hostname"
+  sudo scutil --set ComputerName "$desired_hostname"
+  success "Hostname set to $desired_hostname 💻"
+fi
+
 # --- Homebrew ---
 
 step "🍺 Homebrew"

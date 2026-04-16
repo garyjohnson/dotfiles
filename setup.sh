@@ -63,6 +63,26 @@ echo -e "  ${hotpink}♥${pink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥
 echo ""
 echo -e "  ${dim}${periwinkle}📂 $DOTFILES_DIR${reset}"
 
+# --- Hostname ---
+# Set explicitly so mDNS doesn't pick up some mangled/auto-generated name
+# (macOS will sometimes grab whatever it finds on the network at first boot).
+
+step "💻 Hostname"
+
+current_hostname="$(scutil --get LocalHostName 2>/dev/null || hostname -s)"
+prompt "Hostname [$current_hostname]: "
+read desired_hostname
+desired_hostname="${desired_hostname:-$current_hostname}"
+
+if [ "$desired_hostname" = "$current_hostname" ]; then
+  skip "Already set to $current_hostname"
+else
+  sudo scutil --set HostName "$desired_hostname"
+  sudo scutil --set LocalHostName "$desired_hostname"
+  sudo scutil --set ComputerName "$desired_hostname"
+  success "Hostname set to $desired_hostname 💻"
+fi
+
 # --- Install Homebrew to ~/homebrew ---
 
 step "🍺 Homebrew"

@@ -11,6 +11,7 @@ brew "zoxide"
 brew "git"
 brew "mas"
 brew "mosh"
+brew "wget"
 
 # Git hosting CLIs
 brew "gh"
@@ -21,6 +22,7 @@ brew "nodenv"
 brew "go"
 brew "postgresql@18"
 brew "luarocks"
+brew "git-town"
 
 # Fonts
 cask "font-meslo-lg-nerd-font"
