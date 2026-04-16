@@ -9,7 +9,6 @@ brew "ack"
 brew "tree"
 brew "zoxide"
 brew "git"
-brew "mas"
 brew "mosh"
 brew "wget"
 
@@ -24,21 +23,28 @@ brew "postgresql@18"
 brew "luarocks"
 brew "git-town"
 
-# Fonts
-cask "font-meslo-lg-nerd-font"
+# charm.sh tools
+brew "crush"
 
-# CLI tools
-cask "1password-cli"
+if OS.mac?
+  brew "mas"
 
-# Apps
-cask "iterm2"
-cask "tailscale-app"
-cask "obsidian"
-cask "google-chrome"
-cask "fastmail"
-cask "voiceink"
-cask "cap"
-cask "slack"
-cask "notion"
-cask "monitorcontrol"
-cask "claude"
+  # Fonts
+  cask "font-meslo-lg-nerd-font"
+
+  # CLI tools
+  cask "1password-cli"
+
+  # Apps
+  cask "iterm2"
+  cask "tailscale-app"
+  cask "obsidian"
+  cask "google-chrome"
+  cask "fastmail"
+  cask "voiceink"
+  cask "cap"
+  cask "slack"
+  cask "notion"
+  cask "monitorcontrol"
+  cask "claude"
+end

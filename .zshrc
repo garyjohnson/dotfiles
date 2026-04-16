@@ -1,10 +1,13 @@
 [[ -f ~/.profile-env ]] && . ~/.profile-env
 
-# Homebrew (per-user install at ~/homebrew)
-eval "$($HOME/homebrew/bin/brew shellenv)"
-
-# PATH
-export PATH="$HOME/.local/bin:$HOME/homebrew/opt/libpq/bin:$PATH"
+# Homebrew (per-user install at ~/homebrew on macOS, /home/linuxbrew on Linux)
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  eval "$($HOME/homebrew/bin/brew shellenv)"
+  export PATH="$HOME/.local/bin:$HOME/homebrew/opt/libpq/bin:$PATH"
+else
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  export PATH="$HOME/.local/bin:/home/linuxbrew/.linuxbrew/opt/libpq/bin:$PATH"
+fi
 
 # History
 export HISTIGNORE='rm*:git*'
@@ -23,8 +26,10 @@ source <(fzf --zsh)
 # Colors
 autoload -U colors && colors
 
-# Rename iterm2 tab
-tabname() { echo -ne "\033]0;"${1}"\007"; }
+# Rename iterm2 tab (macOS only)
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  tabname() { echo -ne "\033]0;"${1}"\007"; }
+fi
 
 diffbranch() { vim -p $(git diff --name-only ${1} HEAD) -c "tabdo :Gdiff ${1}" }
 
