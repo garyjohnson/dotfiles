@@ -24,7 +24,7 @@ brew "luarocks"
 brew "git-town"
 
 # charm.sh tools
-brew "crush"
+brew "charmbracelet/tap/crush"
 
 if OS.mac?
   brew "mas"
