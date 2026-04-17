@@ -137,6 +137,7 @@ symlink "$DOTFILES_DIR/oh-my-posh-themes" "$HOME/oh-my-posh-themes"
 # Individual .local/bin scripts
 symlink "$DOTFILES_DIR/.local/bin/until-fail"    "$HOME/.local/bin/until-fail"
 symlink "$DOTFILES_DIR/.local/bin/until-success" "$HOME/.local/bin/until-success"
+symlink "$DOTFILES_DIR/.local/bin/kagi"          "$HOME/.local/bin/kagi"
 
 # Tool symlinks (typo-correctors and editor aliases)
 mkdir -p "$HOME/.local/bin"
@@ -145,6 +146,15 @@ ln -sf "$(brew --prefix neovim)/bin/nvim" "$HOME/.local/bin/vi"
 ln -sf "$(brew --prefix neovim)/bin/nvim" "$HOME/.local/bin/vim"
 info "gti → git, vi → nvim, vim → nvim (typo-proof aliases 🐾)"
 
+# pi config
+symlink "$DOTFILES_DIR/.pi/agent" "$HOME/.pi/agent"
+
+# pi auth setup (copy template if auth.json doesn't exist)
+if [[ ! -f "$HOME/.pi/agent/auth.json" ]]; then
+  info "Setting up pi auth template..."
+  cp "$DOTFILES_DIR/.pi/agent/auth.template.json" "$HOME/.pi/agent/auth.json"
+  warn "Edit ~/.pi/agent/auth.json with your credentials"
+fi
 success "All linked up 💕"
 
 # --- TPM (Tmux Plugin Manager) ---
@@ -177,7 +187,7 @@ success "Node $latest_node 🐾"
 step "📦 npm globals"
 
 eval "$(nodenv init - bash)"
-npm install -g codex @mariozechner/pi-coding-agent firecrawl-cli @siteboon/claude-code-ui
+npm install -g --force codex @mariozechner/pi-coding-agent firecrawl-cli
 nodenv rehash
 success "npm globals installed!"
 
@@ -193,6 +203,21 @@ info "Latest: ${bold}$latest_ruby${reset}"
 rbenv install -s "$latest_ruby"
 rbenv global "$latest_ruby"
 success "Ruby $latest_ruby 💅✨"
+
+# --- Rust via rustup ---
+
+step "🦀 Rust"
+
+if command -v rustup &>/dev/null; then
+  info "Updating rustup and toolchain..."
+  rustup update
+  skip "Already installed — updated!"
+else
+  info "Installing Rust via rustup..."
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+  source "$HOME/.cargo/env"
+  success "Rust $(rustc --version | cut -d' ' -f2) installed 🦀"
+fi
 
 # --- Claude Code ---
 

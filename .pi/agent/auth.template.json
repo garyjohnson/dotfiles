@@ -1,0 +1,9 @@
+{
+  "openai-codex": {
+    "type": "oauth",
+    "access": "YOUR_ACCESS_TOKEN",
+    "refresh": "YOUR_REFRESH_TOKEN",
+    "expires": 0,
+    "accountId": "YOUR_ACCOUNT_ID"
+  }
+}

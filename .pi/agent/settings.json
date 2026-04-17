@@ -1,0 +1,6 @@
+{
+  "lastChangelogVersion": "0.67.6",
+  "defaultProvider": "deepinfra",
+  "defaultModel": "Qwen/Qwen3.5-397B-A17B",
+  "theme": "catppuccin-macchiato"
+}

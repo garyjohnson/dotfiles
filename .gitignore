@@ -7,3 +7,4 @@ Brewfile.lock.json
 .local/bin/share/
 .local/bin/state/
 .claude/settings.local.json
+.pi/agent/auth.json

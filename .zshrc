@@ -16,6 +16,9 @@ export HISTORY_IGNORE='(rm*|git*)'
 # Ruby build config (fixes openssl@3 issue)
 export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@3)"
 
+# Rust
+export PATH="$HOME/.cargo/bin:$PATH"
+
 # Tool inits
 eval "$(oh-my-posh init zsh --config $HOME/oh-my-posh-themes/custom-janedobbeleer.omp.json)"
 eval "$(nodenv init - zsh)"
