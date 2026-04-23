@@ -23,9 +23,6 @@ brew "postgresql@18"
 brew "luarocks"
 brew "git-town"
 
-# charm.sh tools
-brew "charmbracelet/tap/crush"
-
 if OS.mac?
   brew "mas"
 
