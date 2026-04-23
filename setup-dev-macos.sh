@@ -192,6 +192,15 @@ nodenv install -s "$latest_node"
 nodenv global "$latest_node"
 success "Node $latest_node 🐾"
 
+# --- npm globals ---
+
+step "📦 npm globals"
+
+eval "$(nodenv init - bash)"
+npm install -g --force codex @mariozechner/pi-coding-agent firecrawl-cli
+nodenv rehash
+success "npm globals installed!"
+
 # --- Install latest Ruby via rbenv ---
 
 step "💎 Ruby"
