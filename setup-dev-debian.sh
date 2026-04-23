@@ -146,8 +146,14 @@ ln -sf "$(brew --prefix neovim)/bin/nvim" "$HOME/.local/bin/vi"
 ln -sf "$(brew --prefix neovim)/bin/nvim" "$HOME/.local/bin/vim"
 info "gti → git, vi → nvim, vim → nvim (typo-proof aliases 🐾)"
 
-# pi config
-symlink "$DOTFILES_DIR/.pi/agent" "$HOME/.pi/agent"
+# pi config — symlink shared configs, keep local runtime files
+mkdir -p "$HOME/.pi/agent"
+symlink "$DOTFILES_DIR/.pi/agent/models.json" "$HOME/.pi/agent/models.json"
+symlink "$DOTFILES_DIR/.pi/agent/settings.json" "$HOME/.pi/agent/settings.json"
+symlink "$DOTFILES_DIR/.pi/agent/themes" "$HOME/.pi/agent/themes"
+if [[ -d "$DOTFILES_DIR/.pi/extensions" ]]; then
+  symlink "$DOTFILES_DIR/.pi/extensions" "$HOME/.pi/extensions"
+fi
 
 # pi auth setup (copy template if auth.json doesn't exist)
 if [[ ! -f "$HOME/.pi/agent/auth.json" ]]; then

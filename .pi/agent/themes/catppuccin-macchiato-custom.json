@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/badlogic/pi-mono/main/packages/coding-agent/src/modes/interactive/theme/theme-schema.json",
-  "name": "catppuccin-macchiato",
+  "name": "catppuccin-macchiato-custom",
   "vars": {
     "rosewater": "#f4dbd6",
     "flamingo": "#f0c6c6",
@@ -47,7 +47,7 @@
     "customMessageBg": "surface0",
     "customMessageText": "",
     "customMessageLabel": "pink",
-    "toolPendingBg": "#1a1b26",
+    "toolPendingBg": "mantle",
     "toolSuccessBg": "#1e2a24",
     "toolErrorBg": "#2a1e22",
     "toolTitle": "blue",

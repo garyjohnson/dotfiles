@@ -1,6 +1,13 @@
 {
-  "lastChangelogVersion": "0.67.6",
+  "lastChangelogVersion": "0.69.0",
   "defaultProvider": "deepinfra",
-  "defaultModel": "Qwen/Qwen3.5-397B-A17B",
-  "theme": "catppuccin-macchiato"
+  "defaultModel": "Qwen/Qwen3.6-35B-A3B",
+  "theme": "catppuccin-macchiato",
+  "packages": [
+    "npm:@sherif-fanous/pi-catppuccin",
+    "/home/garyjohnson/repositories/pi-badger"
+  ],
+  "defaultThinkingLevel": "medium",
+  "hideThinkingBlock": true,
+  "enableInstallTelemetry": false
 }
