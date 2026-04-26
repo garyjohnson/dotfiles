@@ -24,6 +24,24 @@
           }
         },
         {
+          "id": "qwen/qwen3.6-35b-a3b",
+          "name": "Qwen 3.6 35B (GGUF, Q4_K_M, LM Studio)",
+          "reasoning": true,
+          "input": ["text", "image"],
+          "contextWindow": 128504,
+          "maxTokens": 81920,
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "compat": {
+            "supportsReasoningEffort": false,
+            "thinkingFormat": "qwen-chat-template"
+          }
+        },
+        {
           "id": "qwen3.6-35b-a3b-mlx",
           "name": "Qwen 3.6 35B A3B (LM Studio, MLX)",
           "reasoning": true,

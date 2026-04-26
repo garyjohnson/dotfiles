@@ -1,7 +1,7 @@
 {
   "lastChangelogVersion": "0.70.2",
-  "defaultProvider": "lmstudio",
-  "defaultModel": "qwen3.6-35b-a3b-mlx",
+  "defaultProvider": "deepinfra",
+  "defaultModel": "MiniMaxAI/MiniMax-M2.5",
   "theme": "catppuccin-macchiato",
   "packages": [
     "npm:@sherif-fanous/pi-catppuccin",
@@ -28,6 +28,7 @@
     "deepinfra/deepseek-ai/DeepSeek-V4-Pro",
     "deepinfra/deepseek-ai/DeepSeek-V4-Flash",
     "deepinfra/moonshotai/Kimi-K2.6",
-    "lmstudio/qwen3.6-35b-a3b-mlx"
+    "lmstudio/qwen3.6-35b-a3b-mlx",
+    "lmstudio/qwen/qwen3.6-35b-a3b"
   ]
 }
