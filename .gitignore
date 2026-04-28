@@ -7,4 +7,9 @@ Brewfile.lock.json
 .local/bin/share/
 .local/bin/state/
 .claude/settings.local.json
+<<<<<<< HEAD
 .pi/agent/auth.json
+=======
+git-town.toml
+.git-town.toml
+>>>>>>> c6cfe8d (Small tweaks)

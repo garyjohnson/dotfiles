@@ -2223,7 +2223,7 @@
 				<key>editor</key>
 				<string>com.sublimetext.2</string>
 				<key>text</key>
-				<string>[ -z "\2" ] &amp;&amp; echo vim \1 || echo vim +\2 \1</string>
+				<string>[ -z "\2" ] &amp;&amp; echo vim "\1" || echo vim +\2 "\1"</string>
 			</dict>
 			<key>Send Bell Alert</key>
 			<false/>
