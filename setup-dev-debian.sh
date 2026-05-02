@@ -69,7 +69,7 @@ step "📦 apt bootstrap"
 
 info "Updating package list and installing essentials..."
 sudo apt-get update -qq
-sudo apt-get install -y zsh curl git build-essential tea libyaml-dev zlib1g-dev libssl-dev libreadline-dev libncurses5-dev libffi-dev libgdbm-dev
+sudo apt-get install -y zsh curl git build-essential tea libyaml-dev zlib1g-dev libssl-dev libreadline-dev libncurses5-dev libffi-dev libgdbm-dev mosh
 success "apt packages installed!"
 
 # --- zsh as default shell ---

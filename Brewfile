@@ -9,7 +9,6 @@ brew "ack"
 brew "tree"
 brew "zoxide"
 brew "git"
-brew "mosh"
 brew "wget"
 
 # Git hosting CLIs
@@ -25,6 +24,7 @@ brew "git-town"
 brew "lazygit"
 
 if OS.mac?
+  brew "mosh"
   brew "mas"
 
   # Fonts
