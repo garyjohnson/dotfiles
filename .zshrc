@@ -36,7 +36,8 @@ fi
 
 diffbranch() { vim -p $(git diff --name-only ${1} HEAD) -c "tabdo :Gdiff ${1}" }
 
-moshdev() { mosh devts -- tmux new -A -s main }
+moshdev() { mosh dev -- tmux new -A -s main }
+moshdev3() { mosh dev3 -- tmux new -A -s main }
 
 # claude
 export CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY=true
