@@ -73,13 +73,19 @@ current_hostname="$(scutil --get LocalHostName 2>/dev/null || hostname -s)"
 prompt "Hostname [$current_hostname]: "
 read desired_hostname
 desired_hostname="${desired_hostname:-$current_hostname}"
+hostname_changed=false
 
-if [ "$desired_hostname" = "$current_hostname" ]; then
-  skip "Already set to $current_hostname"
-else
-  sudo scutil --set HostName "$desired_hostname"
-  sudo scutil --set LocalHostName "$desired_hostname"
-  sudo scutil --set ComputerName "$desired_hostname"
+for attr in HostName LocalHostName ComputerName; do
+  current_val="$(scutil --get "$attr" 2>/dev/null || true)"
+  if [ "$desired_hostname" = "$current_val" ]; then
+    skip "$attr already set to $current_val"
+  else
+    sudo scutil --set "$attr" "$desired_hostname"
+    hostname_changed=true
+  fi
+done
+
+if [ "$hostname_changed" = true ]; then
   success "Hostname set to $desired_hostname 💻"
 fi
 
@@ -361,6 +367,62 @@ gh ssh-key add "$HOME/.ssh/id_ed25519.pub" --title "$(hostname)-$(date +%Y%m%d)"
   && success "SSH key added to GitHub 🎉" \
   || skip "SSH key already on GitHub"
 
+# --- Dev SSH keys from 1Password ---
+
+step "🔑 Dev SSH keys from 1Password"
+
+# Ensure 1Password CLI is connected
+if ! echo "n" | op account list &>/dev/null; then
+  warn "1Password CLI is not connected."
+  info "Open ${bold}1Password → Settings → Developer${reset}"
+  info "and turn on ${bold}\"Integrate with 1Password CLI\"${reset}"
+  prompt "Press Enter once that's enabled: "
+  read
+fi
+
+if ! echo "n" | op account list &>/dev/null; then
+  err "Still can't reach 1Password — skipping Dev SSH keys"
+else
+  for item in "Dev SSH:dev_id_ed25519" "Dev3 SSH:dev3_id_ed25519"; do
+    op_name="${item%%:*}"
+    key_name="${item##*:}"
+
+    if [ -f "$HOME/.ssh/$key_name" ]; then
+      skip "$op_name key already exists at ~/.ssh/$key_name"
+    else
+      info "Fetching $op_name key from 1Password..."
+      # op wraps field values in quotes; strip them and any blank lines
+      op item get "$op_name" --fields "private key" --reveal \
+        | awk 'NR==1{sub(/^\"/,\"\")} END{sub(/\"$/,\"\")} {print}' | awk 'NF' > "$HOME/.ssh/$key_name"
+      op item get "$op_name" --fields "public key" \
+        | awk 'NR==1{sub(/^\"/,\"\")} END{sub(/\"$/,\"\")} {print}' > "$HOME/.ssh/$key_name.pub"
+      chmod 600 "$HOME/.ssh/$key_name"
+      chmod 644 "$HOME/.ssh/$key_name.pub"
+      success "$op_name key saved to ~/.ssh/$key_name 🗝️"
+    fi
+  done
+
+  # Append Dev host configs if not already present
+  for entry in "dev:dev_id_ed25519" "dev3:dev3_id_ed25519"; do
+    host="${entry%%:*}"
+    key_name="${entry##*:}"
+    if grep -q "^Host ${host}$" "$HOME/.ssh/config" 2>/dev/null; then
+      skip "$host SSH config already present"
+    else
+      cat >> "$HOME/.ssh/config" <<HOSTEOF
+
+Host $host
+  AddKeysToAgent yes
+  UseKeychain yes
+  HostName $host
+  User garyjohnson
+  IdentityFile ~/.ssh/${key_name}
+HOSTEOF
+      success "$host SSH config added"
+    fi
+  done
+fi
+
 
 # --- Home VPN (L2TP/IPsec) ---
 
@@ -464,6 +526,66 @@ step "🍎 macOS defaults"
 
 source "$DOTFILES_DIR/.macos"
 success "Defaults applied ✨"
+
+# --- Dock ---
+
+step "🚢 Dock"
+
+info "Clearing default apps from dock..."
+defaults write com.apple.dock persistent-apps -array
+
+dock_add() {
+  local app_path
+  app_path="$(readlink -f "$1" 2>/dev/null || echo "$1")"
+  local app_name
+  app_name="$(basename "$app_path" .app)"
+  defaults write com.apple.dock persistent-apps -array-add \
+    "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>file://$app_path/</string><key>_CFURLStringType</key><integer>15</integer></dict><key>file-label</key><string>$app_name</string><key>file-type</key><integer>41</integer></dict><key>tile-type</key><string>file-tile</string></dict>"
+}
+
+# Finder is always pinned by macOS, no need to add it
+
+# Applications folder stack (shows as "Apps" with grid display)
+defaults write com.apple.dock persistent-others -array \
+  "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>file:///Applications/</string><key>_CFURLStringType</key><integer>15</integer></dict><key>file-label</key><string>Apps</string><key>file-type</key><integer>2</integer></dict><key>tile-type</key><string>directory-tile</string></dict>"
+
+# iTerm2 — check both install locations
+iterm_path=""
+if [ -d "$HOME/Applications/iTerm.app" ]; then
+  iterm_path="$HOME/Applications/iTerm.app"
+elif [ -d "/Applications/iTerm.app" ]; then
+  iterm_path="/Applications/iTerm.app"
+fi
+
+if [ -n "$iterm_path" ]; then
+  dock_add "$iterm_path"
+else
+  warn "iTerm2 not found — install it and add to dock manually"
+fi
+
+# Fastmail — installed to ~/Applications via Homebrew cask
+fastmail_path=""
+if [ -d "$HOME/Applications/Fastmail.app" ]; then
+  fastmail_path="$HOME/Applications/Fastmail.app"
+elif [ -d "/Applications/Fastmail.app" ]; then
+  fastmail_path="/Applications/Fastmail.app"
+fi
+
+if [ -n "$fastmail_path" ]; then
+  dock_add "$fastmail_path"
+else
+  warn "Fastmail not found — install it and add to dock manually"
+fi
+
+dock_add "/Applications/Safari.app"
+dock_add "/System/Applications/Messages.app"
+
+defaults write com.apple.dock autohide -bool true
+defaults write com.apple.dock magnification -bool true
+defaults write com.apple.dock largesize -int 98
+
+killall Dock 2>/dev/null || true
+success "Dock cleaned up — auto-hidden, magnified, only the essentials 💅"
 
 # --- iTerm2 config ---
 

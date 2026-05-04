@@ -22,6 +22,7 @@ brew "postgresql@18"
 brew "luarocks"
 brew "git-town"
 brew "lazygit"
+brew "bun"
 
 if OS.mac?
   brew "mosh"

@@ -1,57 +1,80 @@
 #!/usr/bin/env bash
 
+# Helper: write a default, warn if the domain isn't writable
+# (e.g. sandboxed apps whose container doesn't exist yet on a fresh machine)
+dw() {
+  if ! defaults write "$@" 2>/dev/null; then
+    echo "  ⚠️  defaults write failed: $*" >&2
+  fi
+}
+
 # Disable automatic capitalization (global + per-app overrides)
-defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
-defaults write com.apple.Safari NSAutomaticCapitalizationEnabled -bool false
-defaults write com.apple.messages NSAutomaticCapitalizationEnabled -bool false
-defaults write com.apple.mail NSAutomaticCapitalizationEnabled -bool false
-defaults write com.apple.Notes NSAutomaticCapitalizationEnabled -bool false
+dw NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+dw com.apple.Safari NSAutomaticCapitalizationEnabled -bool false
+dw com.apple.messages NSAutomaticCapitalizationEnabled -bool false
+dw com.apple.mail NSAutomaticCapitalizationEnabled -bool false
+dw com.apple.Notes NSAutomaticCapitalizationEnabled -bool false
 
 # Disable smart dashes (global + per-app overrides)
-defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
-defaults write com.apple.Safari NSAutomaticDashSubstitutionEnabled -bool false
-defaults write com.apple.messages NSAutomaticDashSubstitutionEnabled -bool false
-defaults write com.apple.mail NSAutomaticDashSubstitutionEnabled -bool false
-defaults write com.apple.Notes NSAutomaticDashSubstitutionEnabled -bool false
+dw NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+dw com.apple.Safari NSAutomaticDashSubstitutionEnabled -bool false
+dw com.apple.messages NSAutomaticDashSubstitutionEnabled -bool false
+dw com.apple.mail NSAutomaticDashSubstitutionEnabled -bool false
+dw com.apple.Notes NSAutomaticDashSubstitutionEnabled -bool false
 
 # Disable automatic period substitution (global + per-app overrides)
-defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
-defaults write com.apple.Safari NSAutomaticPeriodSubstitutionEnabled -bool false
-defaults write com.apple.messages NSAutomaticPeriodSubstitutionEnabled -bool false
-defaults write com.apple.mail NSAutomaticPeriodSubstitutionEnabled -bool false
-defaults write com.apple.Notes NSAutomaticPeriodSubstitutionEnabled -bool false
+dw NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
+dw com.apple.Safari NSAutomaticPeriodSubstitutionEnabled -bool false
+dw com.apple.messages NSAutomaticPeriodSubstitutionEnabled -bool false
+dw com.apple.mail NSAutomaticPeriodSubstitutionEnabled -bool false
+dw com.apple.Notes NSAutomaticPeriodSubstitutionEnabled -bool false
 
 # Disable smart quotes (global + per-app overrides)
-defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
-defaults write com.apple.Safari NSAutomaticQuoteSubstitutionEnabled -bool false
-defaults write com.apple.messages NSAutomaticQuoteSubstitutionEnabled -bool false
-defaults write com.apple.mail NSAutomaticQuoteSubstitutionEnabled -bool false
-defaults write com.apple.Notes NSAutomaticQuoteSubstitutionEnabled -bool false
+dw NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+dw com.apple.Safari NSAutomaticQuoteSubstitutionEnabled -bool false
+dw com.apple.messages NSAutomaticQuoteSubstitutionEnabled -bool false
+dw com.apple.mail NSAutomaticQuoteSubstitutionEnabled -bool false
+dw com.apple.Notes NSAutomaticQuoteSubstitutionEnabled -bool false
 
 # Disable auto-correct (global + per-app overrides, since some apps ignore global domain)
-defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
-defaults write com.apple.Safari WebAutomaticSpellingCorrectionEnabled -bool false
-defaults write com.apple.Safari NSAutomaticSpellingCorrectionEnabled -bool false
-defaults write com.apple.messages NSAutomaticSpellingCorrectionEnabled -bool false
-defaults write com.apple.mail NSAutomaticSpellingCorrectionEnabled -bool false
-defaults write com.apple.Notes NSAutomaticSpellingCorrectionEnabled -bool false
+dw NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+dw com.apple.Safari WebAutomaticSpellingCorrectionEnabled -bool false
+dw com.apple.Safari NSAutomaticSpellingCorrectionEnabled -bool false
+dw com.apple.messages NSAutomaticSpellingCorrectionEnabled -bool false
+dw com.apple.mail NSAutomaticSpellingCorrectionEnabled -bool false
+dw com.apple.Notes NSAutomaticSpellingCorrectionEnabled -bool false
 
 # Disable automatic text replacement (global + per-app overrides)
-defaults write NSGlobalDomain NSAutomaticTextReplacementEnabled -bool false
-defaults write com.apple.Safari NSAutomaticTextReplacementEnabled -bool false
-defaults write com.apple.messages NSAutomaticTextReplacementEnabled -bool false
-defaults write com.apple.mail NSAutomaticTextReplacementEnabled -bool false
-defaults write com.apple.Notes NSAutomaticTextReplacementEnabled -bool false
+dw NSGlobalDomain NSAutomaticTextReplacementEnabled -bool false
+dw com.apple.Safari NSAutomaticTextReplacementEnabled -bool false
+dw com.apple.messages NSAutomaticTextReplacementEnabled -bool false
+dw com.apple.mail NSAutomaticTextReplacementEnabled -bool false
+dw com.apple.Notes NSAutomaticTextReplacementEnabled -bool false
 
 # Disable press-and-hold for keys in favor of key repeat
-defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+dw NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
 # Set a blazingly fast keyboard repeat rate
-defaults write NSGlobalDomain KeyRepeat -int 5
-defaults write NSGlobalDomain InitialKeyRepeat -int 20
+dw NSGlobalDomain KeyRepeat -int 5
+dw NSGlobalDomain InitialKeyRepeat -int 20
 
 # Finder: show all filename extensions
-defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+dw NSGlobalDomain AppleShowAllExtensions -bool true
+
+# Safari: show Develop menu in menu bar
+dw com.apple.Safari IncludeDevelopMenu -bool true
+
+# Safari: always show full URL in address bar
+dw com.apple.Safari ShowFullURLInSmartAddressField -bool true
+
+# Safari: disable all autofill options
+dw com.apple.Safari AutoFillFromContacts -bool false
+dw com.apple.Safari AutoFillPasswords -bool false
+dw com.apple.Safari AutoFillCreditCardData -bool false
+dw com.apple.Safari AutoFillMiscForms -bool false
+
+# Safari: set default search engine to DuckDuckGo
+dw com.apple.Safari SearchEngineName -string "DuckDuckGo"
 
 # Finder: use list view by default
-defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
+dw com.apple.finder FXPreferredViewStyle -string "Nlsv"

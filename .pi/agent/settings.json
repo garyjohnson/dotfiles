@@ -1,7 +1,7 @@
 {
-  "lastChangelogVersion": "0.70.2",
+  "lastChangelogVersion": "0.72.1",
   "defaultProvider": "deepinfra",
-  "defaultModel": "MiniMaxAI/MiniMax-M2.5",
+  "defaultModel": "zai-org/GLM-5.1",
   "theme": "catppuccin-macchiato",
   "packages": [
     "npm:@sherif-fanous/pi-catppuccin",
