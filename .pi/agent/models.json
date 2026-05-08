@@ -25,7 +25,7 @@
         },
         {
           "id": "qwen/qwen3.6-35b-a3b",
-          "name": "Qwen 3.6 35B (GGUF, Q4_K_M, LM Studio)",
+          "name": "Qwen 3.6 35B (LM Studio, GGUF)",
           "reasoning": true,
           "input": ["text", "image"],
           "contextWindow": 128504,

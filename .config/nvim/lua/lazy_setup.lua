@@ -29,4 +29,7 @@ require("lazy").setup({
       },
     },
   },
+  dev = {
+    path = "~/repositories",
+  }
 } --[[@as LazyConfig]])
