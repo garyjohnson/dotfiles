@@ -1,5 +1,7 @@
 tap "jandedobbeleer/oh-my-posh"
 
+tap "garyjohnson/prd", "https://forgejo.app.usefulbits.io/garyjohnson/homebrew-prd"
+
 # Terminal tools
 brew "oh-my-posh"
 brew "neovim"
@@ -10,6 +12,7 @@ brew "tree"
 brew "zoxide"
 brew "git"
 brew "wget"
+brew "prd"
 
 # Git hosting CLIs
 brew "gh"
@@ -22,7 +25,6 @@ brew "postgresql@18"
 brew "luarocks"
 brew "git-town"
 brew "lazygit"
-brew "bun"
 
 if OS.mac?
   brew "mosh"

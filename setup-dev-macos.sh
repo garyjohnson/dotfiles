@@ -207,6 +207,20 @@ npm install -g --force codex @mariozechner/pi-coding-agent firecrawl-cli
 nodenv rehash
 success "npm globals installed!"
 
+# --- Bun ---
+
+step "🥯 Bun"
+
+if command -v bun &>/dev/null; then
+  info "Updating bun..."
+  bun upgrade
+  skip "Already installed — updated!"
+else
+  info "Installing Bun..."
+  curl -fsSL https://bun.com/install | bash
+  success "Bun installed!"
+fi
+
 # --- Install latest Ruby via rbenv ---
 
 step "💎 Ruby"

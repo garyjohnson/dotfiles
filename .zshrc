@@ -43,7 +43,7 @@ moshdev3() { mosh dev3 -- tmux new -A -s main }
 export CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY=true
 
 # bun completions
-[ -s "/Users/garyjohnson/.bun/_bun" ] && source "/Users/garyjohnson/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"

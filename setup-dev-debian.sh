@@ -69,7 +69,7 @@ step "📦 apt bootstrap"
 
 info "Updating package list and installing essentials..."
 sudo apt-get update -qq
-sudo apt-get install -y zsh curl git build-essential tea libyaml-dev zlib1g-dev libssl-dev libreadline-dev libncurses5-dev libffi-dev libgdbm-dev mosh tmux
+sudo apt-get install -y zsh curl git build-essential tea libyaml-dev zlib1g-dev libssl-dev libreadline-dev libncurses5-dev libffi-dev libgdbm-dev mosh tmux unzip
 success "apt packages installed!"
 
 # --- zsh as default shell ---
@@ -196,6 +196,20 @@ eval "$(nodenv init - bash)"
 npm install -g --force codex @mariozechner/pi-coding-agent firecrawl-cli
 nodenv rehash
 success "npm globals installed!"
+
+# --- Bun ---
+
+step "🥯 Bun"
+
+if command -v bun &>/dev/null; then
+  info "Updating bun..."
+  bun upgrade
+  skip "Already installed — updated!"
+else
+  info "Installing Bun (requires unzip)..."
+  curl -fsSL https://bun.com/install | bash
+  success "Bun installed!"
+fi
 
 # --- Ruby via rbenv ---
 

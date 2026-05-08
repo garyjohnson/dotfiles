@@ -14,7 +14,7 @@
     }
   ],
   "defaultThinkingLevel": "medium",
-  "hideThinkingBlock": false,
+  "hideThinkingBlock": true,
   "enableInstallTelemetry": false,
   "enabledModels": [
     "openai-codex/gpt-5.4",
