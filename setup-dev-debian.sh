@@ -69,7 +69,11 @@ step "📦 apt bootstrap"
 
 info "Updating package list and installing essentials..."
 sudo apt-get update -qq
-sudo apt-get install -y zsh curl git build-essential tea libyaml-dev zlib1g-dev libssl-dev libreadline-dev libncurses5-dev libffi-dev libgdbm-dev mosh tmux unzip
+# Playwright (Chromium headless) dependencies: libnspr4 libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libxcomposite1 libxdamage1 libxrandr2 libgbm1 libpango-1.0-0 libcairo2 libasound2t64 libxshmfence1
+sudo apt-get install -y zsh curl git build-essential tea libyaml-dev zlib1g-dev libssl-dev libreadline-dev libncurses5-dev libffi-dev libgdbm-dev mosh tmux unzip \
+  libnspr4 libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 \
+  libxcomposite1 libxdamage1 libxrandr2 libgbm1 libpango-1.0-0 \
+  libcairo2 libasound2t64 libxshmfence1
 success "apt packages installed!"
 
 # --- zsh as default shell ---

@@ -1,7 +1,7 @@
 {
   "lastChangelogVersion": "0.74.0",
   "defaultProvider": "deepinfra",
-  "defaultModel": "moonshotai/Kimi-K2.6",
+  "defaultModel": "zai-org/GLM-5.1",
   "theme": "catppuccin-macchiato",
   "packages": [
     "npm:@sherif-fanous/pi-catppuccin",
@@ -10,11 +10,18 @@
       "source": "git:github.com/tmustier/pi-extensions",
       "extensions": [
         "usage-extension/index.ts"
+      ],
+      "skills": [
+        "-pi-ralph-wiggum/SKILL.md",
+        "-extending-pi/skill-creator/SKILL.md",
+        "-extending-pi/SKILL.md"
       ]
-    }
+    },
+    "npm:pi-subagents",
+    "npm:pi-intercom"
   ],
   "defaultThinkingLevel": "medium",
-  "hideThinkingBlock": true,
+  "hideThinkingBlock": false,
   "enableInstallTelemetry": false,
   "enabledModels": [
     "openai-codex/gpt-5.4",
@@ -30,5 +37,8 @@
     "deepinfra/moonshotai/Kimi-K2.6",
     "lmstudio/qwen3.6-35b-a3b-mlx",
     "lmstudio/qwen/qwen3.6-35b-a3b"
+  ],
+  "themes": [
+    "-themes/rainbow-cute.json"
   ]
 }
