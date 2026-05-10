@@ -69,11 +69,7 @@ step "📦 apt bootstrap"
 
 info "Updating package list and installing essentials..."
 sudo apt-get update -qq
-# Playwright (Chromium headless) dependencies: libnspr4 libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libxcomposite1 libxdamage1 libxrandr2 libgbm1 libpango-1.0-0 libcairo2 libasound2t64 libxshmfence1
-sudo apt-get install -y zsh curl git build-essential tea libyaml-dev zlib1g-dev libssl-dev libreadline-dev libncurses5-dev libffi-dev libgdbm-dev mosh tmux unzip \
-  libnspr4 libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 \
-  libxcomposite1 libxdamage1 libxrandr2 libgbm1 libpango-1.0-0 \
-  libcairo2 libasound2t64 libxshmfence1
+sudo apt-get install -y zsh curl git build-essential libyaml-dev zlib1g-dev libssl-dev libreadline-dev libncurses5-dev libffi-dev libgdbm-dev mosh tmux unzip
 success "apt packages installed!"
 
 # --- zsh as default shell ---
@@ -203,9 +199,17 @@ fi
 step "📦 npm globals"
 
 eval "$(nodenv init - bash)"
-npm install -g --force codex @mariozechner/pi-coding-agent firecrawl-cli
+npm install -g --force codex @earendil-works/pi-coding-agent firecrawl-cli
 nodenv rehash
 success "npm globals installed!"
+
+# --- Playwright deps ---
+
+step "🎭 Playwright deps"
+
+info "Installing Chromium system dependencies via playwright..."
+sudo "$(which npx)" playwright install-deps chromium
+success "Playwright Chromium deps installed!"
 
 # --- Bun ---
 
@@ -369,7 +373,7 @@ echo ""
 echo -e "  ${hotpink}♥${pink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${pink}♥${hotpink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${hotpink}♥${pink}♥${rose}♥${hotpink}♥${pink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${pink}♥${hotpink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${hotpink}♥${pink}♥${rose}♥${reset}"
 echo ""
 echo -e "  ${bold}${rose}📝 Manual steps remaining:${reset}"
-echo -e "  ${lilac}🌷${reset} Add SSH key to Forgejo:"
+echo -e "  ${lilac}🌷${reset} Log in to Forgejo:  ${bold}tea login add -n forgejo -u https://forgejo.app.usefulbits.io${reset}"
 echo -e "     ${bold}https://forgejo.app.usefulbits.io/user/settings/keys${reset}"
 echo -e "  ${purple}🌷${reset} Fill in ${bold}~/.profile-env${reset} with API keys (ANTHROPIC_API_KEY, etc.)"
 echo -e "  ${periwinkle}🌷${reset} Coolify: no CLI available — manage via web dashboard"

@@ -28,6 +28,23 @@ Run the appropriate script on a fresh machine. It installs dependencies, symlink
 
 A handful of small utilities symlinked individually (not the whole directory). Cross-platform: `until-fail`, `until-success`. macOS-only: `allow-exec`, `iterm-open`, `headless`. Typo/alias symlinks: `gti` → git, `vi`/`vim` → nvim. Ask before touching anything else in .local — most of it is legacy.
 
+## Tea CLI for Forgejo
+
+[tea](https://gitea.com/gitea/tea) is the command-line tool for interacting with Forgejo (Gitea-compatible) repos — issues, PRs, releases, labels, milestones, and more. Think of it as `gh` but for Forgejo.
+
+Installed via the Brewfile alongside `gh`. After `brew bundle`, run `tea login add` to authenticate against `https://forgejo.app.usefulbits.io`. The setup scripts handle this interactively on first run.
+
+Common commands:
+
+- `tea login list` — show configured logins
+- `tea issues` — list repo issues (from `$PWD` context)
+- `tea pulls` — list / create pull requests
+- `tea releases` — create / list releases
+- `tea repos` — show repo details
+- `tea open` — open the repo in a browser
+
+Note: `tea` is **not** the same as the Debian `tea` apt package (a GUI text editor). The Debian setup script intentionally omits the apt `tea` package — the real CLI comes from Homebrew.
+
 ## The vibe
 
 Setup scripts are intentionally cute (pink/lavender/sparkle output). That's on purpose, keep it that way. Changes should be idempotent — running a script twice should be safe and skip what's already done.

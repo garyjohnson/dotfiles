@@ -209,7 +209,7 @@ fi
 step "📦 npm globals"
 
 eval "$(nodenv init - bash)"
-npm install -g --force codex @mariozechner/pi-coding-agent firecrawl-cli
+npm install -g --force codex @earendil-works/pi-coding-agent firecrawl-cli
 nodenv rehash
 success "npm globals installed!"
 
@@ -636,7 +636,7 @@ echo -e "  ${purple}🌷${reset} Configure Cap → ${bold}https://cap.app.useful
 echo -e "  ${periwinkle}🌷${reset} Add Trilium PWA to dock from Safari:"
 echo -e "     ${bold}https://trilium-gary.app.usefulbits.io/${reset}"
 echo -e "  ${pink}🌷${reset} Install 1Password extension for Chrome"
-echo -e "  ${skyblue}🌷${reset} Add SSH key to Forgejo:"
+echo -e "  ${skyblue}🌷${reset} Log in to Forgejo:  ${bold}tea login add -n forgejo -u https://forgejo.app.usefulbits.io${reset}"
 echo -e "     ${bold}https://forgejo.app.usefulbits.io/user/settings/keys${reset}"
 echo ""
 echo -e "  ${mint}Open a new terminal to pick up the new shell config 💕${reset}"

@@ -16,6 +16,7 @@ brew "prd"
 
 # Git hosting CLIs
 brew "gh"
+brew "tea"
 
 # Development
 brew "rbenv"
