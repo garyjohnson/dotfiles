@@ -137,6 +137,7 @@ symlink "$DOTFILES_DIR/.gitignore"     "$HOME/.gitignore"
 symlink "$DOTFILES_DIR/.tmux.conf"     "$HOME/.tmux.conf"
 symlink "$DOTFILES_DIR/.config/nvim"   "$HOME/.config/nvim"
 symlink "$DOTFILES_DIR/oh-my-posh-themes" "$HOME/oh-my-posh-themes"
+symlink "$DOTFILES_DIR/agents/AGENTS.md"     "$HOME/AGENTS.md"
 
 # Individual .local/bin scripts
 symlink "$DOTFILES_DIR/.local/bin/until-fail"    "$HOME/.local/bin/until-fail"
@@ -184,13 +185,18 @@ fi
 step "🟢 Node"
 
 eval "$(nodenv init - bash)"
-node_max_major=24
-latest_node=$(nodenv install -l | grep -E '^\s*[0-9]+\.[0-9]+\.[0-9]+$' | awk -v max="$node_max_major" '{gsub(/^ +/,"")} split($0,v,".") && v[1]+0 <= max' | tail -1 | tr -d ' ')
-info "Latest: ${bold}$latest_node${reset}"
-nodenv install -s "$latest_node"
-nodenv global "$latest_node"
-nodenv rehash
-success "Node $latest_node 🐾"
+existing_node=$(nodenv versions --bare 2>/dev/null | grep -v '^system$')
+if [ -n "$existing_node" ]; then
+  skip "Node already managed by nodenv ($(nodenv global 2>/dev/null || echo $existing_node))"
+else
+  node_max_major=24
+  latest_node=$(nodenv install -l | grep -E '^\s*[0-9]+\.[0-9]+\.[0-9]+$' | awk -v max="$node_max_major" '{gsub(/^ +/,"")} split($0,v,".") && v[1]+0 <= max' | tail -1 | tr -d ' ')
+  info "Latest: ${bold}$latest_node${reset}"
+  nodenv install -s "$latest_node"
+  nodenv global "$latest_node"
+  nodenv rehash
+  success "Node $latest_node 🐾"
+fi
 
 # --- npm globals ---
 
@@ -219,14 +225,19 @@ fi
 
 step "💎 Ruby"
 
-info "This may take a few minutes... grab a coffee ☕"
 eval "$(rbenv init - bash)"
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@3)"
-latest_ruby=$(rbenv install -l | grep -E '^\s*[0-9]+\.[0-9]+\.[0-9]+$' | tail -1 | tr -d ' ')
-info "Latest: ${bold}$latest_ruby${reset}"
-rbenv install -s "$latest_ruby"
-rbenv global "$latest_ruby"
-success "Ruby $latest_ruby 💅✨"
+existing_ruby=$(rbenv versions --bare 2>/dev/null | grep -v '^system$')
+if [ -n "$existing_ruby" ]; then
+  skip "Ruby already managed by rbenv ($(rbenv global 2>/dev/null || echo $existing_ruby))"
+else
+  info "This may take a few minutes... grab a coffee ☕"
+  export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@3)"
+  latest_ruby=$(rbenv install -l | grep -E '^\s*[0-9]+\.[0-9]+\.[0-9]+$' | tail -1 | tr -d ' ')
+  info "Latest: ${bold}$latest_ruby${reset}"
+  rbenv install -s "$latest_ruby"
+  rbenv global "$latest_ruby"
+  success "Ruby $latest_ruby 💅✨"
+fi
 
 # --- Rust via rustup ---
 
