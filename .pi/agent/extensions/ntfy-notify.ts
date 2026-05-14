@@ -50,11 +50,21 @@ interface NtfyOptions {
 	actions?: Array<{ action: string; label: string; url?: string; command?: string }>;
 }
 
+/**
+ * Strip non-ASCII characters from a string so it's safe for HTTP headers (ByteString).
+ * Node.js fetch requires header values to be ByteString (each char <= 255).
+ * Emoji like ✅ (U+2705, value 9989) and em dashes — (U+2014, value 8212) cause errors.
+ * Tags use ntfy emoji shortcodes (ASCII) and are safe without sanitization.
+ */
+function asciiOnly(text: string): string {
+	return text.replace(/[^\x00-\xff]/g, "").replace(/\s+/g, " ").trim();
+}
+
 async function sendNtfy(opts: NtfyOptions): Promise<void> {
 	const url = `${opts.server.replace(/\/+$/, "")}/${opts.topic}`;
 
 	const headers: Record<string, string> = {
-		"Title": opts.title,
+		"Title": asciiOnly(opts.title),
 		"Content-Type": "text/plain; charset=utf-8",
 	};
 
@@ -71,17 +81,19 @@ async function sendNtfy(opts: NtfyOptions): Promise<void> {
 	}
 
 	if (opts.click) {
-		headers["Click"] = opts.click;
+		headers["Click"] = asciiOnly(opts.click);
 	}
 
 	if (opts.actions && opts.actions.length > 0) {
-		headers["Actions"] = opts.actions
-			.map((a) => {
-				if (a.url) return `${a.action}, ${a.label}, ${a.url}`;
-				if (a.command) return `${a.action}, ${a.label}, ${a.command}`;
-				return `${a.action}, ${a.label}`;
-			})
-			.join("; ");
+		headers["Actions"] = asciiOnly(
+			opts.actions
+				.map((a) => {
+					if (a.url) return `${a.action}, ${a.label}, ${a.url}`;
+					if (a.command) return `${a.action}, ${a.label}, ${a.command}`;
+					return `${a.action}, ${a.label}`;
+				})
+				.join("; "),
+		);
 	}
 
 	try {
@@ -173,7 +185,7 @@ export default function ntfyNotify(pi: ExtensionAPI) {
 			);
 
 			await notify(
-				hasError ? "⚠️ Pi — Error" : "✅ Pi — Ready",
+				hasError ? "Pi - Error" : "Pi - Ready",
 				preview,
 				{
 					priority: hasError ? "high" : "low",
@@ -198,7 +210,7 @@ export default function ntfyNotify(pi: ExtensionAPI) {
 			const message = controlEvent.message || "Subagent needs attention";
 
 			await notify(
-				`🔔 Pi — ${agent} needs attention`,
+				`Pi - ${agent} needs attention`,
 				truncate(message, 200),
 				{
 					priority: "high",
@@ -226,7 +238,7 @@ export default function ntfyNotify(pi: ExtensionAPI) {
 			const preview = truncate(errorText.split("\n")[0], 100) || "Agent error";
 
 			await notify(
-				"⚠️ Pi — Error",
+				"Pi - Error",
 				preview,
 				{
 					priority: "high",
