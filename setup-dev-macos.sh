@@ -175,9 +175,7 @@ mkdir -p "$HOME/.pi/agent"
 symlink "$DOTFILES_DIR/.pi/agent/models.json" "$HOME/.pi/agent/models.json"
 symlink "$DOTFILES_DIR/.pi/agent/settings.json" "$HOME/.pi/agent/settings.json"
 symlink "$DOTFILES_DIR/.pi/agent/themes" "$HOME/.pi/agent/themes"
-if [[ -d "$DOTFILES_DIR/.pi/extensions" ]]; then
-  symlink "$DOTFILES_DIR/.pi/extensions" "$HOME/.pi/extensions"
-fi
+symlink "$DOTFILES_DIR/.pi/agent/extensions" "$HOME/.pi/agent/extensions"
 
 # pi auth setup (copy template if auth.json doesn't exist)
 if [[ ! -f "$HOME/.pi/agent/auth.json" ]]; then

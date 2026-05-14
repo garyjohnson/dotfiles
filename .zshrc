@@ -39,8 +39,9 @@ diffbranch() { vim -p $(git diff --name-only ${1} HEAD) -c "tabdo :Gdiff ${1}" }
 moshdev() { mosh dev -- tmux new -A -s main }
 moshdev3() { mosh dev3 -- tmux new -A -s main }
 
-# claude
+# stop bugging me LLMS!
 export CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY=true
+export FIRECRAWL_NO_TELEMETRY=1
 
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
