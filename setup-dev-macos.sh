@@ -185,6 +185,18 @@ if [[ ! -f "$HOME/.pi/agent/auth.json" ]]; then
 fi
 success "All linked up 💕"
 
+# --- Lua rocks (Neovim plugin deps) ---
+
+step "🪨 Luarocks"
+
+if luarocks --lua-version 5.1 --local list 2>/dev/null | grep -q "^magick"; then
+  skip "magick already installed"
+else
+  info "Installing magick (required for image.nvim inline images)..."
+  luarocks --lua-version 5.1 --local install magick
+  success "magick installed 🖼️"
+fi
+
 # --- Install latest Node via nodenv ---
 
 step "🟢 Node"

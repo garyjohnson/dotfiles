@@ -41,6 +41,9 @@ return {
     },
     mappings = {
       n = {
+        -- LSP
+        ["<Leader>K"] = { desc = "Hover (show type / docs)" },
+
         --project.nvim
         ["<Leader>fp"] = { "<cmd>Telescope projects<cr>", desc = "Find projects" },
 

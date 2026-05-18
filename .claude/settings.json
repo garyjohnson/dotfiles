@@ -2,6 +2,6 @@
   "enabledPlugins": {
     "skill-creator@claude-plugins-official": true
   },
-  "effortLevel": "high",
+  "effortLevel": "medium",
   "theme": "dark-ansi"
 }
