@@ -1,7 +1,7 @@
 {
-  "lastChangelogVersion": "0.74.0",
+  "lastChangelogVersion": "0.75.4",
   "defaultProvider": "deepinfra",
-  "defaultModel": "zai-org/GLM-5.1",
+  "defaultModel": "deepseek-ai/DeepSeek-V4-Flash",
   "theme": "catppuccin-macchiato",
   "packages": [
     "npm:@sherif-fanous/pi-catppuccin",
@@ -18,10 +18,11 @@
       ]
     },
     "npm:pi-subagents",
-    "npm:pi-intercom"
+    "npm:pi-intercom",
+    "git:github.com/garyjohnson/pi-badger"
   ],
   "defaultThinkingLevel": "medium",
-  "hideThinkingBlock": true,
+  "hideThinkingBlock": false,
   "enableInstallTelemetry": false,
   "enabledModels": [
     "openai-codex/gpt-5.4",
