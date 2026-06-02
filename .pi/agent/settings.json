@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.75.4",
+  "lastChangelogVersion": "0.75.5",
   "defaultProvider": "deepinfra",
   "defaultModel": "deepseek-ai/DeepSeek-V4-Flash",
   "theme": "catppuccin-macchiato",
