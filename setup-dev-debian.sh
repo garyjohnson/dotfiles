@@ -109,6 +109,18 @@ info "Running brew bundle... this might take a sec 🍩"
 brew bundle --file="$DOTFILES_DIR/Brewfile"
 success "All packages installed!"
 
+# --- Kagi CLI (from upstream install script) ---
+
+step "🔑 Kagi CLI"
+
+if command -v kagi &>/dev/null; then
+  skip "kagi already installed at $(which kagi)"
+else
+  info "Installing kagi CLI from upstream..."
+  curl -fsSL https://raw.githubusercontent.com/Microck/kagi-cli/main/scripts/install.sh | sh
+  success "kagi CLI installed!"
+fi
+
 # --- Symlink dotfiles ---
 
 step "🔗 Symlinks"
@@ -138,8 +150,6 @@ symlink "$DOTFILES_DIR/agents/AGENTS.md"     "$HOME/AGENTS.md"
 # Individual .local/bin scripts
 symlink "$DOTFILES_DIR/.local/bin/until-fail"    "$HOME/.local/bin/until-fail"
 symlink "$DOTFILES_DIR/.local/bin/until-success" "$HOME/.local/bin/until-success"
-symlink "$DOTFILES_DIR/.local/bin/kagi"          "$HOME/.local/bin/kagi"
-
 # Tool symlinks (typo-correctors and editor aliases)
 mkdir -p "$HOME/.local/bin"
 ln -sf "$(brew --prefix git)/bin/git"   "$HOME/.local/bin/gti"
