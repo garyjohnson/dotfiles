@@ -53,8 +53,10 @@ function howdoi() {
     return 1
   fi
   local cmd
+
   # Ask pi for a bash command, then grab the first non-blank line from the output
   cmd=$(pi -p --no-session --model "deepseek-ai/DeepSeek-V4-Flash" "bash command to $* — output ONLY the raw single-line bash command, no markdown, no backticks, no explanation, just the command" 2>/dev/null | sed -n '/[^[:space:]]/p' | head -1)
+
   # Inject the command into the zsh line editor buffer so the user can press enter to run it
   if [[ -n "$cmd" ]]; then
     print -z "$cmd"

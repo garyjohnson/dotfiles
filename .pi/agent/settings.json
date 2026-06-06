@@ -1,7 +1,7 @@
 {
-  "lastChangelogVersion": "0.75.5",
+  "lastChangelogVersion": "0.78.1",
   "defaultProvider": "deepinfra",
-  "defaultModel": "deepseek-ai/DeepSeek-V4-Flash",
+  "defaultModel": "deepseek-ai/DeepSeek-V4-Pro",
   "theme": "catppuccin-macchiato",
   "packages": [
     "npm:@sherif-fanous/pi-catppuccin",
