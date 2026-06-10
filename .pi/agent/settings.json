@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.78.1",
+  "lastChangelogVersion": "0.79.1",
   "defaultProvider": "deepinfra",
   "defaultModel": "deepseek-ai/DeepSeek-V4-Pro",
   "theme": "catppuccin-macchiato",
@@ -27,6 +27,7 @@
   "enabledModels": [
     "openai-codex/gpt-5.4",
     "openai-codex/gpt-5.5",
+    "ds4/deepseek-v4-flash",
     "lmstudio/google/gemma-4-31b",
     "deepinfra/zai-org/GLM-5.1",
     "deepinfra/google/gemma-4-31B-it",
