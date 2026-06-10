@@ -12,6 +12,7 @@ brew "tree"
 brew "zoxide"
 brew "git"
 brew "wget"
+brew "imagemagick"
 brew "prd"
 
 # Git hosting CLIs
