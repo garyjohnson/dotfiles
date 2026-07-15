@@ -229,7 +229,7 @@ fi
 step "📦 npm globals"
 
 eval "$(nodenv init - bash)"
-npm install -g --force codex @earendil-works/pi-coding-agent firecrawl-cli
+npm install -g --force @openai/codex @earendil-works/pi-coding-agent firecrawl-cli
 nodenv rehash
 success "npm globals installed!"
 
