@@ -66,3 +66,17 @@ function howdoi() {
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+function howdoi() {
+    if [[ -z "$1" ]]; then
+      echo "Usage: howdoi <what you want to do on the command line>"
+      return 1
+    fi
+    local cmd
+
+    cmd=$(claude -p "bash command to $* — output ONLY the raw single-line bash command, no markdown, no backticks, no explanation, just the command" 2>/dev/null | sed -n '/[^[:space:]]/p' | head -1)
+
+    if [[ -n "$cmd" ]]; then
+      print -z "$cmd"
+    fi
+  }
