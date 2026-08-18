@@ -163,6 +163,7 @@ symlink "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
 symlink "$DOTFILES_DIR/.gitignore" "$HOME/.gitignore"
 symlink "$DOTFILES_DIR/.tmux.conf" "$HOME/.tmux.conf"
 symlink "$DOTFILES_DIR/.config/nvim" "$HOME/.config/nvim"
+symlink "$DOTFILES_DIR/.config/herdr/config.toml" "$HOME/.config/herdr/config.toml"
 symlink "$DOTFILES_DIR/oh-my-posh-themes" "$HOME/oh-my-posh-themes"
 symlink "$DOTFILES_DIR/agents/AGENTS.md"      "$HOME/AGENTS.md"
 
