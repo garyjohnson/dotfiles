@@ -37,6 +37,7 @@ fi
 diffbranch() { vim -p $(git diff --name-only ${1} HEAD) -c "tabdo :Gdiff ${1}" }
 
 moshdev() { mosh dev -- tmux new -A -s main }
+moshdev2() { mosh dev2 -- tmux new -A -s main }
 moshdev3() { mosh dev3 -- tmux new -A -s main }
 
 # stop bugging me LLMS!

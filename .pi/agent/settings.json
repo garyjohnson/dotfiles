@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.79.1",
+  "lastChangelogVersion": "0.83.0",
   "defaultProvider": "deepinfra",
   "defaultModel": "deepseek-ai/DeepSeek-V4-Pro",
   "theme": "catppuccin-macchiato",
@@ -38,7 +38,8 @@
     "deepinfra/deepseek-ai/DeepSeek-V4-Flash",
     "deepinfra/moonshotai/Kimi-K2.6",
     "lmstudio/qwen3.6-35b-a3b-mlx",
-    "lmstudio/qwen/qwen3.6-35b-a3b"
+    "lmstudio/qwen/qwen3.6-35b-a3b",
+    "lmstudio/qwen/qwen3.6-27b"
   ],
   "themes": [
     "-themes/rainbow-cute.json"

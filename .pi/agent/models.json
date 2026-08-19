@@ -1,7 +1,7 @@
 {
   "providers": {
     "lmstudio": {
-      "baseUrl": "https://lmstudio.home.usefulbits.io/v1",
+      "baseUrl": "http://garys-macbook-pro.tail34b205.ts.net:1234/v1",
       "api": "openai-completions",
       "apiKey": "$LMSTUDIO_API_KEY",
       "authHeader": true,
@@ -9,6 +9,26 @@
         "supportsDeveloperRole": false
       },
       "models": [
+        {
+          "id": "qwen/qwen3.6-27b",
+          "name": "Qwen 3.6 27B (LM Studio)",
+          "reasoning": true,
+          "input": [
+            "text"
+          ],
+          "contextWindow": 127093,
+          "maxTokens": 81920,
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "compat": {
+            "supportsReasoningEffort": false,
+            "thinkingFormat": "qwen-chat-template"
+          }
+        },
         {
           "id": "google/gemma-4-31b",
           "name": "Gemma 4 31B (LM Studio)",
