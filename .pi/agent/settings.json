@@ -1,11 +1,14 @@
 {
+<<<<<<< HEAD
   "lastChangelogVersion": "0.83.0",
+=======
+  "lastChangelogVersion": "0.84.2",
+>>>>>>> a71ab03 (Updates!!!!)
   "defaultProvider": "deepinfra",
-  "defaultModel": "deepseek-ai/DeepSeek-V4-Pro",
+  "defaultModel": "zai-org/GLM-5.2",
   "theme": "catppuccin-macchiato",
   "packages": [
     "npm:@sherif-fanous/pi-catppuccin",
-    "/home/garyjohnson/repositories/pi-badger",
     {
       "source": "git:github.com/tmustier/pi-extensions",
       "extensions": [
@@ -19,27 +22,18 @@
     },
     "npm:pi-subagents",
     "npm:pi-intercom",
-    "git:github.com/garyjohnson/pi-badger"
+    "npm:pi-prompt-template-model",
+    "git:github.com/0xkuze/pi-worktrees"
   ],
   "defaultThinkingLevel": "medium",
   "hideThinkingBlock": true,
   "enableInstallTelemetry": false,
   "enabledModels": [
-    "openai-codex/gpt-5.4",
-    "openai-codex/gpt-5.5",
-    "ds4/deepseek-v4-flash",
-    "lmstudio/google/gemma-4-31b",
-    "deepinfra/zai-org/GLM-5.1",
-    "deepinfra/google/gemma-4-31B-it",
     "deepinfra/MiniMaxAI/MiniMax-M2.5",
-    "deepinfra/Qwen/Qwen3-Coder-480B-A35B-Instruct",
-    "deepinfra/Qwen/Qwen3.6-35B-A3B",
     "deepinfra/deepseek-ai/DeepSeek-V4-Pro",
-    "deepinfra/deepseek-ai/DeepSeek-V4-Flash",
-    "deepinfra/moonshotai/Kimi-K2.6",
-    "lmstudio/qwen3.6-35b-a3b-mlx",
-    "lmstudio/qwen/qwen3.6-35b-a3b",
-    "lmstudio/qwen/qwen3.6-27b"
+    "deepinfra/zai-org/GLM-5.2",
+    "deepinfra/moonshotai/Kimi-K2.7-Code",
+    "deepinfra/deepseek-ai/DeepSeek-V4-Flash-0731"
   ],
   "themes": [
     "-themes/rainbow-cute.json"

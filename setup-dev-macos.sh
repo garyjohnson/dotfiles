@@ -172,6 +172,7 @@ symlink "$DOTFILES_DIR/.local/bin/allow-exec" "$HOME/.local/bin/allow-exec"
 symlink "$DOTFILES_DIR/.local/bin/until-fail" "$HOME/.local/bin/until-fail"
 symlink "$DOTFILES_DIR/.local/bin/until-success" "$HOME/.local/bin/until-success"
 symlink "$DOTFILES_DIR/.local/bin/iterm-open" "$HOME/.local/bin/iterm-open"
+symlink "$DOTFILES_DIR/.local/bin/sync-deepinfra-langfuse.sh" "$HOME/.local/bin/sync-deepinfra-langfuse.sh"
 # Tool symlinks (typo-correctors and editor aliases)
 ln -sf "$HOME/homebrew/bin/git" "$HOME/.local/bin/gti"
 ln -sf "$HOME/homebrew/bin/nvim" "$HOME/.local/bin/vi"
@@ -230,7 +231,7 @@ fi
 step "📦 npm globals"
 
 eval "$(nodenv init - bash)"
-npm install -g --force @openai/codex @earendil-works/pi-coding-agent firecrawl-cli
+npm install -g --force @openai/codex @earendil-works/pi-coding-agent firecrawl-cli appwrite-cli
 nodenv rehash
 success "npm globals installed!"
 

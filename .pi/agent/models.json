@@ -252,13 +252,35 @@
           "input": [
             "text"
           ],
-          "contextWindow": 1000000,
+          "contextWindow": 1048576,
           "maxTokens": 1048576,
           "cost": {
-            "input": 0.14,
-            "output": 0.28,
-            "cacheRead": 0.028,
+            "input": 0.09,
+            "output": 0.18,
+            "cacheRead": 0.018,
             "cacheWrite": 0
+          },
+          "compat": {
+            "thinkingFormat": "deepseek"
+          }
+        },
+        {
+          "id": "deepseek-ai/DeepSeek-V4-Flash-0731",
+          "name": "DeepSeek V4 Flash 0731 (DeepInfra)",
+          "reasoning": true,
+          "input": [
+            "text"
+          ],
+          "contextWindow": 1048576,
+          "maxTokens": 1048576,
+          "cost": {
+            "input": 0.09,
+            "output": 0.18,
+            "cacheRead": 0.018,
+            "cacheWrite": 0
+          },
+          "compat": {
+            "thinkingFormat": "deepseek"
           }
         },
         {
@@ -276,6 +298,59 @@
             "output": 3.5,
             "cacheRead": 0.15,
             "cacheWrite": 0
+          }
+        },
+        {
+          "id": "moonshotai/Kimi-K2.7-Code",
+          "name": "Kimi K2.7 Code (DeepInfra)",
+          "reasoning": true,
+          "input": [
+            "text",
+            "image"
+          ],
+          "contextWindow": 262144,
+          "maxTokens": 262144,
+          "cost": {
+            "input": 0.74,
+            "output": 3.5,
+            "cacheRead": 0.15,
+            "cacheWrite": 0
+          }
+        },
+        {
+          "id": "moonshotai/Kimi-K3",
+          "name": "Kimi K3 (DeepInfra)",
+          "reasoning": true,
+          "input": [
+            "text",
+            "image"
+          ],
+          "contextWindow": 1048576,
+          "maxTokens": 1048576,
+          "cost": {
+            "input": 2.85,
+            "output": 14.25,
+            "cacheRead": 0.285,
+            "cacheWrite": 0
+          }
+        },
+        {
+          "id": "zai-org/GLM-5.2",
+          "name": "GLM 5.2 (DeepInfra)",
+          "reasoning": true,
+          "input": [
+            "text"
+          ],
+          "contextWindow": 1048576,
+          "maxTokens": 1048576,
+          "cost": {
+            "input": 0.93,
+            "output": 3.0,
+            "cacheRead": 0.18,
+            "cacheWrite": 0
+          },
+          "compat": {
+            "thinkingFormat": "zai"
           }
         }
       ]

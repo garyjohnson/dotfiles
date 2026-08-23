@@ -26,7 +26,9 @@ Run the appropriate script on a fresh machine. It installs dependencies, symlink
 
 ## What's in .local/bin
 
-A handful of small utilities symlinked individually (not the whole directory). Cross-platform: `until-fail`, `until-success`. macOS-only: `allow-exec`, `iterm-open`, `headless`. Typo/alias symlinks: `gti` → git, `vi`/`vim` → nvim. Ask before touching anything else in .local — most of it is legacy.
+A handful of small utilities symlinked individually (not the whole directory). Cross-platform: `until-fail`, `until-success`, `sync-deepinfra-langfuse.sh`. macOS-only: `allow-exec`, `iterm-open`, `headless`. Typo/alias symlinks: `gti` → git, `vi`/`vim` → nvim. Ask before touching anything else in .local — most of it is legacy.
+
+`sync-deepinfra-langfuse.sh` pulls model token pricing from DeepInfra's `GET /models/list` for the models you've actually used (via `GET /payment/usage`) and upserts them as custom Langfuse model definitions (`unit=TOKENS`, with a `cache_read_input_tokens` price) through the public API. Idempotent; dry-run with `--dry-run`, sync all with `--all`. Needs `DEEPINFRA_API_KEY` + `LANGFUSE_BASE_URL/PUBLIC_KEY/SECRET_KEY` (sourced from `~/.profile-env` if unset). See `README-sync-deepinfra-langfuse.md`.
 
 ## Tea CLI for Forgejo
 
