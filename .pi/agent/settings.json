@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "lastChangelogVersion": "0.83.0",
-=======
   "lastChangelogVersion": "0.84.2",
->>>>>>> a71ab03 (Updates!!!!)
   "defaultProvider": "deepinfra",
   "defaultModel": "zai-org/GLM-5.2",
   "theme": "catppuccin-macchiato",
