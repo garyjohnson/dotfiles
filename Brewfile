@@ -19,6 +19,9 @@ brew "prd"
 brew "gh"
 brew "tea"
 
+# Agent runtime
+brew "herdr"
+
 # Development
 brew "rbenv"
 brew "nodenv"

@@ -19,7 +19,8 @@
     "npm:pi-subagents",
     "npm:pi-intercom",
     "npm:pi-prompt-template-model",
-    "git:github.com/0xkuze/pi-worktrees"
+    "git:github.com/0xkuze/pi-worktrees",
+    "git:github.com/CharlesWiltgen/Axiom"
   ],
   "defaultThinkingLevel": "medium",
   "hideThinkingBlock": true,

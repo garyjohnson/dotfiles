@@ -101,6 +101,20 @@ fi
 
 eval "$($BREW_BIN shellenv)"
 
+# --- Trust taps ---
+
+step "🤝 Trust taps"
+
+# Trust non-official taps before brew bundle so it doesn't prompt
+while IFS= read -r line; do
+  tap_name=$(echo "$line" | sed -n 's/^tap "\([^"]*\)".*/\1/p')
+  if [ -n "$tap_name" ]; then
+    info "Trusting $tap_name..."
+    brew trust --tap "$tap_name"
+  fi
+done < "$DOTFILES_DIR/Brewfile"
+success "Taps trusted!"
+
 # --- Install packages from Brewfile ---
 
 step "📦 Brew packages"
