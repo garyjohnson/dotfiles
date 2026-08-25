@@ -337,6 +337,26 @@
           }
         },
         {
+          "id": "Qwen/Qwen3-VL-235B-A22B-Instruct",
+          "name": "Qwen3 VL 235B (DeepInfra)",
+          "reasoning": true,
+          "input": [
+            "text",
+            "image"
+          ],
+          "contextWindow": 262144,
+          "maxTokens": 262144,
+          "cost": {
+            "input": 0.2,
+            "output": 0.88,
+            "cacheRead": 0.11,
+            "cacheWrite": 0
+          },
+          "compat": {
+            "thinkingFormat": "qwen"
+          }
+        },
+        {
           "id": "moonshotai/Kimi-K3",
           "name": "Kimi K3 (DeepInfra)",
           "reasoning": true,
@@ -352,7 +372,6 @@
             "cacheRead": 0.285,
             "cacheWrite": 0
           }
-<<<<<<< HEAD
         },
         {
           "id": "zai-org/GLM-5.2",
@@ -372,8 +391,6 @@
           "compat": {
             "thinkingFormat": "zai"
           }
-=======
->>>>>>> 3e77489 (Updating models, trusting taps, adding axiom)
         }
       ]
     }

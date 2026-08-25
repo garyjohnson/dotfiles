@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.84.2",
+  "lastChangelogVersion": "0.84.3",
   "defaultProvider": "deepinfra",
   "defaultModel": "zai-org/GLM-5.2",
   "theme": "catppuccin-macchiato",
@@ -30,7 +30,8 @@
     "deepinfra/deepseek-ai/DeepSeek-V4-Pro",
     "deepinfra/zai-org/GLM-5.2",
     "deepinfra/moonshotai/Kimi-K2.7-Code",
-    "deepinfra/deepseek-ai/DeepSeek-V4-Flash-0731"
+    "deepinfra/deepseek-ai/DeepSeek-V4-Flash-0731",
+    "deepinfra/Qwen/Qwen3-VL-235B-A22B-Instruct"
   ],
   "themes": [
     "-themes/rainbow-cute.json"
