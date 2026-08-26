@@ -1,7 +1,7 @@
 {
   "lastChangelogVersion": "0.84.3",
   "defaultProvider": "deepinfra",
-  "defaultModel": "zai-org/GLM-5.2",
+  "defaultModel": "deepseek-ai/DeepSeek-V4-Pro-0813",
   "theme": "catppuccin-macchiato",
   "packages": [
     "npm:@sherif-fanous/pi-catppuccin",
@@ -19,19 +19,19 @@
     "npm:pi-subagents",
     "npm:pi-intercom",
     "npm:pi-prompt-template-model",
-    "git:github.com/0xkuze/pi-worktrees",
-    "git:github.com/CharlesWiltgen/Axiom"
+    "git:github.com/0xkuze/pi-worktrees"
   ],
   "defaultThinkingLevel": "medium",
-  "hideThinkingBlock": true,
+  "hideThinkingBlock": false,
   "enableInstallTelemetry": false,
   "enabledModels": [
     "deepinfra/MiniMaxAI/MiniMax-M2.5",
-    "deepinfra/deepseek-ai/DeepSeek-V4-Pro",
     "deepinfra/zai-org/GLM-5.2",
     "deepinfra/moonshotai/Kimi-K2.7-Code",
     "deepinfra/deepseek-ai/DeepSeek-V4-Flash-0731",
-    "deepinfra/Qwen/Qwen3-VL-235B-A22B-Instruct"
+    "deepinfra/Qwen/Qwen3-VL-235B-A22B-Instruct",
+    "deepinfra/deepseek-ai/DeepSeek-V4-Pro-0813",
+    "deepinfra/moonshotai/Kimi-K2.6"
   ],
   "themes": [
     "-themes/rainbow-cute.json"

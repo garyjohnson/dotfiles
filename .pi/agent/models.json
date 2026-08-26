@@ -324,8 +324,7 @@
           "name": "Kimi K2.7 Code (DeepInfra)",
           "reasoning": true,
           "input": [
-            "text",
-            "image"
+            "text"
           ],
           "contextWindow": 262144,
           "maxTokens": 262144,
