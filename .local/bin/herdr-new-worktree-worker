@@ -1,0 +1,35 @@
+#!/bin/sh
+# Starts the preferred coding agent in the newly-created worktree pane
+# (retrying past the brief agent_pane_busy race right after pane creation)
+# and re-focuses the workspace once it succeeds. Runs detached from
+# herdr-new-worktree's popup so its focus call isn't undone when the popup
+# closes (see that script).
+#
+# Herdr itself has no notion of a "preferred" agent kind — --kind is a
+# required, per-call flag. HERDR_NEW_WORKTREE_AGENT is our own knob for
+# that, so different machines can default to e.g. `pi` instead of `claude`
+# (set it in ~/.zshrc.local, which setup-dev-macos.sh does not track).
+set -e
+
+name="$1"
+pane_id="$2"
+workspace_id="$3"
+log="$4"
+agent_kind="${HERDR_NEW_WORKTREE_AGENT:-claude}"
+
+exec >>"$log" 2>&1
+echo "=== $(date 2>/dev/null || true) starting $agent_kind for $name in $pane_id ==="
+
+attempt=1
+while ! herdr agent start "$name" --kind "$agent_kind" --pane "$pane_id"; do
+    if [ "$attempt" -ge 30 ]; then
+        echo "Failed to start $agent_kind in $pane_id after $attempt attempts."
+        exit 1
+    fi
+    attempt=$((attempt + 1))
+    sleep 1
+done
+
+# Re-assert focus: agent start / other activity can shift it again.
+herdr workspace focus "$workspace_id"
+echo "=== done: $workspace_id ==="

@@ -279,5 +279,6 @@
       "**Org-specific CLIs**: None configured (non-standard CLIs seen — npx, pwd, agent-browser, eval, open — are generic dev tools, not org-specific)",
       "routine under packages/*/ prefix: package/module-scoped work (e.g. flow-website, flow-core, credit-builder, giveback-program, marketing-web, marketing-cms) resolves as a path within panda-mobile/bamboo rather than a separate repo"
     ]
-  }
+  },
+  "hooks": {"SessionStart":[{"matcher":"*","hooks":[{"type":"command","command":"bash '/Users/garyjohnson-td/.claude/hooks/herdr-agent-state.sh' session","timeout":10}]}]}
 }
