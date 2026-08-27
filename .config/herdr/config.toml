@@ -127,15 +127,6 @@ switch_workspace = "prefix+shift+1..9"   # optional indexed binding, e.g. "prefi
 # width = "80%"
 # height = "80%"
 
-# Prompt for a name, create a worktree + workspace, and launch
-# `claude --worktree` in it. See ~/.local/bin/herdr-new-worktree.
-[[keys.command]]
-key = "prefix+t"
-type = "popup"
-command = "herdr-new-worktree"
-width = "60%"
-height = "30%"
-
 # Legacy indexed shortcut config is still parsed for compatibility.
 # Prefer switch_tab, switch_workspace, and focus_agent for new configs.
 # [keys.indexed]

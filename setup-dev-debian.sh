@@ -166,8 +166,6 @@ symlink "$DOTFILES_DIR/agents/AGENTS.md"     "$HOME/AGENTS.md"
 symlink "$DOTFILES_DIR/.local/bin/until-fail"    "$HOME/.local/bin/until-fail"
 symlink "$DOTFILES_DIR/.local/bin/until-success" "$HOME/.local/bin/until-success"
 symlink "$DOTFILES_DIR/.local/bin/sync-deepinfra-langfuse.sh" "$HOME/.local/bin/sync-deepinfra-langfuse.sh"
-symlink "$DOTFILES_DIR/.local/bin/herdr-new-worktree" "$HOME/.local/bin/herdr-new-worktree"
-symlink "$DOTFILES_DIR/.local/bin/herdr-new-worktree-worker" "$HOME/.local/bin/herdr-new-worktree-worker"
 # Tool symlinks (typo-correctors and editor aliases)
 mkdir -p "$HOME/.local/bin"
 ln -sf "$(brew --prefix git)/bin/git"   "$HOME/.local/bin/gti"
