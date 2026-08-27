@@ -47,6 +47,32 @@ export FIRECRAWL_NO_TELEMETRY=1
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
+# AWS via 1Password — every `aws` call resolves creds from the vault (Touch ID gated),
+# nothing static lives in ~/.aws/credentials
+function aws() {
+  local profile="${AWS_PROFILE:-panda-mobile}"
+  local args=("$@")
+  local passthrough=()
+  local i=1
+  while (( i <= $#args )); do
+    if [[ "${args[$i]}" == "--profile" && -n "${args[$((i + 1))]}" ]]; then
+      profile="${args[$((i + 1))]}"
+      (( i += 2 ))
+    else
+      passthrough+=("${args[$i]}")
+      (( i += 1 ))
+    fi
+  done
+
+  local envfile="$HOME/.config/aws/op-${profile}.env"
+  if [[ ! -f "$envfile" ]]; then
+    echo "aws: no 1Password env file for profile '$profile' at $envfile" >&2
+    return 1
+  fi
+
+  op run --env-file="$envfile" -- command aws "${passthrough[@]}"
+}
+
 # howdoi — ask for a bash command in plain english and get it prefilled at the prompt
 function howdoi() {
   if [[ -z "$1" ]]; then
