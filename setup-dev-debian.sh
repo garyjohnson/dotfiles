@@ -158,6 +158,7 @@ symlink "$DOTFILES_DIR/.gitconfig"     "$HOME/.gitconfig"
 symlink "$DOTFILES_DIR/.gitignore"     "$HOME/.gitignore"
 symlink "$DOTFILES_DIR/.tmux.conf"     "$HOME/.tmux.conf"
 symlink "$DOTFILES_DIR/.config/nvim"   "$HOME/.config/nvim"
+symlink "$DOTFILES_DIR/.config/herdr/config.toml" "$HOME/.config/herdr/config.toml"
 symlink "$DOTFILES_DIR/oh-my-posh-themes" "$HOME/oh-my-posh-themes"
 symlink "$DOTFILES_DIR/agents/AGENTS.md"     "$HOME/AGENTS.md"
 
@@ -165,12 +166,17 @@ symlink "$DOTFILES_DIR/agents/AGENTS.md"     "$HOME/AGENTS.md"
 symlink "$DOTFILES_DIR/.local/bin/until-fail"    "$HOME/.local/bin/until-fail"
 symlink "$DOTFILES_DIR/.local/bin/until-success" "$HOME/.local/bin/until-success"
 symlink "$DOTFILES_DIR/.local/bin/sync-deepinfra-langfuse.sh" "$HOME/.local/bin/sync-deepinfra-langfuse.sh"
+symlink "$DOTFILES_DIR/.local/bin/herdr-new-worktree" "$HOME/.local/bin/herdr-new-worktree"
+symlink "$DOTFILES_DIR/.local/bin/herdr-new-worktree-worker" "$HOME/.local/bin/herdr-new-worktree-worker"
 # Tool symlinks (typo-correctors and editor aliases)
 mkdir -p "$HOME/.local/bin"
 ln -sf "$(brew --prefix git)/bin/git"   "$HOME/.local/bin/gti"
 ln -sf "$(brew --prefix neovim)/bin/nvim" "$HOME/.local/bin/vi"
 ln -sf "$(brew --prefix neovim)/bin/nvim" "$HOME/.local/bin/vim"
 info "gti → git, vi → nvim, vim → nvim (typo-proof aliases 🐾)"
+
+# AI config
+symlink "$DOTFILES_DIR/.claude/settings.json" "$HOME/.claude/settings.json"
 
 # pi config — symlink shared configs, keep local runtime files
 mkdir -p "$HOME/.pi/agent"

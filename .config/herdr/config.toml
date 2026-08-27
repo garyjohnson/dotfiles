@@ -164,7 +164,7 @@ height = "30%"
 
 # Terminal width at or below which Herdr uses the mobile single-column layout.
 # Increase this for foldables, tablets, or wide phone terminals.
-# mobile_width_threshold = 64
+mobile_width_threshold = 80
 
 # Capture mouse input for Herdr's mouse UI.
 # Set false to let the terminal handle normal clicks, such as Cmd-clicking URLs.
