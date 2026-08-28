@@ -159,6 +159,12 @@ symlink "$DOTFILES_DIR/.gitignore"     "$HOME/.gitignore"
 symlink "$DOTFILES_DIR/.tmux.conf"     "$HOME/.tmux.conf"
 symlink "$DOTFILES_DIR/.config/nvim"   "$HOME/.config/nvim"
 symlink "$DOTFILES_DIR/.config/herdr/config.toml" "$HOME/.config/herdr/config.toml"
+symlink "$DOTFILES_DIR/.config/herdr/plugins/worktreeinclude-sync" "$HOME/.config/herdr/plugins/worktreeinclude-sync"
+if command -v herdr >/dev/null 2>&1; then
+  herdr plugin link "$HOME/.config/herdr/plugins/worktreeinclude-sync" >/dev/null 2>&1 \
+    && success "herdr worktreeinclude-sync plugin linked" \
+    || warn "failed to link herdr worktreeinclude-sync plugin"
+fi
 symlink "$DOTFILES_DIR/oh-my-posh-themes" "$HOME/oh-my-posh-themes"
 symlink "$DOTFILES_DIR/agents/AGENTS.md"     "$HOME/AGENTS.md"
 

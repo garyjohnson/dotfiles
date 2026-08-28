@@ -1,0 +1,9 @@
+id = "worktreeinclude-sync"
+name = "Worktreeinclude Sync"
+version = "0.1.0"
+min_herdr_version = "0.8.0"
+description = "Copies gitignored files listed in .worktreeinclude into new worktrees created by herdr."
+
+[[events]]
+on = "worktree.created"
+command = ["bash", "sync.sh"]
