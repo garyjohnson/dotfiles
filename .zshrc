@@ -39,6 +39,7 @@ diffbranch() { vim -p $(git diff --name-only ${1} HEAD) -c "tabdo :Gdiff ${1}" }
 moshdev() { mosh dev -- tmux new -A -s main }
 moshdev2() { mosh dev2 -- tmux new -A -s main }
 moshdev3() { mosh dev3 -- tmux new -A -s main }
+hdev3() { herdr --remote dev3 }
 
 # stop bugging me LLMS!
 export CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY=true
@@ -79,10 +80,17 @@ function howdoi() {
     echo "Usage: howdoi <what you want to do on the command line>"
     return 1
   fi
-  local cmd
 
-  # Ask pi for a bash command, then grab the first non-blank line from the output
-  cmd=$(pi -p --no-session --model "deepseek-ai/DeepSeek-V4-Flash" "bash command to $* — output ONLY the raw single-line bash command, no markdown, no backticks, no explanation, just the command" 2>/dev/null | sed -n '/[^[:space:]]/p' | head -1)
+  local cmd harness
+  case "${LLM_HARNESS:-pi}" in
+    pi)    harness=(pi -p --no-session --model "deepseek-ai/DeepSeek-V4-Flash") ;;
+    claude) harness=(claude -p) ;;
+    codex) harness=(codex exec) ;;
+    *)     echo "Invalid LLM_HARNESS: ${LLM_HARNESS} (valid: pi, claude, codex)" >&2; return 1 ;;
+  esac
+
+  # Ask the harness for a bash command, then grab the first non-blank line
+  cmd=$("${harness[@]}" "bash command to $* — output ONLY the raw single-line bash command, no markdown, no backticks, no explanation, just the command" 2>/dev/null | sed -n '/[^[:space:]]/p' | head -1)
 
   # Inject the command into the zsh line editor buffer so the user can press enter to run it
   if [[ -n "$cmd" ]]; then
@@ -93,17 +101,3 @@ function howdoi() {
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
-
-function howdoi() {
-    if [[ -z "$1" ]]; then
-      echo "Usage: howdoi <what you want to do on the command line>"
-      return 1
-    fi
-    local cmd
-
-    cmd=$(claude -p "bash command to $* — output ONLY the raw single-line bash command, no markdown, no backticks, no explanation, just the command" 2>/dev/null | sed -n '/[^[:space:]]/p' | head -1)
-
-    if [[ -n "$cmd" ]]; then
-      print -z "$cmd"
-    fi
-  }

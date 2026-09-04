@@ -591,6 +591,16 @@ fi
 
 step "🍎 macOS defaults"
 
+# Sandboxed Apple apps (Safari/Mail/Notes) can't have their prefs written unless
+# the terminal has Full Disk Access. Detect it up front and offer to fix it.
+fda_probe="$HOME/Library/Containers/com.apple.Safari/Data/Library/Preferences/.fda-probe"
+if ! { touch "$fda_probe" 2>/dev/null && rm -f "$fda_probe" 2>/dev/null; }; then
+  warn "Terminal lacks Full Disk Access — Safari/Mail/Notes defaults will be skipped."
+  info  "Opening System Settings → Full Disk Access so you can grant it…"
+  open "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"
+  read -rp "  Grant iTerm Full Disk Access, then press Enter to continue (or Enter to skip)… " _
+fi
+
 source "$DOTFILES_DIR/.macos"
 success "Defaults applied ✨"
 
