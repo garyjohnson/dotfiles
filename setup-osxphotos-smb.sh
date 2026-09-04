@@ -73,6 +73,11 @@ LOG_DIR="$HOME/osxphotos_logs"
 CONFIG_DIR="$HOME/.config/osxphotos-backup"
 CREDS_FILE="$CONFIG_DIR/smb.conf"
 
+# Path to a Finder alias of the SMB export folder, used by osxphotos'
+# --retry-nas-alias to auto-remount the share on connection loss. The sync
+# script creates this best-effort after the first successful mount.
+NAS_ALIAS="$STATE_DIR/smb-alias"
+
 # Install locations (the files this script writes and keeps up to date).
 INSTALL_BIN="$HOME/.local/bin/sync-osxphotos-backup.sh"
 PLIST_LABEL="com.garyjohnson.osxphotos-backup"
@@ -188,7 +193,26 @@ else
   err "No Photos.sqlite at '$PHOTOS_LIBRARY'. Confirm the path (watch for trailing spaces/characters) and the drive is mounted."
 fi
 
-# --- 4. Provision the SMB mount point (needs root, one-time) ----------------
+# --- 4. NAS alias for SMB remount-on-disconnect (optional, prompted) ---------
+
+step "🔌 NAS remount alias"
+
+default_alias="$( [ -f "$INSTALL_BIN" ] && read_back NAS_ALIAS || true )"
+default_alias="${default_alias:-${NAS_ALIAS}}"
+
+info "osxphotos can auto-remount the SMB share if it drops mid-export, using a"
+info "Finder alias to the export folder. The sync script creates this alias"
+info "best-effort after the first successful mount."
+prompt "Finder alias path for NAS remount [$default_alias] (blank to skip): "
+read -r alias_in
+NAS_ALIAS="$(unquote "${alias_in:-$default_alias}")"
+if [ -n "$NAS_ALIAS" ]; then
+  success "Will use NAS alias at $NAS_ALIAS"
+else
+  warn "NAS alias disabled — plain --retry only (no auto-remount on disconnect)."
+fi
+
+# --- 5. Provision the SMB mount point (needs root, one-time) ----------------
 
 step "🗂 Mount point"
 
@@ -201,7 +225,7 @@ else
   success "Mount point ready at $MOUNT_POINT"
 fi
 
-# --- 5. Collect / store SMB credentials in a local config file ---------------
+# --- 6. Collect / store SMB credentials in a local config file ---------------
 
 step "🔐 SMB credentials"
 
@@ -253,7 +277,7 @@ else
   success "SMB credentials written to $CREDS_FILE (chmod 600)."
 fi
 
-# --- 6. Render the sync script from the template -----------------------------
+# --- 7. Render the sync script from the template -----------------------------
 
 step "📝 Sync script"
 
@@ -270,6 +294,7 @@ sed \
   -e "s|__STATE_DIR__|$(sed_repl "$STATE_DIR")|g" \
   -e "s|__LOG_DIR__|$(sed_repl "$LOG_DIR")|g" \
   -e "s|__CREDS_FILE__|$(sed_repl "$CREDS_FILE")|g" \
+  -e "s|__NAS_ALIAS__|$(sed_repl "$NAS_ALIAS")|g" \
   "$SRC_SYNC_SCRIPT" > "$tmp_sync"
 
 if [ -f "$INSTALL_BIN" ] && cmp -s "$tmp_sync" "$INSTALL_BIN"; then
@@ -282,7 +307,7 @@ else
 fi
 link "$INSTALL_BIN" "(rendered from $SRC_SYNC_SCRIPT)"
 
-# --- 7. Render the launchd plist from the template ---------------------------
+# --- 8. Render the launchd plist from the template ---------------------------
 
 step "⏱ LaunchAgent"
 
@@ -308,7 +333,7 @@ else
 fi
 link "$PLIST_PATH" "(rendered from $PLIST_SRC)"
 
-# --- 8. Load / reload the agent ----------------------------------------------
+# --- 9. Load / reload the agent ----------------------------------------------
 
 step "🚀 LaunchAgent activation"
 
@@ -323,7 +348,7 @@ else
   fi
 fi
 
-# --- 9. First-run dry check --------------------------------------------------
+# --- 10. First-run dry check -------------------------------------------------
 
 step "🎬 First run"
 

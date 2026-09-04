@@ -16,9 +16,12 @@ Backs up an Apple Photos library to an SMB share using [osxphotos](https://githu
 2. Mounts the SMB share (skips if already mounted; password read from the local creds file — no keychain, no unlock).
 3. Runs `osxphotos export` with:
    - `--update` + `--overwrite` — only exports new/changed assets, never re-exports unchanged ones (incremental).
+   - `--export-by-date` — organizes output into `DEST/YYYY/MM/DD/` folders (not a flat dump).
    - `--sidecar xmp` — writes XMP sidecars (metadata for Immich/other indexers).
    - `--download-missing` — pulls iCloud-only originals down first.
    - `--exportdb $HOME/osxphotos_state/osxphotos_export.db` — local state DB so partial runs resume cleanly and the flow is genuinely incremental.
+   - `--retry 3` — retries failed file operations (useful for flaky SMB).
+   - `--retry-nas-alias` + `--retry-wait` — if a Finder alias to the export folder exists (created best-effort after the first mount), osxphotos auto-remounts the SMB share on connection loss instead of aborting.
    - `--report` — CSV audit trail per day.
 4. Leaves the share mounted (reused on the next run) and rotates old logs.
 
@@ -30,6 +33,7 @@ CONFIG` block at the top of `setup-osxphotos-smb.sh` just sets the *defaults*:
 - `SERVER` / `SHARE` — SMB host + share name (prompted; no default).
 - `PHOTOS_LIBRARY` — default path to the Photos library (defaults to `~/Photos/...`).
 - `MOUNT_POINT` / `SUB_DIR` — local mount + export subfolder (defaults to `/Volumes/osxphotos-backup/osxphotos`).
+- `NAS_ALIAS` — path to a Finder alias used for SMB auto-remount (defaults to `~/osxphotos_state/smb-alias`; prompted, blank to skip).
 - `SYNC_INTERVAL_SECONDS` — default every 5 hours.
 
 ## Run it
@@ -40,12 +44,13 @@ CONFIG` block at the top of `setup-osxphotos-smb.sh` just sets the *defaults*:
 
 The script installs osxphotos (via pipx), then prompts for (in order): SMB
 server + share, the Photos library path (default
-`~/Photos/Photos Library.photoslibrary`), and the SMB username + password. It
-provisions the SMB mount point (in `/Volumes`, so it asks for `sudo` once),
-renders + installs the sync script and plist, loads the LaunchAgent, and kicks
-off an immediate first sync. Values may be typed bare, single-quoted, or
-double-quoted (useful for paths containing spaces) — surrounding quotes are
-stripped. Tail the log with:
+`~/Photos/Photos Library.photoslibrary`), a Finder alias path for NAS remount
+(default `~/osxphotos_state/smb-alias`, blank to skip), and the SMB username +
+password. It provisions the SMB mount point (in `/Volumes`, so it asks for
+`sudo` once), renders + installs the sync script and plist, loads the
+LaunchAgent, and kicks off an immediate first sync. Values may be typed bare,
+single-quoted, or double-quoted (useful for paths containing spaces) —
+surrounding quotes are stripped. Tail the log with:
 
 ```bash
 tail -f ~/osxphotos_logs/$(ls -t ~/osxphotos_logs | head -1)

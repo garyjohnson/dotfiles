@@ -18,6 +18,7 @@ EXPORT_DB="__EXPORT_DB__"
 STATE_DIR="__STATE_DIR__"
 LOG_DIR="__LOG_DIR__"
 CREDS_FILE="__CREDS_FILE__"
+NAS_ALIAS="__NAS_ALIAS__"
 
 EXPORT_DIR="$MOUNT_POINT/$SUB_DIR"
 LOG_FILE="$LOG_DIR/sync-$(date +%Y-%m-%d_%H%M%S).log"
@@ -97,15 +98,52 @@ log "Exporting to $EXPORT_DIR ..."
 
 mkdir -p "$EXPORT_DIR"
 
-osxphotos export "$EXPORT_DIR" \
-  --library "$PHOTOS_LIBRARY" \
-  --update \
-  --overwrite \
-  --sidecar xmp \
-  --download-missing \
-  --exportdb "$EXPORT_DB" \
-  --retry 3 \
+# Best-effort: create a Finder alias to the export folder so osxphotos'
+# --retry-nas-alias can auto-remount the SMB share if it drops mid-export.
+# osxphotos opens the alias via Finder, which re-establishes the connection.
+if [ -n "$NAS_ALIAS" ] && [ ! -f "$NAS_ALIAS" ]; then
+  log "  creating Finder alias at $NAS_ALIAS (best-effort)..."
+  alias_dir="$(dirname "$NAS_ALIAS")"
+  mkdir -p "$alias_dir"
+  tmp_alias_dir="$(mktemp -d "$alias_dir/.alias-XXXX")"
+  if osascript -e "tell application \"Finder\" to make alias file to (POSIX file \"$EXPORT_DIR\") at (POSIX file \"$tmp_alias_dir/\")" >/dev/null 2>&1; then
+    created="$(find "$tmp_alias_dir" -maxdepth 1 -type f ! -name ".DS_Store" -print -quit)"
+    if [ -n "$created" ]; then
+      mv "$created" "$NAS_ALIAS"
+      log "  ✓ Finder alias created at $NAS_ALIAS"
+    else
+      log "  ⚠ alias creation produced no file; using plain --retry"
+    fi
+  else
+    log "  ⚠ could not create Finder alias automatically."
+    log "    Manually: in Finder, right-click '$EXPORT_DIR' → Make Alias,"
+    log "    then move it to '$NAS_ALIAS'. Using plain --retry until then."
+  fi
+  rm -rf "$tmp_alias_dir"
+fi
+
+# Build the osxphotos command. Use --retry-nas-alias + --retry-wait only if the
+# alias exists; otherwise fall back to plain --retry (no auto-remount).
+OSXPHOTOS_ARGS=(
+  export "$EXPORT_DIR"
+  --library "$PHOTOS_LIBRARY"
+  --update
+  --overwrite
+  --sidecar xmp
+  --download-missing
+  --exportdb "$EXPORT_DB"
+  --export-by-date
+  --retry 3
   --report "$LOG_DIR/export-report-$(date +%Y-%m-%d).csv"
+)
+if [ -n "$NAS_ALIAS" ] && [ -f "$NAS_ALIAS" ]; then
+  OSXPHOTOS_ARGS+=(--retry-nas-alias "$NAS_ALIAS" --retry-wait 15)
+  log "  using --retry-nas-alias (auto-remount enabled)"
+else
+  log "  using plain --retry (no NAS alias)"
+fi
+
+osxphotos "${OSXPHOTOS_ARGS[@]}"
 
 EXIT_CODE=$?
 
