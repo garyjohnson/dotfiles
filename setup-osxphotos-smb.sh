@@ -109,16 +109,18 @@ xml_esc() { printf '%s' "$1" | sed -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&
 
 # Strip surrounding single/double quotes from user-typed input, so values with
 # spaces can be entered as 'foo bar' or "foo bar" or bare foo bar — all become
-# foo bar. (Does NOT strip internal quotes.)
+# foo bar. Loops to remove repeated/compounded quote layers.
 unquote() {
   local v="$1" n
-  n=${#v}
-  if [ "$n" -ge 2 ]; then
+  while :; do
+    n=${#v}
+    [ "$n" -ge 2 ] || break
     case "$v" in
-      \'*\')   v="${v#\'}"; v="${v%\'}" ;;
-      \"*\")  v="${v#\"}"; v="${v%\"}" ;;
+      \'*\')  v="${v#\'}"; v="${v%\'}" ;;
+      \"*\") v="${v#\"}"; v="${v%\"}" ;;
+      *) break ;;
     esac
-  fi
+  done
   printf '%s' "$v"
 }
 
