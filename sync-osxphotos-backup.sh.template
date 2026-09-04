@@ -66,16 +66,14 @@ else
     abort "mount point missing: $MOUNT_POINT. Create it once with:\n  sudo mkdir -p '$MOUNT_POINT' && sudo chown \"\$(whoami)\" '$MOUNT_POINT'"
   fi
 
-  # URL-encode the password so special characters (e.g. @, :, /) don't break
-  # the SMB URL. mount_smbfs accepts user:password@server embedded in the URL.
-  enc_pass() {
-    python3 -c 'import sys,urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$1"
-  }
-  ENC_PASS="$(enc_pass "$SMB_PASS")"
+  # Pass the raw username:password in the SMB URL. mount_smbfs wants the
+  # literal password, NOT a URL-encoded one (encoding breaks auth on most SMB
+  # servers). Special characters like @ or : in the password are handled by
+  # the fact that the final @ and / delimiters are placed after it.
 
   log "  mounting //${SERVER}/${SHARE} ..."
-  if ! /sbin/mount_smbfs "//${SMB_USER}:${ENC_PASS}@${SERVER}/${SHARE}" "$MOUNT_POINT" 2>&1; then
-    abort "mount_smbfs failed for //${SERVER}/${SHARE}"
+  if ! /sbin/mount_smbfs "//${SMB_USER}:${SMB_PASS}@${SERVER}/${SHARE}" "$MOUNT_POINT" 2>&1; then
+    abort "mount_smbfs failed for //${SERVER}/${SHARE} (server reachable but auth/mount failed)"
   fi
 
   sleep 2
