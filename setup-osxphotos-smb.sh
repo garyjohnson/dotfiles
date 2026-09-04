@@ -203,10 +203,14 @@ else
   [ -n "$SMB_PASS" ] || err "SMB password is required."
 
   # Write the credentials file (owner-only). Single source of truth for sync.
+  # Wrap each value in single quotes, escaping any embedded single quote the
+  # shell way: ' -> '\''
+  sq() { printf '%s' "$1" | sed "s/'/'\\''/g"; }
+
   umask 077
   {
-    echo "SMB_USER='$(printf '%s' "$SMB_USER" | sed "s/'/'\\''/g")"
-    echo "SMB_PASS='$(printf '%s' "$SMB_PASS" | sed "s/'/'\\''/g")"
+    echo "SMB_USER='$(sq "$SMB_USER")'"
+    echo "SMB_PASS='$(sq "$SMB_PASS")'"
   } > "$CREDS_FILE"
   chmod 600 "$CREDS_FILE"
   success "SMB credentials written to $CREDS_FILE (chmod 600)."
