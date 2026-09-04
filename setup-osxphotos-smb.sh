@@ -107,6 +107,21 @@ sed_repl() { printf '%s' "$1" | sed -e 's/\\/\\\\/g' -e 's/&/\\&/g' -e 's/|/\\|/
 # Escape a value for safe embedding in the XML launchd plist.
 xml_esc() { printf '%s' "$1" | sed -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g' -e 's/"/\&quot;/g'; }
 
+# Strip surrounding single/double quotes from user-typed input, so values with
+# spaces can be entered as 'foo bar' or "foo bar" or bare foo bar — all become
+# foo bar. (Does NOT strip internal quotes.)
+unquote() {
+  local v="$1" n
+  n=${#v}
+  if [ "$n" -ge 2 ]; then
+    case "$v" in
+      \'*\')   v="${v#\'}"; v="${v%\'}" ;;
+      \"*\")  v="${v#\"}"; v="${v%\"}" ;;
+    esac
+  fi
+  printf '%s' "$v"
+}
+
 step "🔧 osxphotos + SMB backup setup"
 
 # --- 1. Install osxphotos via pipx -------------------------------------------
@@ -201,7 +216,7 @@ if [ -n "$stored_user" ] && [ "$CHANGE_CREDS" != "y" ] && [ "$CHANGE_CREDS" != "
 else
   prompt "SMB username [${SMB_USER:-$stored_user}]: "
   read -r username_in
-  SMB_USER="${username_in:-${SMB_USER:-$stored_user}}"
+  SMB_USER="$(unquote "${username_in:-${SMB_USER:-$stored_user}}")"
   [ -n "$SMB_USER" ] || err "SMB username is required."
 
   prompt "SMB password (input hidden): "

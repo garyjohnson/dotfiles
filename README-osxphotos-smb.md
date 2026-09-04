@@ -43,7 +43,9 @@ The script installs osxphotos (via pipx), then prompts for (in order): SMB
 server + share, the Photos library path (default
 `~/Photos/Photos Library.photoslibrary`), and the SMB username + password. It
 renders + installs the sync script and plist, loads the LaunchAgent, and kicks
-off an immediate first sync. Tail the log with:
+off an immediate first sync. Values may be typed bare, single-quoted, or
+double-quoted (useful for paths containing spaces) — surrounding quotes are
+stripped. Tail the log with:
 
 ```bash
 tail -f ~/osxphotos_logs/$(ls -t ~/osxphotos_logs | head -1)
