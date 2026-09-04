@@ -48,13 +48,14 @@ link()    { echo -e "  ${dim}${purple}   $1 → $2${reset}"; }
 #  EDITABLE CONFIG  (everything machine/OS-specific is here)
 # ─────────────────────────────────────────────────────────────────────────────
 
-SERVER=""                # e.g. "truenas.local" or "192.168.1.50"
-SHARE=""                 # e.g. "photos"  (the export subdir is set below)
+# These are defaults only — everything user-facing is prompted at setup,
+# with the value below shown as the default. Running the script asks for
+# server/share/library/creds/etc; no editing required.
+SERVER=""                # e.g. "truenas.local" or "192.168.1.50" (prompted)
+SHARE=""                 # e.g. "photos" (prompted)
 
-# SMB username + password are NOT configured here — they live in the creds
-# file ($CREDS_FILE below), written interactively by this script on first run.
-
-# Where the Photos library lives (on the SSD / external drive)
+# Where the Photos library lives (on the SSD / external drive). Default below;
+# re-prompted at setup with a sensible guess.
 PHOTOS_LIBRARY="$HOME/Photos/Photos Library.photoslibrary"
 
 # Where to mount the SMB share locally, and the subfolder to export into.
@@ -84,16 +85,19 @@ if [ "$(uname)" != "Darwin" ]; then
   err "This script is for macOS only"
 fi
 
-if [ -z "${SERVER:-}" ] || [ -z "${SHARE:-}" ]; then
-  err "Edit SERVER and SHARE near the top of this script before running."
-fi
-
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 SRC_SYNC_SCRIPT="$DOTFILES_DIR/sync-osxphotos-backup.sh.template"
 
 if [ ! -f "$SRC_SYNC_SCRIPT" ]; then
   err "Template not found: $SRC_SYNC_SCRIPT"
 fi
+
+# Read a single `VAR="value"` assignment back out of the installed sync script,
+# so re-runs can default to what was already configured (no need to re-type).
+read_back() {
+  local var="$1"
+  sed -n "s/^${var}=\"\(.*\)\"$/\1/p" "$INSTALL_BIN" 2>/dev/null | head -1
+}
 
 step "🔧 osxphotos + SMB backup setup"
 
@@ -120,16 +124,32 @@ else
   success "osxphotos installed!"
 fi
 
-# --- 2. Photos library location (prompt, with a sensible default) ------------
+# --- 2. SMB server + share (prompted, defaults from prior run) --------------
+
+step "🗄 SMB server + share"
+
+default_server="$( [ -f "$INSTALL_BIN" ] && read_back SERVER || printf '%s' "$SERVER" )"
+default_share="$( [ -f "$INSTALL_BIN" ] && read_back SHARE || printf '%s' "$SHARE" )"
+
+prompt "SMB server (hostname or IP) [${default_server}]: "
+read -r server_in
+SERVER="${server_in:-$default_server}"
+[ -n "$SERVER" ] || err "SMB server is required."
+
+prompt "SMB share name [${default_share}]: "
+read -r share_in
+SHARE="${share_in:-$default_share}"
+[ -n "$SHARE" ] || err "SMB share name is required."
+
+success "Will export to //${SERVER}/${SHARE}/${SUB_DIR}"
+
+# --- 3. Photos library location (prompt, with a sensible default) ------------
 
 step "📚 Photos library"
 
 # On re-runs, default to the library path currently baked into the installed
 # script so the user can just hit Enter. First run: $HOME/Photos default.
-prev_library=""
-if [ -f "$INSTALL_BIN" ]; then
-  prev_library="$(sed -n 's/^PHOTOS_LIBRARY="\(.*\)"$/\1/p' "$INSTALL_BIN" | head -1)"
-fi
+prev_library="$( [ -f "$INSTALL_BIN" ] && read_back PHOTOS_LIBRARY || true )"
 DEFAULT_LIBRARY="${prev_library:-${PHOTOS_LIBRARY}}"
 
 prompt "Photos library path [$DEFAULT_LIBRARY]: "
@@ -144,7 +164,7 @@ else
   warn "verify at runtime."
 fi
 
-# --- 3. Collect / store SMB credentials in a local config file ---------------
+# --- 4. Collect / store SMB credentials in a local config file ---------------
 
 step "🔐 SMB credentials"
 
@@ -192,7 +212,7 @@ else
   success "SMB credentials written to $CREDS_FILE (chmod 600)."
 fi
 
-# --- 4. Render the sync script from the template -----------------------------
+# --- 5. Render the sync script from the template -----------------------------
 
 step "📝 Sync script"
 
@@ -221,7 +241,7 @@ else
 fi
 link "$INSTALL_BIN" "(rendered from $SRC_SYNC_SCRIPT)"
 
-# --- 5. Render the launchd plist from the template ---------------------------
+# --- 6. Render the launchd plist from the template ---------------------------
 
 step "⏱ LaunchAgent"
 
@@ -247,7 +267,7 @@ else
 fi
 link "$PLIST_PATH" "(rendered from $PLIST_SRC)"
 
-# --- 6. Load / reload the agent ----------------------------------------------
+# --- 7. Load / reload the agent ----------------------------------------------
 
 step "🚀 LaunchAgent activation"
 
@@ -262,7 +282,7 @@ else
   fi
 fi
 
-# --- 7. First-run dry check --------------------------------------------------
+# --- 8. First-run dry check --------------------------------------------------
 
 step "🎬 First run"
 

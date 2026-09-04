@@ -24,10 +24,12 @@ Backs up an Apple Photos library to an SMB share using [osxphotos](https://githu
 
 ## Config
 
-Edit the `EDITABLE CONFIG` block near the top of `setup-osxphotos-smb.sh`:
+No editing required — the setup script prompts for everything (with sensible
+defaults, and on re-runs it recalls your previous answers). The `EDITABLE
+CONFIG` block at the top of `setup-osxphotos-smb.sh` just sets the *defaults*:
 
-- `SERVER` / `SHARE` — SMB host + share name (required).
-- `PHOTOS_LIBRARY` — default path to the Photos library (re-prompted at setup; just hit Enter to accept).
+- `SERVER` / `SHARE` — SMB host + share name (prompted; no default).
+- `PHOTOS_LIBRARY` — default path to the Photos library (defaults to `~/Photos/...`).
 - `MOUNT_POINT` / `SUB_DIR` — local mount + export subfolder (defaults to `/Volumes/osxphotos-backup/osxphotos`).
 - `SYNC_INTERVAL_SECONDS` — default every 5 hours.
 
@@ -37,7 +39,11 @@ Edit the `EDITABLE CONFIG` block near the top of `setup-osxphotos-smb.sh`:
 ./setup-osxphotos-smb.sh
 ```
 
-The script installs osxphotos (via pipx), prompts for the Photos library location (default `~/Photos/Photos Library.photoslibrary`), prompts for SMB credentials, renders + installs the sync script and plist, loads the LaunchAgent, and kicks off an immediate first sync. Tail the log with:
+The script installs osxphotos (via pipx), then prompts for (in order): SMB
+server + share, the Photos library path (default
+`~/Photos/Photos Library.photoslibrary`), and the SMB username + password. It
+renders + installs the sync script and plist, loads the LaunchAgent, and kicks
+off an immediate first sync. Tail the log with:
 
 ```bash
 tail -f ~/osxphotos_logs/$(ls -t ~/osxphotos_logs | head -1)
