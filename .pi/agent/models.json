@@ -177,18 +177,19 @@
           }
         },
         {
-          "id": "MiniMaxAI/MiniMax-M2.5",
-          "name": "MiniMax M2.5 (DeepInfra)",
+          "id": "MiniMaxAI/MiniMax-M3",
+          "name": "MiniMax M3 (DeepInfra)",
           "reasoning": true,
           "input": [
-            "text"
+            "text",
+            "image"
           ],
-          "contextWindow": 196608,
-          "maxTokens": 32768,
+          "contextWindow": 524288,
+          "maxTokens": 512000,
           "cost": {
-            "input": 0.27,
-            "output": 0.95,
-            "cacheRead": 0.03,
+            "input": 0.28,
+            "output": 1.1,
+            "cacheRead": 0.056,
             "cacheWrite": 0
           }
         },
