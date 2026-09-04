@@ -193,6 +193,7 @@ symlink "$DOTFILES_DIR/.local/bin/until-fail" "$HOME/.local/bin/until-fail"
 symlink "$DOTFILES_DIR/.local/bin/until-success" "$HOME/.local/bin/until-success"
 symlink "$DOTFILES_DIR/.local/bin/iterm-open" "$HOME/.local/bin/iterm-open"
 symlink "$DOTFILES_DIR/.local/bin/sync-deepinfra-langfuse.sh" "$HOME/.local/bin/sync-deepinfra-langfuse.sh"
+symlink "$DOTFILES_DIR/.local/bin/photos-logs.sh" "$HOME/.local/bin/photos-logs.sh"
 # Tool symlinks (typo-correctors and editor aliases)
 ln -sf "$HOME/homebrew/bin/git" "$HOME/.local/bin/gti"
 ln -sf "$HOME/homebrew/bin/nvim" "$HOME/.local/bin/vi"
