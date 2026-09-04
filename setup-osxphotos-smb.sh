@@ -168,8 +168,7 @@ PHOTOS_LIBRARY="${library_in:-$DEFAULT_LIBRARY}"
 if [ -f "$PHOTOS_LIBRARY/database/Photos.sqlite" ]; then
   success "Photos library found at $PHOTOS_LIBRARY"
 else
-  warn "No Photos.sqlite at $PHOTOS_LIBRARY — continuing anyway; the sync will"
-  warn "verify at runtime."
+  err "No Photos.sqlite at '$PHOTOS_LIBRARY'. Confirm the path (watch for trailing spaces/characters) and the drive is mounted."
 fi
 
 # --- 4. Collect / store SMB credentials in a local config file ---------------

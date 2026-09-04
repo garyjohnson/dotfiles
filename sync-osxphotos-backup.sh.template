@@ -45,7 +45,7 @@ fi
 
 log "[1/3] Checking Photos library..."
 if [ ! -d "$PHOTOS_LIBRARY" ]; then
-  abort "Photos library not found at $PHOTOS_LIBRARY"
+  abort "Photos library not found at [$PHOTOS_LIBRARY]"
 fi
 if [ ! -f "$PHOTOS_LIBRARY/database/Photos.sqlite" ]; then
   abort "Photos.sqlite missing under $PHOTOS_LIBRARY — wrong library or unmounted drive"
