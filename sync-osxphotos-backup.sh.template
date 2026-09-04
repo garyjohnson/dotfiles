@@ -1,0 +1,122 @@
+#!/bin/bash
+set -uo pipefail
+
+# ─────────────────────────────────────────────────────────────────────────────
+# sync-osxphotos-backup.sh  (rendered from sync-osxphotos-backup.sh.template)
+#
+# Mounts the SMB share (if needed), runs osxphotos export in update mode, and
+# unmounts cleanly. Called by launchd. The SMB credentials are read from a
+# local, owner-only creds file written by the setup script.
+# ─────────────────────────────────────────────────────────────────────────────
+
+SERVER="__SERVER__"
+SHARE="__SHARE__"
+MOUNT_POINT="__MOUNT_POINT__"
+SUB_DIR="__SUB_DIR__"
+PHOTOS_LIBRARY="__PHOTOS_LIBRARY__"
+EXPORT_DB="__EXPORT_DB__"
+STATE_DIR="__STATE_DIR__"
+LOG_DIR="__LOG_DIR__"
+CREDS_FILE="__CREDS_FILE__"
+
+EXPORT_DIR="$MOUNT_POINT/$SUB_DIR"
+LOG_FILE="$LOG_DIR/sync-$(date +%Y-%m-%d_%H%M%S).log"
+
+mkdir -p "$LOG_DIR" "$STATE_DIR"
+
+# Log everything to the per-run log file
+exec > "$LOG_FILE" 2>&1
+
+echo "=========================================="
+echo "osxphotos SMB sync started: $(date)"
+echo "=========================================="
+
+log()  { echo "[$(date +%H:%M:%S)] $*"; }
+abort() { log "ABORT: $*"; exit 1; }
+
+# Load SMB credentials from the local creds file (written by the setup script).
+# shellcheck disable=SC1090
+. "$CREDS_FILE"
+if [ -z "${SMB_USER:-}" ] || [ -z "${SMB_PASS:-}" ]; then
+  abort "missing SMB_USER/SMB_PASS in $CREDS_FILE (re-run the setup script)"
+fi
+
+# ─── Pre-flight 1: Photos library present ───────────────────────────────────
+
+log "[1/3] Checking Photos library..."
+if [ ! -d "$PHOTOS_LIBRARY" ]; then
+  abort "Photos library not found at $PHOTOS_LIBRARY"
+fi
+if [ ! -f "$PHOTOS_LIBRARY/database/Photos.sqlite" ]; then
+  abort "Photos.sqlite missing under $PHOTOS_LIBRARY — wrong library or unmounted drive"
+fi
+log "  ✓ library present"
+
+# ─── Pre-flight 2: Mount SMB share ──────────────────────────────────────────
+
+log "[2/3] SMB share..."
+if mount | grep -q "on $MOUNT_POINT "; then
+  log "  ✓ already mounted at $MOUNT_POINT"
+else
+  mkdir -p "$MOUNT_POINT"
+
+  # URL-encode the password so special characters (e.g. @, :, /) don't break
+  # the SMB URL. mount_smbfs accepts user:password@server embedded in the URL.
+  enc_pass() {
+    python3 -c 'import sys,urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$1"
+  }
+  ENC_PASS="$(enc_pass "$SMB_PASS")"
+
+  log "  mounting //${SERVER}/${SHARE} ..."
+  if ! /sbin/mount_smbfs "//${SMB_USER}:${ENC_PASS}@${SERVER}/${SHARE}" "$MOUNT_POINT" 2>&1; then
+    abort "mount_smbfs failed for //${SERVER}/${SHARE}"
+  fi
+
+  sleep 2
+  if ! mount | grep -q "on $MOUNT_POINT "; then
+    abort "mount command ran but share did not appear in mount list"
+  fi
+  log "  ✓ mounted at $MOUNT_POINT"
+fi
+
+# ─── Pre-flight 3: osxphotos available ──────────────────────────────────────
+
+log "[3/3] osxphotos..."
+if ! command -v osxphotos >/dev/null 2>&1; then
+  abort "osxphotos not found in PATH (pipx install osxphotos)"
+fi
+log "  ✓ $(osxphotos --version 2>/dev/null || echo osxphotos)"
+
+# ─── Run export ─────────────────────────────────────────────────────────────
+
+log "Exporting to $EXPORT_DIR ..."
+
+mkdir -p "$EXPORT_DIR"
+
+osxphotos export "$EXPORT_DIR" \
+  --library "$PHOTOS_LIBRARY" \
+  --update \
+  --overwrite \
+  --sidecar xmp \
+  --download-missing \
+  --exportdb "$EXPORT_DB" \
+  --retry 3 \
+  --retry-wait 15 \
+  --report "$LOG_DIR/export-report-$(date +%Y-%m-%d).csv"
+
+EXIT_CODE=$?
+
+echo "=========================================="
+log "osxphotos exited with code: $EXIT_CODE"
+log "Finished: $(date)"
+echo "=========================================="
+
+# Leave the SMB share mounted so the next run skips remounting (and so other
+# processes, e.g. Immich, can keep reading it). The pre-flight check above
+# already reuses an existing mount.
+
+# Rotate old logs (keep 30 days of sync logs, 90 days of reports)
+find "$LOG_DIR" -name "sync-*.log" -mtime +30 -delete 2>/dev/null || true
+find "$LOG_DIR" -name "export-report-*.csv" -mtime +90 -delete 2>/dev/null || true
+
+exit "$EXIT_CODE"

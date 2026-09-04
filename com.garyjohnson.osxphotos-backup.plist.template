@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>__LABEL__</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>__PROGRAM__</string>
+    </array>
+
+    <!-- Run every __INTERVAL__ seconds, and once at load/login -->
+    <key>StartInterval</key>
+    <integer>__INTERVAL__</integer>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <!-- Environment for launchd (pipx/pip-installed binaries) -->
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/Users/__USER__/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+        <key>HOME</key>
+        <string>/Users/__USER__</string>
+    </dict>
+
+    <key>StandardOutPath</key>
+    <string>/Users/__USER__/osxphotos_logs/launchd.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/__USER__/osxphotos_logs/launchd.log</string>
+</dict>
+</plist>
