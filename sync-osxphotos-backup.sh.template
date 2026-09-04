@@ -58,7 +58,13 @@ log "[2/3] SMB share..."
 if mount | grep -q "on $MOUNT_POINT "; then
   log "  ✓ already mounted at $MOUNT_POINT"
 else
-  mkdir -p "$MOUNT_POINT"
+  # The mount point must already exist. Creating it under /Volumes needs root,
+  # so we do NOT `mkdir -p` here (as a non-admin launchd job that would silently
+  # fail). The setup script provisions it once with sudo; if it's gone, tell the
+  # user exactly what to run.
+  if [ ! -d "$MOUNT_POINT" ]; then
+    abort "mount point missing: $MOUNT_POINT. Create it once with:\n  sudo mkdir -p '$MOUNT_POINT' && sudo chown \"\$(whoami)\" '$MOUNT_POINT'"
+  fi
 
   # URL-encode the password so special characters (e.g. @, :, /) don't break
   # the SMB URL. mount_smbfs accepts user:password@server embedded in the URL.

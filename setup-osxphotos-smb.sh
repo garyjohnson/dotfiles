@@ -158,12 +158,12 @@ default_share="$( [ -f "$INSTALL_BIN" ] && read_back SHARE || printf '%s' "$SHAR
 
 prompt "SMB server (hostname or IP) [${default_server}]: "
 read -r server_in
-SERVER="${server_in:-$default_server}"
+SERVER="$(unquote "${server_in:-$default_server}")"
 [ -n "$SERVER" ] || err "SMB server is required."
 
 prompt "SMB share name [${default_share}]: "
 read -r share_in
-SHARE="${share_in:-$default_share}"
+SHARE="$(unquote "${share_in:-$default_share}")"
 [ -n "$SHARE" ] || err "SMB share name is required."
 
 success "Will export to //${SERVER}/${SHARE}/${SUB_DIR}"
@@ -179,7 +179,7 @@ DEFAULT_LIBRARY="${prev_library:-${PHOTOS_LIBRARY}}"
 
 prompt "Photos library path [$DEFAULT_LIBRARY]: "
 read -r library_in
-PHOTOS_LIBRARY="${library_in:-$DEFAULT_LIBRARY}"
+PHOTOS_LIBRARY="$(unquote "${library_in:-$DEFAULT_LIBRARY}")"
 [ -n "$PHOTOS_LIBRARY" ] || err "Photos library path is required."
 
 if [ -f "$PHOTOS_LIBRARY/database/Photos.sqlite" ]; then
@@ -188,7 +188,20 @@ else
   err "No Photos.sqlite at '$PHOTOS_LIBRARY'. Confirm the path (watch for trailing spaces/characters) and the drive is mounted."
 fi
 
-# --- 4. Collect / store SMB credentials in a local config file ---------------
+# --- 4. Provision the SMB mount point (needs root, one-time) ----------------
+
+step "🗂 Mount point"
+
+if [ -d "$MOUNT_POINT" ]; then
+  skip "Mount point already exists at $MOUNT_POINT"
+else
+  info "Creating $MOUNT_POINT (needs sudo — /Volumes is root-owned)..."
+  sudo mkdir -p "$MOUNT_POINT"
+  sudo chown "$USER" "$MOUNT_POINT"
+  success "Mount point ready at $MOUNT_POINT"
+fi
+
+# --- 5. Collect / store SMB credentials in a local config file ---------------
 
 step "🔐 SMB credentials"
 
@@ -240,7 +253,7 @@ else
   success "SMB credentials written to $CREDS_FILE (chmod 600)."
 fi
 
-# --- 5. Render the sync script from the template -----------------------------
+# --- 6. Render the sync script from the template -----------------------------
 
 step "📝 Sync script"
 
@@ -269,7 +282,7 @@ else
 fi
 link "$INSTALL_BIN" "(rendered from $SRC_SYNC_SCRIPT)"
 
-# --- 6. Render the launchd plist from the template ---------------------------
+# --- 7. Render the launchd plist from the template ---------------------------
 
 step "⏱ LaunchAgent"
 
@@ -295,7 +308,7 @@ else
 fi
 link "$PLIST_PATH" "(rendered from $PLIST_SRC)"
 
-# --- 7. Load / reload the agent ----------------------------------------------
+# --- 8. Load / reload the agent ----------------------------------------------
 
 step "🚀 LaunchAgent activation"
 
@@ -310,7 +323,7 @@ else
   fi
 fi
 
-# --- 8. First-run dry check --------------------------------------------------
+# --- 9. First-run dry check --------------------------------------------------
 
 step "🎬 First run"
 

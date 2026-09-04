@@ -23,7 +23,6 @@ Backs up an Apple Photos library to an SMB share using [osxphotos](https://githu
 4. Leaves the share mounted (reused on the next run) and rotates old logs.
 
 ## Config
-
 No editing required — the setup script prompts for everything (with sensible
 defaults, and on re-runs it recalls your previous answers). The `EDITABLE
 CONFIG` block at the top of `setup-osxphotos-smb.sh` just sets the *defaults*:
@@ -42,6 +41,7 @@ CONFIG` block at the top of `setup-osxphotos-smb.sh` just sets the *defaults*:
 The script installs osxphotos (via pipx), then prompts for (in order): SMB
 server + share, the Photos library path (default
 `~/Photos/Photos Library.photoslibrary`), and the SMB username + password. It
+provisions the SMB mount point (in `/Volumes`, so it asks for `sudo` once),
 renders + installs the sync script and plist, loads the LaunchAgent, and kicks
 off an immediate first sync. Values may be typed bare, single-quoted, or
 double-quoted (useful for paths containing spaces) — surrounding quotes are
