@@ -99,6 +99,14 @@ read_back() {
   sed -n "s/^${var}=\"\(.*\)\"$/\1/p" "$INSTALL_BIN" 2>/dev/null | head -1
 }
 
+# Escape a value for safe use inside a `sed` replacement string (delimiter `|`):
+#   \ -> \\ , & -> \& , | -> \|
+# Prevents values containing `&`/`\`/`|` from corrupting the rendered output.
+sed_repl() { printf '%s' "$1" | sed -e 's/\\/\\\\/g' -e 's/&/\\&/g' -e 's/|/\\|/g'; }
+
+# Escape a value for safe embedding in the XML launchd plist.
+xml_esc() { printf '%s' "$1" | sed -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g' -e 's/"/\&quot;/g'; }
+
 step "🔧 osxphotos + SMB backup setup"
 
 # --- 1. Install osxphotos via pipx -------------------------------------------
@@ -224,15 +232,15 @@ mkdir -p "$(dirname "$INSTALL_BIN")"
 
 tmp_sync="$(mktemp)"
 sed \
-  -e "s|__SERVER__|$SERVER|g" \
-  -e "s|__SHARE__|$SHARE|g" \
-  -e "s|__MOUNT_POINT__|$MOUNT_POINT|g" \
-  -e "s|__SUB_DIR__|$SUB_DIR|g" \
-  -e "s|__PHOTOS_LIBRARY__|$PHOTOS_LIBRARY|g" \
-  -e "s|__EXPORT_DB__|$EXPORT_DB|g" \
-  -e "s|__STATE_DIR__|$STATE_DIR|g" \
-  -e "s|__LOG_DIR__|$LOG_DIR|g" \
-  -e "s|__CREDS_FILE__|$CREDS_FILE|g" \
+  -e "s|__SERVER__|$(sed_repl "$SERVER")|g" \
+  -e "s|__SHARE__|$(sed_repl "$SHARE")|g" \
+  -e "s|__MOUNT_POINT__|$(sed_repl "$MOUNT_POINT")|g" \
+  -e "s|__SUB_DIR__|$(sed_repl "$SUB_DIR")|g" \
+  -e "s|__PHOTOS_LIBRARY__|$(sed_repl "$PHOTOS_LIBRARY")|g" \
+  -e "s|__EXPORT_DB__|$(sed_repl "$EXPORT_DB")|g" \
+  -e "s|__STATE_DIR__|$(sed_repl "$STATE_DIR")|g" \
+  -e "s|__LOG_DIR__|$(sed_repl "$LOG_DIR")|g" \
+  -e "s|__CREDS_FILE__|$(sed_repl "$CREDS_FILE")|g" \
   "$SRC_SYNC_SCRIPT" > "$tmp_sync"
 
 if [ -f "$INSTALL_BIN" ] && cmp -s "$tmp_sync" "$INSTALL_BIN"; then
@@ -254,10 +262,10 @@ PLIST_SRC="$DOTFILES_DIR/com.garyjohnson.osxphotos-backup.plist.template"
 
 tmp_plist="$(mktemp)"
 sed \
-  -e "s|__LABEL__|$PLIST_LABEL|g" \
-  -e "s|__PROGRAM__|$INSTALL_BIN|g" \
-  -e "s|__INTERVAL__|$SYNC_INTERVAL_SECONDS|g" \
-  -e "s|__USER__|$USER|g" \
+  -e "s|__LABEL__|$(sed_repl "$PLIST_LABEL")|g" \
+  -e "s|__PROGRAM__|$(xml_esc "$INSTALL_BIN")|g" \
+  -e "s|__INTERVAL__|$(sed_repl "$SYNC_INTERVAL_SECONDS")|g" \
+  -e "s|__USER__|$(xml_esc "$USER")|g" \
   "$PLIST_SRC" > "$tmp_plist"
 
 if [ -f "$PLIST_PATH" ] && cmp -s "$tmp_plist" "$PLIST_PATH"; then
