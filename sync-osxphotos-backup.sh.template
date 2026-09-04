@@ -105,7 +105,6 @@ osxphotos export "$EXPORT_DIR" \
   --download-missing \
   --exportdb "$EXPORT_DB" \
   --retry 3 \
-  --retry-wait 15 \
   --report "$LOG_DIR/export-report-$(date +%Y-%m-%d).csv"
 
 EXIT_CODE=$?
