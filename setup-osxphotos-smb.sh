@@ -120,7 +120,31 @@ else
   success "osxphotos installed!"
 fi
 
-# --- 2. Collect / store SMB credentials in a local config file ---------------
+# --- 2. Photos library location (prompt, with a sensible default) ------------
+
+step "📚 Photos library"
+
+# On re-runs, default to the library path currently baked into the installed
+# script so the user can just hit Enter. First run: $HOME/Photos default.
+prev_library=""
+if [ -f "$INSTALL_BIN" ]; then
+  prev_library="$(sed -n 's/^PHOTOS_LIBRARY="\(.*\)"$/\1/p' "$INSTALL_BIN" | head -1)"
+fi
+DEFAULT_LIBRARY="${prev_library:-${PHOTOS_LIBRARY}}"
+
+prompt "Photos library path [$DEFAULT_LIBRARY]: "
+read -r library_in
+PHOTOS_LIBRARY="${library_in:-$DEFAULT_LIBRARY}"
+[ -n "$PHOTOS_LIBRARY" ] || err "Photos library path is required."
+
+if [ -f "$PHOTOS_LIBRARY/database/Photos.sqlite" ]; then
+  success "Photos library found at $PHOTOS_LIBRARY"
+else
+  warn "No Photos.sqlite at $PHOTOS_LIBRARY — continuing anyway; the sync will"
+  warn "verify at runtime."
+fi
+
+# --- 3. Collect / store SMB credentials in a local config file ---------------
 
 step "🔐 SMB credentials"
 
@@ -168,7 +192,7 @@ else
   success "SMB credentials written to $CREDS_FILE (chmod 600)."
 fi
 
-# --- 3. Render the sync script from the template -----------------------------
+# --- 4. Render the sync script from the template -----------------------------
 
 step "📝 Sync script"
 
@@ -197,7 +221,7 @@ else
 fi
 link "$INSTALL_BIN" "(rendered from $SRC_SYNC_SCRIPT)"
 
-# --- 4. Render the launchd plist from the template ---------------------------
+# --- 5. Render the launchd plist from the template ---------------------------
 
 step "⏱ LaunchAgent"
 
@@ -223,7 +247,7 @@ else
 fi
 link "$PLIST_PATH" "(rendered from $PLIST_SRC)"
 
-# --- 5. Load / reload the agent ----------------------------------------------
+# --- 6. Load / reload the agent ----------------------------------------------
 
 step "🚀 LaunchAgent activation"
 
@@ -238,7 +262,7 @@ else
   fi
 fi
 
-# --- 6. First-run dry check --------------------------------------------------
+# --- 7. First-run dry check --------------------------------------------------
 
 step "🎬 First run"
 

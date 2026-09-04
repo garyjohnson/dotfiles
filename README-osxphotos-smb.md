@@ -6,7 +6,7 @@ Backs up an Apple Photos library to an SMB share using [osxphotos](https://githu
 
 | File | Purpose |
 |---|---|
-| `setup-osxphotos-smb.sh` | One-shot / repeatable setup. Prompts once for the SMB username + password and writes them to a local owner-only creds file (`~/.config/osxphotos-backup/smb.conf`, chmod 600). |
+| `setup-osxphotos-smb.sh` | One-shot / repeatable setup. Prompts for the Photos library path (defaults to `~/Photos`) and once for the SMB username + password, writing creds to a local owner-only file (`~/.config/osxphotos-backup/smb.conf`, chmod 600). |
 | `sync-osxphotos-backup.sh.template` | The actual sync script, rendered with your config values. Runs the osxphotos export. |
 | `com.garyjohnson.osxphotos-backup.plist.template` | launchd LaunchAgent plist, rendered to `~/Library/LaunchAgents/`. |
 
@@ -27,7 +27,7 @@ Backs up an Apple Photos library to an SMB share using [osxphotos](https://githu
 Edit the `EDITABLE CONFIG` block near the top of `setup-osxphotos-smb.sh`:
 
 - `SERVER` / `SHARE` — SMB host + share name (required).
-- `PHOTOS_LIBRARY` — path to the Photos library (defaults to `~/Photos/...`).
+- `PHOTOS_LIBRARY` — default path to the Photos library (re-prompted at setup; just hit Enter to accept).
 - `MOUNT_POINT` / `SUB_DIR` — local mount + export subfolder (defaults to `/Volumes/osxphotos-backup/osxphotos`).
 - `SYNC_INTERVAL_SECONDS` — default every 5 hours.
 
@@ -37,7 +37,7 @@ Edit the `EDITABLE CONFIG` block near the top of `setup-osxphotos-smb.sh`:
 ./setup-osxphotos-smb.sh
 ```
 
-The script installs osxphotos (via pipx), prompts for SMB credentials, renders + installs the sync script and plist, loads the LaunchAgent, and kicks off an immediate first sync. Tail the log with:
+The script installs osxphotos (via pipx), prompts for the Photos library location (default `~/Photos/Photos Library.photoslibrary`), prompts for SMB credentials, renders + installs the sync script and plist, loads the LaunchAgent, and kicks off an immediate first sync. Tail the log with:
 
 ```bash
 tail -f ~/osxphotos_logs/$(ls -t ~/osxphotos_logs | head -1)
