@@ -333,7 +333,25 @@ else
 fi
 link "$PLIST_PATH" "(rendered from $PLIST_SRC)"
 
-# --- 9. Load / reload the agent ----------------------------------------------
+# --- 9. Install helper scripts (tail logs / kickstart sync) ------------------
+
+step "🛠 Helper commands"
+
+mkdir -p "$HOME/.local/bin"
+symlink_helper() {
+  local src="$1" dest="$2"
+  if [ -L "$dest" ] && [ "$(readlink "$dest")" = "$src" ]; then
+    skip "$dest already linked"
+  else
+    ln -sf "$src" "$dest"
+    link "$dest" "$src"
+  fi
+}
+symlink_helper "$DOTFILES_DIR/.local/bin/photos-logs.sh"     "$HOME/.local/bin/photos-logs.sh"
+symlink_helper "$DOTFILES_DIR/.local/bin/photos-sync-now.sh" "$HOME/.local/bin/photos-sync-now.sh"
+success "Helper commands ready: photos-logs, photos-sync-now"
+
+# --- 10. Load / reload the agent ---------------------------------------------
 
 step "🚀 LaunchAgent activation"
 
@@ -348,7 +366,7 @@ else
   fi
 fi
 
-# --- 10. First-run dry check -------------------------------------------------
+# --- 11. First-run dry check -------------------------------------------------
 
 step "🎬 First run"
 
