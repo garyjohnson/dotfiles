@@ -25,13 +25,14 @@
   "hideThinkingBlock": false,
   "enableInstallTelemetry": false,
   "enabledModels": [
-    "deepinfra/MiniMaxAI/MiniMax-M2.5",
-    "deepinfra/zai-org/GLM-5.2",
     "deepinfra/moonshotai/Kimi-K2.7-Code",
     "deepinfra/deepseek-ai/DeepSeek-V4.1-Flash",
     "deepinfra/Qwen/Qwen3-VL-235B-A22B-Instruct",
     "deepinfra/deepseek-ai/DeepSeek-V4-Pro-0813",
-    "deepinfra/moonshotai/Kimi-K2.6"
+    "deepinfra/moonshotai/Kimi-K3",
+    "deepinfra/zai-org/GLM-5.3",
+    "deepinfra/zai-org/GLM-5.3-Flash",
+    "deepinfra/MiniMaxAI/MiniMax-M3"
   ],
   "themes": [
     "-themes/rainbow-cute.json"
