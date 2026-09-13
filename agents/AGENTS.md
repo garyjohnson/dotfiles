@@ -47,6 +47,32 @@ Common commands:
 
 Note: `tea` is **not** the same as the Debian `tea` apt package (a GUI text editor). The Debian setup script intentionally omits the apt `tea` package — the real CLI comes from Homebrew.
 
+## Agent-utility CLIs
+
+Two command-line tools on this machine for web search, scraping, and extraction. Both are agent-friendly (JSON/structured output). Available to **pi** (via `bash`); **not** available to Claude Code.
+
+**`kagi`** — Kagi search CLI, JSON-first output built for agents. Installed via Homebrew (`kagi/0.9.0`), **not in the Brewfile**. Use this instead of scraping Google/DDG or distributor sites directly — those block naive scraping (Cloudflare/bot walls); Kagi does not.
+
+- `kagi search "<query>" --format json` — structured results (title, url, snippet). Other formats: `markdown`, `csv`, `pretty`, `compact`.
+- `kagi summarize <url>` / `kagi extract <url>` — summarize a page, or extract full content as markdown
+- `kagi quick "<q>"` / `kagi fastgpt "<prompt>"` — Quick Answer / FastGPT
+- `kagi assistant` / `kagi ask-page <url>` — Assistant + page Q&A
+- `kagi mcp` — run a stdio MCP server exposing Kagi tools
+- Also: `news`, `enrich`, `smallweb`, `watch`, `translate`, `notify`, `history`, `site-pref`
+
+**`firecrawl`** — Firecrawl CLI (`firecrawl-cli`, npm global, v1.23.2). Scrape, crawl, map, parse, and search the web with an AI extraction agent. Complements Kagi (search/summarize) with deep page fetching, JS-heavy site renders, full-site crawls, and structured AI extraction.
+
+- `firecrawl scrape <url...>` — scrape URLs concurrently, saved to `.firecrawl/`
+- `firecrawl crawl <url>` / `firecrawl map <url>` — full-site crawl / map URLs
+- `firecrawl search "<query>"` — web search
+- `firecrawl developer "<query>"` — search a coding-agent index (GitHub issues/PRs, repo READMEs, curated docs); express repo/source/language/topic scope in the query text
+- `firecrawl research "<query>"` — search ~43M research-paper abstracts (PubMed, bioRxiv, medRxiv, arXiv) + GitHub history; use for biomedical/scientific literature instead of scraping PubMed/Scholar
+- `firecrawl parse <file>` — local file (HTML/PDF/DOCX/XLSX…) → markdown/JSON/links
+- `firecrawl agent "<prompt>"` / `firecrawl interact` — AI extraction agent / live-browser session against a prior scrape
+- `firecrawl --status` / `firecrawl login` — check auth+credits / authenticate
+
+Rule of thumb: **Kagi for search & summaries, Firecrawl for full pages, crawls, parsing, and structured extraction.**
+
 ## The vibe
 
 Setup scripts are intentionally cute (pink/lavender/sparkle output). That's on purpose, keep it that way. Changes should be idempotent — running a script twice should be safe and skip what's already done.
