@@ -135,6 +135,18 @@ else
   success "kagi CLI installed!"
 fi
 
+# --- Trilium CLI (triliumnext-cli, for pushing notes) ---
+
+step "📝 trilium CLI"
+
+if command -v trilium &>/dev/null; then
+  skip "trilium already installed at $(which trilium)"
+else
+  info "Installing triliumnext-cli from upstream..."
+  curl -fsSL https://raw.githubusercontent.com/perfectra1n/triliumnext-cli/master/install.sh | sh
+  success "trilium CLI installed!"
+fi
+
 # --- Symlink dotfiles ---
 
 step "🔗 Symlinks"
@@ -406,6 +418,7 @@ echo ""
 echo -e "  ${hotpink}♥${pink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${pink}♥${hotpink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${hotpink}♥${pink}♥${rose}♥${hotpink}♥${pink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${pink}♥${hotpink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${hotpink}♥${pink}♥${rose}♥${reset}"
 echo ""
 echo -e "  ${bold}${rose}📝 Manual steps remaining:${reset}"
+echo -e "  ${lilac}🌷${reset} Log in to Trilium (saves ETAPI token):  ${bold}trilium auth login --server https://trilium-gary.app.usefulbits.io/etapi${reset}"
 echo -e "  ${lilac}🌷${reset} Log in to Forgejo:  ${bold}tea login add -n forgejo -u https://forgejo.app.usefulbits.io${reset}"
 echo -e "     ${bold}https://forgejo.app.usefulbits.io/user/settings/keys${reset}"
 echo -e "  ${purple}🌷${reset} Fill in ${bold}~/.profile-env${reset} with API keys (ANTHROPIC_API_KEY, etc.)"

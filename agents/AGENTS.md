@@ -73,6 +73,16 @@ Two command-line tools on this machine for web search, scraping, and extraction.
 
 Rule of thumb: **Kagi for search & summaries, Firecrawl for full pages, crawls, parsing, and structured extraction.**
 
+**`trilium`** — TriliumNext CLI (`triliumnext-cli`, single binary). Push/pull notes to the local TriliumNext instance. Use this **explicitly when asked to retrieve notes or save notes** (not for web search/scraping).
+
+- `trilium auth login --server <url>` — interactive login; stores the ETAPI token in `~/.config/triliumnext-cli/config.json`
+- `trilium notes search "<query>"` — search notes; `--limit`, `--order-by`
+- `trilium notes get <noteId>` / `get-content <noteId>` — fetch a note / its content
+- `trilium notes create --title "..." --content "..." --markdown` — save a new note
+- `echo "# note" | trilium notes create --title "..." --markdown` — pipe markdown straight in
+- `trilium notes set-content <noteId> --content "..." --markdown` — update existing note content
+- `--format json` for machine-readable output (pipe to `jq`)
+
 ## The vibe
 
 Setup scripts are intentionally cute (pink/lavender/sparkle output). That's on purpose, keep it that way. Changes should be idempotent — running a script twice should be safe and skip what's already done.

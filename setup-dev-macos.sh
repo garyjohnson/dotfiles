@@ -140,6 +140,18 @@ else
   success "kagi CLI installed!"
 fi
 
+# --- Trilium CLI (triliumnext-cli, for pushing notes) ---
+
+step "📝 trilium CLI"
+
+if command -v trilium &>/dev/null; then
+  skip "trilium already installed at $(which trilium)"
+else
+  info "Installing triliumnext-cli from upstream..."
+  curl -fsSL https://raw.githubusercontent.com/perfectra1n/triliumnext-cli/master/install.sh | sh
+  success "trilium CLI installed!"
+fi
+
 # --- Install 1Password to /Applications ---
 
 step "🔐 1Password"
@@ -684,6 +696,7 @@ echo ""
 echo -e "  ${hotpink}♥${pink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${pink}♥${hotpink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${hotpink}♥${pink}♥${rose}♥${hotpink}♥${pink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${pink}♥${hotpink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${hotpink}♥${pink}♥${rose}♥${reset}"
 echo ""
 echo -e "  ${bold}${rose}📝 Manual steps remaining:${reset}"
+echo -e "  ${lilac}🌷${reset} Log in to Trilium (saves ETAPI token):  ${bold}trilium auth login --server https://trilium-gary.app.usefulbits.io/etapi${reset}"
 echo -e "  ${lilac}🌷${reset} Activate VoiceInk license"
 echo -e "  ${purple}🌷${reset} Configure Cap → ${bold}https://cap.app.usefulbits.io${reset}"
 echo -e "  ${periwinkle}🌷${reset} Add Trilium PWA to dock from Safari:"
