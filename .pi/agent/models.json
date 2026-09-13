@@ -304,6 +304,26 @@
           }
         },
         {
+          "id": "deepseek-ai/DeepSeek-V4.1-Flash",
+          "name": "DeepSeek V4.1 Flash (DeepInfra)",
+          "reasoning": true,
+          "input": [
+            "text",
+            "image"
+          ],
+          "contextWindow": 1048576,
+          "maxTokens": 131072,
+          "cost": {
+            "input": 0.2,
+            "output": 0.6,
+            "cacheRead": 0.006,
+            "cacheWrite": 0
+          },
+          "compat": {
+            "thinkingFormat": "deepseek"
+          }
+        },
+        {
           "id": "moonshotai/Kimi-K2.6",
           "name": "Kimi K2.6 (DeepInfra)",
           "reasoning": true,
