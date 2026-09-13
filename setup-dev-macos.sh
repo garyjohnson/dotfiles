@@ -140,18 +140,6 @@ else
   success "kagi CLI installed!"
 fi
 
-# --- Trilium CLI (triliumnext-cli, for pushing notes) ---
-
-step "📝 trilium CLI"
-
-if command -v trilium &>/dev/null; then
-  skip "trilium already installed at $(which trilium)"
-else
-  info "Installing triliumnext-cli from upstream..."
-  curl -fsSL https://raw.githubusercontent.com/perfectra1n/triliumnext-cli/master/install.sh | sh
-  success "trilium CLI installed!"
-fi
-
 # --- Install 1Password to /Applications ---
 
 step "🔐 1Password"
@@ -280,6 +268,34 @@ else
   info "Installing Bun..."
   curl -fsSL https://bun.com/install | bash
   success "Bun installed!"
+fi
+
+# --- Trilium CLI (triliumnext-cli, for pushing notes) ---
+# Build from source with Bun. The upstream darwin-arm64 prebuilt binary is
+# broken (corrupt code signature + dyld chained-fixups), so macOS SIGKILLs it.
+
+step "📝 trilium CLI"
+
+BUN="${BUN:-$HOME/.bun/bin/bun}"
+command -v "$BUN" &>/dev/null || BUN="$(command -v bun || true)"
+
+# Only skip if the installed binary actually runs (self-healing against the
+# upstream broken-binary problem).
+if command -v trilium &>/dev/null && trilium --help &>/dev/null; then
+  skip "trilium already installed at $(which trilium)"
+elif [ -z "$BUN" ]; then
+  warn "bun not found — skipping trilium CLI (re-run setup after Bun installs)"
+else
+  info "Building triliumnext-cli from source (arm64)..."
+  (
+    BUILD_DIR="$(mktemp -d)"
+    trap 'rm -rf "$BUILD_DIR"' EXIT
+    git clone --depth 1 https://github.com/perfectra1n/triliumnext-cli.git "$BUILD_DIR" \
+      && cd "$BUILD_DIR" \
+      && "$BUN" install \
+      && "$BUN" run build:compile \
+      && install -m 755 trilium "$HOME/.local/bin/trilium"
+  ) && success "trilium CLI installed!"
 fi
 
 # --- Install latest Ruby via rbenv ---

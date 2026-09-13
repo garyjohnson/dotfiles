@@ -73,7 +73,7 @@ Two command-line tools on this machine for web search, scraping, and extraction.
 
 Rule of thumb: **Kagi for search & summaries, Firecrawl for full pages, crawls, parsing, and structured extraction.**
 
-**`trilium`** — TriliumNext CLI (`triliumnext-cli`, single binary). Push/pull notes to the local TriliumNext instance. Use this **explicitly when asked to retrieve notes or save notes** (not for web search/scraping).
+**`trilium`** — TriliumNext CLI (`triliumnext-cli`, single binary). Push/pull notes to the local TriliumNext instance. Use this **explicitly when asked to retrieve notes or save notes** (not for web search/scraping). The setup scripts build it from source with Bun (the upstream `darwin-arm64` prebuilt binary is broken — corrupt code signature + dyld chained-fixups — so macOS SIGKILLs it).
 
 - `trilium auth login --server <url>` — interactive login; stores the ETAPI token in `~/.config/triliumnext-cli/config.json`
 - `trilium notes search "<query>"` — search notes; `--limit`, `--order-by`
