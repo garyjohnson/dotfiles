@@ -233,6 +233,20 @@
     ],
     "defaultMode": "auto"
   },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/Users/garyjohnson-td/.claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
   "worktree": {
     "symlinkDirectories": [
       "packages/marketing-cms/.env.local",
@@ -246,6 +260,10 @@
   },
   "effortLevel": "medium",
   "tui": "fullscreen",
+  "voice": {
+    "enabled": true,
+    "mode": "tap"
+  },
   "theme": "dark-ansi",
   "autoMode": {
     "soft_deny": [
@@ -303,5 +321,7 @@
         ]
       }
     ]
-  }
+  },
+  "voiceEnabled": true,
+  "autoMemoryEnabled": false
 }

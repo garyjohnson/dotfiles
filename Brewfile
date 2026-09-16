@@ -30,6 +30,7 @@ brew "postgresql@18"
 brew "luarocks"
 brew "git-town"
 brew "lazygit"
+brew "git-delta"
 
 if OS.mac?
   brew "mosh"

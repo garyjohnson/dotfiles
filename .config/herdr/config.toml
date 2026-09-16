@@ -74,7 +74,7 @@ prefix = "ctrl+a"
 # new_workspace = "prefix+shift+n"
 # new_worktree = "prefix+shift+g"
 # open_worktree = ""    # optional, unset by default
-# remove_worktree = ""  # optional, unset by default; opens confirmation
+remove_worktree = "prefix+shift+q"  # opens confirmation, then closes workspace + removes worktree
 # rename_workspace = "prefix+shift+w"
 # close_workspace = "prefix+shift+d"
 previous_workspace = "prefix+["
@@ -245,6 +245,7 @@ mobile_width_threshold = 80
 # accent = "cyan"
 
 # Background notification popup delivery
+agent_panel_sort = "spaces"
 [ui.toast]
 # off = disable pop-up notifications
 # herdr = show in-app toasts

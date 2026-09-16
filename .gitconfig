@@ -4,10 +4,42 @@
 	branch = auto
 	interactive = auto
 	ui = auto
+[interactive]
+	diffFilter = delta --color-only
 [gc]
 	auto = 1
 [merge]
 	summary = true
+[delta]
+	side-by-side = true
+	navigate = true
+	line-numbers = true
+	wrap-max-lines = unlimited
+	syntax-theme = Catppuccin Mocha
+	dark = true
+	minus-style = syntax "#4c2334"
+	minus-non-emph-style = syntax "#4c2334"
+	minus-emph-style = syntax "#7b3a52"
+	minus-empty-line-marker-style = syntax "#4c2334"
+	plus-style = syntax "#2b4634"
+	plus-non-emph-style = syntax "#2b4634"
+	plus-emph-style = syntax "#3d6b4c"
+	plus-empty-line-marker-style = syntax "#2b4634"
+	line-numbers-minus-style = "#f38ba8"
+	line-numbers-plus-style = "#a6e3a1"
+	line-numbers-zero-style = "#6c7086"
+	line-numbers-left-style = "#585b70"
+	line-numbers-right-style = "#585b70"
+	file-style = "#cba6f7" bold
+	file-decoration-style = "#cba6f7" ul
+	hunk-header-style = syntax file line-number
+	hunk-header-file-style = "#89b4fa"
+	hunk-header-line-number-style = "#f9e2af"
+	hunk-header-decoration-style = "#585b70" box
+	commit-decoration-style = "#89b4fa" bold box
+	commit-style = "#cdd6f4" bold
+	navigate-title-style = "#cba6f7" bold
+	blame-palette = "#1e1e2e" "#313244" "#45475a" "#585b70"
 [alias]
 	co = checkout
 	ci = commit -v
@@ -44,6 +76,7 @@
 	editor = vim
 	excludesfile = ~/.gitignore
 	autocrlf = input
+	pager = delta
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
