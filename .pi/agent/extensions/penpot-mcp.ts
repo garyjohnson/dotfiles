@@ -17,12 +17,44 @@
  * Usage notes:
  *   - Tools are lazily connected on first call (no background resources at load).
  *   - export_shape images are passed back as image content so pi can "see" the design.
+ *   - While Penpot tools are active, extra layout guidance is appended to the system
+ *     prompt (see LAYOUT_GUIDANCE) so the agent uses flex layouts instead of nudging
+ *     x/y by hand. Delete LAYOUT_GUIDANCE if you don't want that.
  */
 
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { Type } from "typebox";
 
 const DEFAULT_URL = process.env.PENPOT_MCP_URL ?? "";
+
+/**
+ * Guidance appended to the system prompt while Penpot tools are active.
+ *
+ * The failure this prevents: a fixed-size board with its label positioned at a
+ * hardcoded x. It looks fine for one label width and is wrong for every other
+ * width — so a row of chips has a different misalignment in each chip. Use a
+ * flex layout so centering is a property of the container, not an arithmetic
+ * guess that has to be redone for every instance.
+ */
+const LAYOUT_GUIDANCE = `
+Penpot layout guidance:
+- Reach for a flex layout instead of positioning children by hand. If a
+  container arranges children in a row or column, it should have a flex
+  layout. Use penpotUtils.addFlexLayout(container, dir) when the container
+  already has children, so their visual order is preserved.
+- Center with justifyContent/alignItems ("center"), not by nudging x/y. A
+  hardcoded x only centers the one label width you had in mind; every other
+  label ends up off-center by a different amount.
+- Papering over layout with padding is the same bug. Symmetric padding plus
+  justifyContent "center" is fine; padding used to fake a center is not.
+- Set horizontalSizing/verticalSizing deliberately: "fix" to keep a size,
+  "auto" to fit content, "fill" to fill the parent.
+`;
+
+/** True when the Penpot tool set is active in this session. */
+function penpotToolsActive(tools: string[] | undefined): boolean {
+  return !!tools?.includes("penpot_execute_code");
+}
 
 /** Minimal MCP JSON-RPC client over streamable HTTP (SSE). */
 class PenpotMcpClient {
@@ -142,6 +174,13 @@ export default function penpotMcp(pi: ExtensionAPI) {
   }
 
   const client = new PenpotMcpClient(url);
+
+  // Only add layout guidance when the Penpot tools are actually available, so
+  // unrelated sessions don't carry design instructions around.
+  pi.on("before_agent_start", async (event) => {
+    if (!penpotToolsActive(event.systemPromptOptions?.selectedTools)) return;
+    return { systemPrompt: event.systemPrompt + "\n" + LAYOUT_GUIDANCE };
+  });
 
   async function callTool(name: string, args: Record<string, unknown>) {
     let result: any;
