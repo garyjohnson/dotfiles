@@ -1,0 +1,23 @@
+:root{--bg:#0d0f1a;--panel:#161a2b;--panel-2:#1e2438;--text:#e7ebf5;--muted:#9aa3bd;--accent:#a78bfa;--accent-2:#f0abfc;--ok:#34d399;--err:#f87171;--border:#2a3050}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--text);background:radial-gradient(1200px 600px at 80% -10%,#2a1a4a 0%,transparent 60%),var(--bg);min-height:100vh}
+header{padding:32px 20px 8px;text-align:center}
+h1{margin:0;font-size:26px;background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--muted);margin:6px 0 0}
+main{max-width:760px;margin:0 auto;padding:20px;display:flex;flex-direction:column;gap:16px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px 18px 20px}
+.card h2{margin:0 0 12px;font-size:17px}
+form{display:flex;flex-wrap:wrap;gap:8px}
+input,textarea{background:var(--panel-2);color:var(--text);border:1px solid var(--border);border-radius:9px;padding:9px 11px;font:inherit}
+input[type=email],input[type=password],input[type=file]{flex:1;min-width:0}
+textarea{width:100%;resize:vertical}
+button{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#1a1030;border:0;border-radius:9px;padding:9px 14px;font:inherit;font-weight:600;cursor:pointer}
+button.ghost{background:var(--panel-2);color:var(--text);border:1px solid var(--border);font-weight:500}
+button:hover{filter:brightness(1.08)}
+.status{color:var(--muted);font-size:13px;min-height:1em}
+.output,.rows{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+.row{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:10px 12px;font-size:13px}
+.row .who{color:var(--accent);font-weight:600}
+.row .small{color:var(--muted);font-size:11px}
+pre{white-space:pre-wrap;word-break:break-word;margin:0}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}

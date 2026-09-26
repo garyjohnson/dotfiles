@@ -1,0 +1,8 @@
+{
+  "name": "demo-fn",
+  "version": "1.0.0",
+  "description": "Appwrite function: calls an OpenAI-compatible chat completion, stores the exchange in TablesDB, drafts a messaging email.",
+  "main": "src/main.js",
+  "scripts": { "start": "node src/main.js" },
+  "dependencies": {}
+}

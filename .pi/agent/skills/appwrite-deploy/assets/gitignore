@@ -1,0 +1,11 @@
+# .gitignore template for an Appwrite demo repo.
+node_modules/
+.env
+.env.*
+.appwrite/
+.DS_Store
+*.log
+
+# Note: site/config.js contains NO secrets (public endpoint + project + resource
+# IDs; the site uses per-user sessions, not an API key), so it SHOULD be committed
+# so the deployed site has its config. Do NOT gitignore site/config.js.

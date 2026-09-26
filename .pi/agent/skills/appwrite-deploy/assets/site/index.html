@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Appwrite Demo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header><h1>✨ Appwrite Demo</h1><p class="sub">Account · Databases · Functions · Storage · Messaging</p></header>
+
+  <main id="app" hidden>
+    <section class="card" id="sec-account">
+      <h2>👤 Account</h2>
+      <form id="auth-form">
+        <input type="email" id="email" placeholder="you@example.com" required autocomplete="email" />
+        <input type="password" id="password" placeholder="password" required autocomplete="current-password" />
+        <button type="submit" id="auth-btn">Sign in / Sign up</button>
+        <button type="button" id="logout-btn" class="ghost" hidden>Log out</button>
+      </form>
+      <p class="status" id="account-status"></p>
+    </section>
+
+    <section class="card" id="sec-functions" hidden>
+      <h2>⚡ Functions</h2>
+      <form id="chat-form">
+        <textarea id="prompt" rows="3" placeholder="Ask the function…" required></textarea>
+        <button type="submit">Ask</button>
+      </form>
+      <div id="chat-output" class="output"></div>
+    </section>
+
+    <section class="card" id="sec-databases" hidden>
+      <h2>🗄️ Databases</h2>
+      <button type="button" id="refresh-rows">Refresh rows</button>
+      <div id="rows" class="rows"></div>
+    </section>
+
+    <section class="card" id="sec-storage" hidden>
+      <h2>📦 Storage</h2>
+      <form id="upload-form">
+        <input type="file" id="file" required />
+        <button type="submit">Upload</button>
+      </form>
+      <button type="button" id="refresh-files" class="ghost">List my files</button>
+      <div id="files" class="rows"></div>
+    </section>
+
+    <section class="card" id="sec-messaging" hidden>
+      <h2>📨 Messaging</h2>
+      <button type="button" id="list-msgs-btn" class="ghost">About messages</button>
+      <div id="messaging" class="rows"></div>
+    </section>
+  </main>
+
+  <!-- Runtime config: edit site/config.js with your endpoint + project + IDs (no secrets). -->
+  <script src="config.js"></script>
+  <!-- `appwrite` resolves to a vendored, esbuild-bundled SDK (see assets/bundle-sdk.sh). -->
+  <script type="importmap">
+  { "imports": { "appwrite": "./appwrite-sdk.mjs" } }
+  </script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
