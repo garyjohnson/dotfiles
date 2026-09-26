@@ -83,6 +83,51 @@ Rule of thumb: **Kagi for search & summaries, Firecrawl for full pages, crawls, 
 - `trilium notes set-content <noteId> --content "..." --markdown` — update existing note content
 - `--format json` for machine-readable output (pipe to `jq`)
 
+## SigNoz logs (production)
+
+Production ships logs to the self-hosted SigNoz at `https://signoz.home.usefulbits.io`. There is no CLI; query the REST API with the key from `~/.profile-env` (`SIGNOZ_API_KEY`) in a `SIGNOZ-API-KEY` header (not `Authorization: Bearer`).
+
+```
+source ~/.profile-env
+SERVICE=spring-cleaning          # the pino `service` field of the app to query
+START=$(( $(date +%s%3N) - 86400000 ))  # ms since epoch, adjust window
+LIMIT=50
+OFFSET=0
+
+curl -s -X POST https://signoz.home.usefulbits.io/api/v5/query_range \
+  -H "SIGNOZ-API-KEY: $SIGNOZ_API_KEY" -H "Content-Type: application/json" \
+  -d @- <<EOF
+{
+  "start": $START,
+  "end": $(date +%s%3N),
+  "requestType": "raw",
+  "variables": {},
+  "compositeQuery": {
+    "queries": [{
+      "type": "builder_query",
+      "spec": {
+        "name": "A",
+        "signal": "logs",
+        "filter": { "expression": "service = '$SERVICE'" },
+        "order": [
+          { "key": { "name": "timestamp" }, "direction": "desc" },
+          { "key": { "name": "id" }, "direction": "desc" }
+        ],
+        "offset": $OFFSET,
+        "limit": $LIMIT
+      }
+    }]
+  }
+}
+EOF
+```
+
+- Results: `.data.data.results[0].rows[].data` — `body` holds the raw pino JSON line; `attributes_string` / `attributes_number` hold parsed fields (`msg`, `path`, `level`, …).
+- Timestamps are ms-since-epoch. If a query returns `0` results unexpectedly, double-check the window and the `service = '…'` filter — a wrong service name filters everything out silently.
+- Pagination is classic `offset`/`limit`; the `timestamp,id` desc sort keeps pages stable.
+- Don't echo the key into transcripts; keep it in the shell variable.
+- Local dev isn't wired up (`SIGNOZ_OTLP_ENDPOINT` empty in the app `.env`s) — production only.
+
 ## The vibe
 
 Setup scripts are intentionally cute (pink/lavender/sparkle output). That's on purpose, keep it that way. Changes should be idempotent — running a script twice should be safe and skip what's already done.

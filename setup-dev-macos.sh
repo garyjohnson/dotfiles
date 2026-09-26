@@ -210,6 +210,7 @@ symlink "$DOTFILES_DIR/.pi/agent/models.json" "$HOME/.pi/agent/models.json"
 symlink "$DOTFILES_DIR/.pi/agent/settings.json" "$HOME/.pi/agent/settings.json"
 symlink "$DOTFILES_DIR/.pi/agent/themes" "$HOME/.pi/agent/themes"
 symlink "$DOTFILES_DIR/.pi/agent/extensions" "$HOME/.pi/agent/extensions"
+symlink "$DOTFILES_DIR/.pi/agent/agents" "$HOME/.pi/agent/agents"
 
 # pi auth setup (copy template if auth.json doesn't exist)
 if [[ ! -f "$HOME/.pi/agent/auth.json" ]]; then
