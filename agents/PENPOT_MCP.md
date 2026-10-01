@@ -255,3 +255,19 @@ against a live plugin — use these rather than guessing a signature)
 - `storage` persists across `mcp__penpot__execute_code` calls in a session —
   use it to carry shape ids and intermediate results between calls (essential
   given the build-then-verify-in-a-separate-call rule above).
+
+## Links
+
+- Official plugin API reference: <https://doc.plugins.penpot.app/> — typedoc;
+  per-type pages at `/interfaces/<Type>`, e.g.
+  <https://doc.plugins.penpot.app/interfaces/Page>
+- Plugin development guides: <https://help.penpot.app/plugins/>
+- TypeScript definitions: `@penpot/plugin-types` (npm) — the same surface
+  the `penpot_api_info` tool reports in-band; prefer the tool, it matches the
+  live plugin version.
+
+Caveat: the official docs and the server's `high_level_overview` text contain
+errors verified against the live plugin (the overview documents the
+two-argument `addTheme(group, name)` and claims fills/strokes arrays are
+immutable — both wrong; see "API semantics"). The notes in this file outrank
+both.
