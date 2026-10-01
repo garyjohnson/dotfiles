@@ -1,7 +1,7 @@
 {
-  "lastChangelogVersion": "0.99.1",
+  "lastChangelogVersion": "0.99.2",
   "defaultProvider": "deepinfra",
-  "defaultModel": "zai-org/GLM-5.3-Flash",
+  "defaultModel": "zai-org/GLM-5.3",
   "theme": "catppuccin-macchiato",
   "packages": [
     "npm:@sherif-fanous/pi-catppuccin",

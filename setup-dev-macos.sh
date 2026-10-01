@@ -187,6 +187,7 @@ if command -v herdr >/dev/null 2>&1; then
 fi
 symlink "$DOTFILES_DIR/oh-my-posh-themes" "$HOME/oh-my-posh-themes"
 symlink "$DOTFILES_DIR/agents/AGENTS.md"      "$HOME/AGENTS.md"
+symlink "$DOTFILES_DIR/agents/PENPOT_MCP.md"  "$HOME/PENPOT_MCP.md"
 
 # Individual .local/bin scripts
 symlink "$DOTFILES_DIR/.local/bin/allow-exec" "$HOME/.local/bin/allow-exec"
