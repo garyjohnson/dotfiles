@@ -13,6 +13,7 @@ brew "zoxide"
 brew "git"
 brew "wget"
 brew "imagemagick"
+brew "mermaid-cli"
 brew "prd"
 
 # Git hosting CLIs
