@@ -128,6 +128,13 @@ switch_workspace = "prefix+shift+1..9"   # optional indexed binding, e.g. "prefi
 # width = "80%"
 # height = "80%"
 
+[[keys.command]]
+key = "prefix+alt+g"
+type = "popup"
+command = "~/.config/herdr/remote-worktree.sh"
+width = "60%"
+height = "30%"
+
 # Legacy indexed shortcut config is still parsed for compatibility.
 # Prefer switch_tab, switch_workspace, and focus_agent for new configs.
 # [keys.indexed]

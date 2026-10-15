@@ -159,6 +159,7 @@ symlink "$DOTFILES_DIR/.gitignore"     "$HOME/.gitignore"
 symlink "$DOTFILES_DIR/.tmux.conf"     "$HOME/.tmux.conf"
 symlink "$DOTFILES_DIR/.config/nvim"   "$HOME/.config/nvim"
 symlink "$DOTFILES_DIR/.config/herdr/config.toml" "$HOME/.config/herdr/config.toml"
+symlink "$DOTFILES_DIR/.config/herdr/remote-worktree.sh" "$HOME/.config/herdr/remote-worktree.sh"
 symlink "$DOTFILES_DIR/.config/herdr/plugins/worktreeinclude-sync" "$HOME/.config/herdr/plugins/worktreeinclude-sync"
 symlink "$DOTFILES_DIR/.config/lazygit/config.yml" "$HOME/.config/lazygit/config.yml"
 if command -v herdr >/dev/null 2>&1; then
