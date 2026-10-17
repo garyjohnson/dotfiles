@@ -5,8 +5,9 @@ set -uo pipefail
 # sync-osxphotos-backup.sh  (rendered from sync-osxphotos-backup.sh.template)
 #
 # Mounts the SMB share (if needed), runs osxphotos export in update mode, and
-# unmounts cleanly. Called by launchd. The SMB credentials are read from a
-# local, owner-only creds file written by the setup script.
+# leaves the share mounted for the next run. Called by launchd. The SMB
+# credentials are read from a local, owner-only creds file written by the
+# setup script.
 # ─────────────────────────────────────────────────────────────────────────────
 
 SERVER="__SERVER__"
@@ -67,14 +68,43 @@ else
     abort "mount point missing: $MOUNT_POINT. Create it once with:\n  sudo mkdir -p '$MOUNT_POINT' && sudo chown \"\$(whoami)\" '$MOUNT_POINT'"
   fi
 
+  # Wait for the server to be reachable on the SMB port before mounting.
+  # launchd's RunAtLoad fires at login — often before Wi-Fi/DHCP/DNS are up —
+  # and one blind mount attempt against an unreachable server aborts the whole
+  # run (the next attempt is SYNC_INTERVAL_SECONDS away). Probe TCP 445 for up
+  # to SMB_WAIT_SECONDS before giving up.
+  SMB_WAIT_SECONDS="${SMB_WAIT_SECONDS:-120}"
+  log "  waiting for ${SERVER}:445 (up to ${SMB_WAIT_SECONDS}s)..."
+  waited=0
+  until nc -z -G 5 "$SERVER" 445 >/dev/null 2>&1; do
+    if [ "$waited" -ge "$SMB_WAIT_SECONDS" ]; then
+      abort "${SERVER}:445 still unreachable after ${SMB_WAIT_SECONDS}s — Wi-Fi not up yet, NAS asleep/off, or hostname not resolving"
+    fi
+    sleep 10
+    waited=$((waited + 10))
+    log "    ${SERVER}:445 not reachable yet (${waited}s waited)..."
+  done
+  log "  ✓ ${SERVER}:445 reachable after ${waited}s"
+
   # Pass the raw username:password in the SMB URL. mount_smbfs wants the
   # literal password, NOT a URL-encoded one (encoding breaks auth on most SMB
   # servers). Special characters like @ or : in the password are handled by
   # the fact that the final @ and / delimiters are placed after it.
 
-  log "  mounting //${SERVER}/${SHARE} ..."
-  if ! /sbin/mount_smbfs "//${SMB_USER}:${SMB_PASS}@${SERVER}/${SHARE}" "$MOUNT_POINT" 2>&1; then
-    abort "mount_smbfs failed for //${SERVER}/${SHARE} (server reachable but auth/mount failed)"
+  # Retry the mount a few times: even with the port open, the first attempt can
+  # fail transiently right after boot or while the NAS is still waking up.
+  MOUNT_ATTEMPTS=3
+  mount_rc=0
+  for attempt in $(seq 1 "$MOUNT_ATTEMPTS"); do
+    log "  mounting //${SERVER}/${SHARE} (attempt ${attempt}/${MOUNT_ATTEMPTS})..."
+    /sbin/mount_smbfs "//${SMB_USER}:${SMB_PASS}@${SERVER}/${SHARE}" "$MOUNT_POINT" 2>&1
+    mount_rc=$?
+    [ "$mount_rc" -eq 0 ] && break
+    log "  mount_smbfs exited ${mount_rc}"
+    [ "$attempt" -lt "$MOUNT_ATTEMPTS" ] && sleep 10
+  done
+  if [ "$mount_rc" -ne 0 ]; then
+    abort "mount_smbfs failed for //${SERVER}/${SHARE} after ${MOUNT_ATTEMPTS} attempts (last exit code ${mount_rc}; see errors above)"
   fi
 
   sleep 2

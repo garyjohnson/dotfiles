@@ -13,7 +13,7 @@ Backs up an Apple Photos library to an SMB share using [osxphotos](https://githu
 ## What it does on each sync run
 
 1. Verifies the Photos library exists and has a `Photos.sqlite` database.
-2. Mounts the SMB share (skips if already mounted; password read from the local creds file — no keychain, no unlock).
+2. Mounts the SMB share (skips if already mounted; waits for the server to be reachable and retries the mount — launchd's `RunAtLoad` can fire before Wi-Fi/DHCP are up. Password read from the local creds file — no keychain, no unlock).
 3. Runs `osxphotos export` with:
    - `--update` + `--overwrite` — only exports new/changed assets, never re-exports unchanged ones (incremental).
    - `--export-by-date` — organizes output into `DEST/YYYY/MM/DD/` folders (not a flat dump).
