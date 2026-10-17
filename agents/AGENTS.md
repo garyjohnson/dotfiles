@@ -5,7 +5,7 @@ Machine setup scripts for macOS and Debian. One command per platform to install 
 ## Scripts
 
 - **`setup-dev-macos.sh`** — Full macOS dev setup: Homebrew, Brewfile, dotfile symlinks, nodenv, rbenv, Claude Code, SSH/GitHub, VPN, macOS defaults, iTerm2
-- **`setup-dev-debian.sh`** — Headless Debian dev setup: apt bootstrap, Linuxbrew, Brewfile, dotfile symlinks, nodenv, rbenv, Claude Code, npm globals (codex, pi, firecrawl-cli), skills, SSH/GitHub
+- **`setup-dev-debian.sh`** — Headless Debian dev setup: apt bootstrap, Linuxbrew, Brewfile, dotfile symlinks, nodenv, rbenv, Claude Code, npm globals (codex, firecrawl-cli), pi (managed installer), skills, SSH/GitHub
 - **`setup-llm-server-macos-headless.sh`** — Apple Silicon LLM server setup: GPU memory split, sleep prevention, SSH, auto-login, LM Studio, dock config
 
 The Brewfile is the source of truth for brew packages — shared across platforms with `OS.mac?` guards for Mac-only casks.
@@ -23,6 +23,8 @@ Run the appropriate script on a fresh machine. It installs dependencies, symlink
 **Configs in this repo are symlinked, not copied.** Changes to .zshrc, .gitconfig, .tmux.conf, nvim config, oh-my-posh themes are symlinked from the dotfiles dir into `$HOME`. Edit them here.
 
 **1Password gets special treatment on Mac** — it must live in `/Applications` (not `~/Applications`) because it's picky about that.
+
+**pi is installed by its managed installer, not npm.** `curl -fsSL https://pi.dev/install.sh | sh` pins all dependencies under `~/.pi/agent/install/releases/<version>` and symlinks the launcher into `~/.local/bin` (already on PATH via .zshrc, so the installer never needs to touch the shell rc). Update later with `pi update`. The setup scripts purge any legacy npm-global pi before installing — the installer's own migrate flow can't remove nodenv shims and would abort.
 
 ## What's in .local/bin
 

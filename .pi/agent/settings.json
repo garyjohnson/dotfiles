@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.99.2",
+  "lastChangelogVersion": "1.1.0",
   "defaultProvider": "deepinfra",
   "defaultModel": "zai-org/GLM-5.3",
   "theme": "catppuccin-macchiato",

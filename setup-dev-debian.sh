@@ -237,9 +237,37 @@ fi
 step "📦 npm globals"
 
 eval "$(nodenv init - bash)"
-npm install -g --force codex @earendil-works/pi-coding-agent firecrawl-cli appwrite-cli
+npm install -g --force codex firecrawl-cli appwrite-cli
 nodenv rehash
 success "npm globals installed!"
+
+# --- pi (managed installer) ---
+
+step "🥧 pi"
+
+info "Installing via official managed installer..."
+# Pi ships a managed installer now (pinned deps, self-updates with `pi update`)
+# instead of a global npm package. Idempotent: fresh install and
+# update-to-latest are both the default action.
+#
+# Keep ~/.local/bin (where the installer symlinks the launcher) on PATH so it
+# never offers to append a PATH export to .zshrc — it's already there.
+export PATH="$HOME/.local/bin:$PATH"
+# Drop pi's inherited PI_MANAGED_INSTALL_ROOT (exported by its launcher as an
+# unnormalized path when pi starts via the ~/.local/bin symlink). The
+# installer string-compares it against the resolved root and would refuse to
+# reinstall — let it rediscover the managed install on its own.
+unset PI_MANAGED_INSTALL_ROOT
+# Purge any legacy npm-global pi from every nodenv version first. The
+# installer's own migrate flow can't remove nodenv shims (npm uninstall
+# doesn't, so it aborts), and a stale shim would shadow the managed launcher.
+while IFS= read -r -d '' nv; do
+  npm uninstall -g --prefix "$nv" @earendil-works/pi-coding-agent >/dev/null 2>&1 || true
+done < <(find "$HOME/.nodenv/versions" -mindepth 1 -maxdepth 1 -type d -print0 2>/dev/null)
+nodenv rehash
+curl -fsSL https://pi.dev/install.sh | sh
+command -v pi &>/dev/null || { err "pi install failed — re-run setup"; exit 1; }
+success "pi installed!"
 
 # --- Playwright deps ---
 
