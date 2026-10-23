@@ -159,6 +159,7 @@ OSXPHOTOS_ARGS=(
   --library "$PHOTOS_LIBRARY"
   --update
   --overwrite
+  --alt-copy
   --sidecar xmp
   --download-missing
   --exportdb "$EXPORT_DB"
@@ -166,6 +167,12 @@ OSXPHOTOS_ARGS=(
   --retry 3
   --report "$LOG_DIR/export-report-$(date +%Y-%m-%d).csv"
 )
+# --alt-copy: copy with shutil instead of NSFileManager. The macOS default
+# copy backend refuses to overwrite an existing file (EEXIST, Code 516) and
+# relies on an in-process stat cache that can go stale/empty after a
+# transient SMB failure -- osxphotos documents --alt-copy specifically for
+# NAS/SMB exports. Cost: no copy-on-write / metadata preservation, neither of
+# which applies to an SMB destination anyway.
 if [ -n "$NAS_ALIAS" ] && [ -f "$NAS_ALIAS" ]; then
   OSXPHOTOS_ARGS+=(--retry-nas-alias "$NAS_ALIAS" --retry-wait 15)
   log "  using --retry-nas-alias (auto-remount enabled)"

@@ -21,6 +21,7 @@ Backs up an Apple Photos library to an SMB share using [osxphotos](https://githu
    - `--download-missing` — pulls iCloud-only originals down first.
    - `--exportdb $HOME/osxphotos_state/osxphotos_export.db` — local state DB so partial runs resume cleanly and the flow is genuinely incremental.
    - `--retry 3` — retries failed file operations (useful for flaky SMB).
+   - `--alt-copy` — copies via `shutil` instead of NSFileManager, silently overwriting existing files instead of failing with EEXIST (osxphotos' documented fix for NAS/SMB exports; no copy-on-write/metadata preservation, which don't apply on SMB anyway).
    - `--retry-nas-alias` + `--retry-wait` — if a Finder alias to the export folder exists (created best-effort after the first mount), osxphotos auto-remounts the SMB share on connection loss instead of aborting.
    - `--report` — CSV audit trail per day.
 4. Leaves the share mounted (reused on the next run) and rotates old logs.
