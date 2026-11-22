@@ -303,34 +303,6 @@ else
   success "Bun installed!"
 fi
 
-# --- Trilium CLI (triliumnext-cli, for pushing notes) ---
-# Build from source with Bun. The upstream darwin-arm64 prebuilt binary is
-# broken (corrupt code signature + dyld chained-fixups), so macOS SIGKILLs it.
-
-step "📝 trilium CLI"
-
-BUN="${BUN:-$HOME/.bun/bin/bun}"
-command -v "$BUN" &>/dev/null || BUN="$(command -v bun || true)"
-
-# Only skip if the installed binary actually runs (self-healing against the
-# upstream broken-binary problem).
-if command -v trilium &>/dev/null && trilium --help &>/dev/null; then
-  skip "trilium already installed at $(which trilium)"
-elif [ -z "$BUN" ]; then
-  warn "bun not found — skipping trilium CLI (re-run setup after Bun installs)"
-else
-  info "Building triliumnext-cli from source (arm64)..."
-  (
-    BUILD_DIR="$(mktemp -d)"
-    trap 'rm -rf "$BUILD_DIR"' EXIT
-    git clone --depth 1 https://github.com/perfectra1n/triliumnext-cli.git "$BUILD_DIR" \
-      && cd "$BUILD_DIR" \
-      && "$BUN" install \
-      && "$BUN" run build:compile \
-      && install -m 755 trilium "$HOME/.local/bin/trilium"
-  ) && success "trilium CLI installed!"
-fi
-
 # --- Install latest Ruby via rbenv ---
 
 step "💎 Ruby"
@@ -745,11 +717,8 @@ echo ""
 echo -e "  ${hotpink}♥${pink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${pink}♥${hotpink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${hotpink}♥${pink}♥${rose}♥${hotpink}♥${pink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${pink}♥${hotpink}♥${rose}♥${peach}♥${lavender}♥${lilac}♥${purple}♥${periwinkle}♥${skyblue}♥${mint}♥${hotpink}♥${pink}♥${rose}♥${reset}"
 echo ""
 echo -e "  ${bold}${rose}📝 Manual steps remaining:${reset}"
-echo -e "  ${lilac}🌷${reset} Log in to Trilium (saves ETAPI token):  ${bold}trilium auth login --server https://trilium-gary.app.usefulbits.io/etapi${reset}"
 echo -e "  ${lilac}🌷${reset} Activate VoiceInk license"
 echo -e "  ${purple}🌷${reset} Configure Cap → ${bold}https://cap.app.usefulbits.io${reset}"
-echo -e "  ${periwinkle}🌷${reset} Add Trilium PWA to dock from Safari:"
-echo -e "     ${bold}https://trilium-gary.app.usefulbits.io/${reset}"
 echo -e "  ${pink}🌷${reset} Install 1Password extension for Chrome"
 echo -e "  ${skyblue}🌷${reset} Log in to Forgejo:  ${bold}tea login add -n forgejo -u https://forgejo.app.usefulbits.io${reset}"
 echo -e "     ${bold}https://forgejo.app.usefulbits.io/user/settings/keys${reset}"

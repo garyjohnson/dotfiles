@@ -44,6 +44,26 @@ moshdev2() { mosh dev2 -- tmux new -A -s main }
 moshdev3() { mosh dev3 -- tmux new -A -s main }
 hdev3() { herdr --remote dev3 }
 
+# llama.cpp router — local LLM server (launchd user agent, port 9931)
+llama-router() {
+  local label=com.garyjohnson.llama-router url=http://127.0.0.1:9931
+  case "$1" in
+    start)
+      if launchctl print gui/$UID/$label >/dev/null 2>&1; then
+        echo "already running — $url"
+      else
+        launchctl bootstrap gui/$UID ~/Library/LaunchAgents/$label.plist && echo "✨ up — $url"
+      fi ;;
+    stop)    launchctl bootout gui/$UID/$label && echo "▼ down" ;;
+    restart) launchctl kickstart -k gui/$UID/$label && echo "↻ restarted" ;;
+    status)
+      launchctl print gui/$UID/$label 2>/dev/null | grep -E '^\s*(state|pid) ='
+      curl -sf $url/health >/dev/null && echo "router: healthy" ;;
+    log)     tail -f ~/Library/Logs/llama-router.log ;;
+    *)       echo "usage: llama-router {start|stop|restart|status|log}" ;;
+  esac
+}
+
 # stop bugging me LLMS!
 export CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY=true
 export FIRECRAWL_NO_TELEMETRY=1

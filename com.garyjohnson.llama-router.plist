@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.garyjohnson.llama-router</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/garyjohnson/homebrew/bin/llama</string>
+    <string>serve</string>
+    <string>--no-models-autoload</string>
+    <string>--models-dir</string><string>/Users/garyjohnson/models</string>
+    <string>-ngl</string><string>all</string>
+    <string>-c</string><string>131072</string>
+    <string>-np</string><string>1</string>
+    <string>--port</string><string>9931</string>
+    <string>--flash-attn</string><string>on</string>
+    <string>--cache-type-k</string><string>f16</string>
+    <string>--cache-type-v</string><string>f16</string>
+    <string>--cache-reuse</string><string>256</string>
+    <string>--spec-type</string><string>draft-mtp</string>
+    <string>--spec-draft-n-max</string><string>4</string>
+    <string>--reasoning-effort</string><string>low</string>
+    <string>--sleep-idle-seconds</string><string>1800</string>
+    <string>--metrics</string>
+  </array>
+  <key>RunAtLoad</key><true/>
+  <key>KeepAlive</key><true/>
+  <key>ProcessType</key><string>Adaptive</string>
+  <key>StandardOutPath</key><string>/Users/garyjohnson/Library/Logs/llama-router.log</string>
+  <key>StandardErrorPath</key><string>/Users/garyjohnson/Library/Logs/llama-router.log</string>
+</dict>
+</plist>

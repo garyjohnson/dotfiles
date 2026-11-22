@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "1.3.0",
+  "lastChangelogVersion": "1.6.0",
   "defaultProvider": "deepinfra",
   "defaultModel": "zai-org/GLM-5.3",
   "theme": "catppuccin-macchiato",
@@ -36,5 +36,10 @@
   ],
   "themes": [
     "-themes/rainbow-cute.json"
-  ]
+  ],
+  "extensionChangelogVersions": {
+    "{\"source\":\"git:github.com/tmustier/pi-extensions\",\"scope\":\"user\"}": "0.1.67",
+    "{\"source\":\"npm:pi-subagents\",\"scope\":\"user\"}": "0.89.2",
+    "{\"source\":\"npm:pi-prompt-template-model\",\"scope\":\"user\"}": "0.12.3"
+  }
 }

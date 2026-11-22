@@ -32,6 +32,12 @@ A handful of small utilities symlinked individually (not the whole directory). C
 
 `sync-deepinfra-langfuse.sh` pulls model token pricing from DeepInfra's `GET /models/list` for the models you've actually used (via `GET /payment/usage`) and upserts them as custom Langfuse model definitions (`unit=TOKENS`, with a `cache_read_input_tokens` price) through the public API. Idempotent; dry-run with `--dry-run`, sync all with `--all`. Needs `DEEPINFRA_API_KEY` + `LANGFUSE_BASE_URL/PUBLIC_KEY/SECRET_KEY` (sourced from `~/.profile-env` if unset). See `README-sync-deepinfra-langfuse.md`.
 
+## Local LLM (llama.cpp router)
+
+`llama.cpp` (brew) runs as a launchd user agent — `com.garyjohnson.llama-router` (plist in this repo, symlinked into `~/Library/LaunchAgents`) — serving a multi-model router on `127.0.0.1:9931`. Models live in `~/models/` (multimodal models in subdirs with their mmproj alongside). Manage the service with the `llama-router` zsh function (`start|stop|restart|status|log`).
+
+pi connects via its built-in `llama.cpp` provider (`LLAMA_BASE_URL=http://127.0.0.1:9931` in `~/.profile-env`, or `/login llama.cpp` once) — load/unload/download models via pi's `/llama`, select via `/model`. Currently: Qwen3.8-27B Q4_K_M (Apache 2.0) served with MTP speculative decoding (`--spec-type draft-mtp --spec-draft-n-max 4`), 131k context, f16 KV cache, `--reasoning-effort low` (the model's `xhigh` default massively overthinks), and it sleeps after 30 min idle.
+
 ## Tea CLI for Forgejo
 
 [tea](https://gitea.com/gitea/tea) is the command-line tool for interacting with Forgejo (Gitea-compatible) repos — issues, PRs, releases, labels, milestones, and more. Think of it as `gh` but for Forgejo.
@@ -75,15 +81,21 @@ Two command-line tools on this machine for web search, scraping, and extraction.
 
 Rule of thumb: **Kagi for search & summaries, Firecrawl for full pages, crawls, parsing, and structured extraction.**
 
-**`trilium`** — TriliumNext CLI (`triliumnext-cli`, single binary). Push/pull notes to the local TriliumNext instance. Use this **explicitly when asked to retrieve notes or save notes** (not for web search/scraping). The setup scripts build it from source with Bun (the upstream `darwin-arm64` prebuilt binary is broken — corrupt code signature + dyld chained-fixups — so macOS SIGKILLs it).
+## Personal notes (Obsidian vault)
 
-- `trilium auth login --server <url>` — interactive login; stores the ETAPI token in `~/.config/triliumnext-cli/config.json`
-- `trilium notes search "<query>"` — search notes; `--limit`, `--order-by`
-- `trilium notes get <noteId>` / `get-content <noteId>` — fetch a note / its content
-- `trilium notes create --title "..." --content "..." --markdown` — save a new note
-- `echo "# note" | trilium notes create --title "..." --markdown` — pipe markdown straight in
-- `trilium notes set-content <noteId> --content "..." --markdown` — update existing note content
-- `--format json` for machine-readable output (pipe to `jq`)
+`~/repositories/obsidian-notes` is the personal knowledge vault (Obsidian). When the user says "notes" — "add this to my notes", "note that", "save to my notes" — they mean this vault, and the note belongs in the right topic folder, not a generic dumping ground.
+
+Content lives under `Notes/` in topic folders: Homelab, House, Career, Test Double, Gaming, Recipes, Trips, Financial, 3D Printing, Drones, Bike, AI + LLM, Ruby + Rails, Personal, Journal, Daily (`Notes/Daily/YYYY/MM/Www/YYYY-MM-DD.md`), Useful Bits.
+
+Conventions:
+- Plain markdown, no YAML frontmatter on new notes. Some files carry `apple-notes-id` frontmatter from the Apple Notes migration — leave that alone.
+- Filename = note title, descriptive, sentence case. Date-prefix only for one-off events/incidents (`2026-11-15 Cert auto-renewal outage (caddy).md`).
+- No `# H1` heading at the top — Obsidian renders the filename as the title. Start with prose.
+- Match the style of neighboring notes; code blocks for commands/config.
+- If no existing folder fits, ask before creating a new one.
+- It's a git repo — never commit unless asked, and never touch unrelated dirty files.
+
+`Notes/Homelab/IPs.md` is the hostname → IP reference for the homelab; keep it current when host IPs change or are added.
 
 ## SigNoz logs (production)
 

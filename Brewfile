@@ -19,9 +19,13 @@ brew "prd"
 # Git hosting CLIs
 brew "gh"
 brew "tea"
+brew "yt-dlp"
 
 # Agent runtime
 brew "herdr"
+
+# Local LLM inference (llama.cpp router — launchd agent, see com.garyjohnson.llama-router.plist)
+brew "llama.cpp"
 
 # Development
 brew "rbenv"
