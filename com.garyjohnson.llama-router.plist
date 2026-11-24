@@ -9,6 +9,7 @@
     <string>serve</string>
     <string>--no-models-autoload</string>
     <string>--models-dir</string><string>/Users/garyjohnson/models</string>
+    <string>--models-preset</string><string>/Users/garyjohnson/repositories/dotfiles/com.garyjohnson.llama-router.models.ini</string>
     <string>-ngl</string><string>all</string>
     <string>-c</string><string>131072</string>
     <string>-np</string><string>1</string>

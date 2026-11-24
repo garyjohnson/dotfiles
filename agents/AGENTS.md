@@ -34,9 +34,11 @@ A handful of small utilities symlinked individually (not the whole directory). C
 
 ## Local LLM (llama.cpp router)
 
-`llama.cpp` (brew) runs as a launchd user agent — `com.garyjohnson.llama-router` (plist in this repo, symlinked into `~/Library/LaunchAgents`) — serving a multi-model router on `127.0.0.1:9931`. Models live in `~/models/` (multimodal models in subdirs with their mmproj alongside). Manage the service with the `llama-router` zsh function (`start|stop|restart|status|log`).
+`llama.cpp` (brew) runs as a launchd user agent — `com.garyjohnson.llama-router` (plist in this repo, symlinked into `~/Library/LaunchAgents`) — serving a multi-model router on `127.0.0.1:9931`. Manage the service with the `llama-router` zsh function (`start|stop|restart|status|log`).
 
-pi connects via its built-in `llama.cpp` provider (`LLAMA_BASE_URL=http://127.0.0.1:9931` in `~/.profile-env`, or `/login llama.cpp` once) — load/unload/download models via pi's `/llama`, select via `/model`. Currently: Qwen3.8-27B Q4_K_M (Apache 2.0) served with MTP speculative decoding (`--spec-type draft-mtp --spec-draft-n-max 4`), 131k context, f16 KV cache, `--reasoning-effort low` (the model's `xhigh` default massively overthinks), and it sleeps after 30 min idle.
+Model weights live in `~/models/` (multimodal models in subdirs with their mmproj alongside). Per-model router options live in `com.garyjohnson.llama-router.models.ini` (INI sections keyed by model id, keys = `llama-server` args without dashes) — currently it attaches the standalone MTP draft head to Qwen3.8-27B. Gotcha: the ggml-org GGUFs ship the MTP head as a **separate file** (only Unsloth UD / LM Studio builds bundle it), so `mtp-Qwen3.8-27B-Q8_0.gguf` must sit next to the main GGUF and be wired via `spec-draft-model` in the INI — without it the model fails to load with "model doesn't contain MTP layers".
+
+pi connects via its built-in `llama.cpp` provider (`LLAMA_BASE_URL=http://127.0.0.1:9931` in `~/.profile-env`, or `/login llama.cpp` once) — load/unload/download models via pi's `/llama`, select via `/model`. Currently: Qwen3.8-27B Q4_K_M (Apache 2.0) served with MTP speculative decoding (`--spec-type draft-mtp --spec-draft-n-max 4`), 131k context, f16 KV cache, `--reasoning-effort low` (the model's `xhigh` default massively overthinks), and it sleeps after 30 min idle. Measured on the M2 Max: ~20–26 tok/s decode, ~110 tok/s prefill.
 
 ## Tea CLI for Forgejo
 

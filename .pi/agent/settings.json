@@ -32,7 +32,8 @@
     "deepinfra/moonshotai/Kimi-K3",
     "deepinfra/zai-org/GLM-5.3",
     "deepinfra/zai-org/GLM-5.3-Flash",
-    "deepinfra/MiniMaxAI/MiniMax-M3"
+    "deepinfra/MiniMaxAI/MiniMax-M3",
+    "llama.cpp/Qwen3.8-27B-Q4_K_M"
   ],
   "themes": [
     "-themes/rainbow-cute.json"
