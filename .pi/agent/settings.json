@@ -1,6 +1,9 @@
 {
   "lastChangelogVersion": "1.6.0",
   "defaultProvider": "deepinfra",
+  "defaultTools": [
+    "+codemode"
+  ],
   "defaultModel": "zai-org/GLM-5.3",
   "theme": "catppuccin-macchiato",
   "packages": [
